@@ -18,7 +18,7 @@ ENV PROFILE=${PROFILE}
 RUN mkdir /flow-auth
 WORKDIR /flow-auth
 
-COPY --from=builder /flow-main/build/libs/flow-auth-* /flow-auth/app.jar
+COPY --from=builder /flow-auth/build/libs/flow-auth-* /flow-auth/app.jar
 
 CMD ["java", \
     "-Dspring.profiles.active=${PROFILE}", \
