@@ -30,8 +30,5 @@ COPY --from=builder /flow-auth/build/libs/flow-auth-* /flow-auth/app.jar
 
 CMD ["java", \
     "-Dspring.profiles.active=${PROFILE}", \
-    "-Dspring.datasource.url=${DB_URL}", \
-    "-Dspring.datasource.username=${DB_USERNAME}", \
-    "-Dspring.datasource.password=${DB_PASSWORD}", \
     "-jar", \
     "/flow-auth/app.jar"]
