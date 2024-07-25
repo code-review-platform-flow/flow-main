@@ -1,6 +1,14 @@
 # builder image
 FROM amazoncorretto:17-al2-jdk AS builder
 
+ARG DB_URL
+ARG DB_USERNAME
+ARG DB_PASSWORD
+
+ENV DB_URL=${DB_URL}
+ENV DB_USERNAME=${DB_USERNAME}
+ENV DB_PASSWORD=${DB_PASSWORD}
+
 RUN mkdir /flow-auth
 WORKDIR /flow-auth
 
