@@ -35,9 +35,6 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build --push \
-            --build-arg DB_URL=${{ secrets.DEV_DB_URL }} \
-            --build-arg DB_USERNAME=${{ secrets.DEV_DB_USERNAME }} \
-            --build-arg DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }} \
             --tag asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-auth-dev:${{ github.sha }} .
 
   deploy:
