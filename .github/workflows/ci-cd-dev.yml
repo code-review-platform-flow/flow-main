@@ -35,9 +35,6 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build --push \
-            --build-arg DB_URL=${{ secrets.DEV_DB_URL }} \
-            --build-arg DB_USERNAME=${{ secrets.DEV_DB_USERNAME }} \
-            --build-arg DB_PASSWORD=${{ secrets.DEV_DB_PASSWORD }} \
             --tag asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-auth-dev:${{ github.sha }} .
 
   deploy:
@@ -55,6 +52,20 @@ jobs:
       - name: Update manifest
         run: |
           sed -i "s|image: .*|image: asia-northeast3-docker.pkg.dev/code-review-platform-flow/flow-dev/flow-auth-dev:${{ github.sha }}|" manifests/flow-auth-dev/deployment.yaml
+
+      - name: Update Kubernetes Secret manifest
+          run: |
+            cp manifests/secret-template.yaml manifests/secret.yaml
+            secrets=$(echo '${{ toJSON(secrets) }}' | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") | .[]')
+            for secret in $secrets; do
+              key=$(echo $secret | cut -d '=' -f 1)
+              value=$(echo $secret | cut -d '=' -f 2)
+              if [[ $key == "DEV_"* ]]; then
+                base64_value=$(echo -n $value | base64)
+                sed -i "s|$key:.*|$key: $base64_value|" manifests/secret.yaml
+              fi
+            done
+      
 
       - name: Commit and push changes
         working-directory: manifests
