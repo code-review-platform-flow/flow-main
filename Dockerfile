@@ -31,10 +31,13 @@ WORKDIR /flow-auth
 
 COPY --from=builder /flow-auth/build/libs/flow-auth-* /flow-auth/app.jar
 
-CMD ["java", \
-    "-Dspring.profiles.active=${PROFILE}", \
-    "-Dspring.datasource.url=${DB_URL}", \
-    "-Dspring.datasource.username=${DB_USERNAME}", \
-    "-Dspring.datasource.password=${DB_PASSWORD}", \
-    "-jar", \
-    "/flow-auth/app.jar"]
+CMD ["sh", "-c", "\
+    echo DB_URL=${DB_URL} && \
+    echo DB_USERNAME=${DB_USERNAME} && \
+    echo DB_PASSWORD=${DB_PASSWORD} && \
+    echo PROFILE=${PROFILE} && \
+    java -Dspring.profiles.active=${PROFILE} \
+         -Dspring.datasource.url=${DB_URL} \
+         -Dspring.datasource.username=${DB_USERNAME} \
+         -Dspring.datasource.password=${DB_PASSWORD} \
+         -jar /flow-auth/app.jar"]
