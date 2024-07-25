@@ -1,3 +1,6 @@
 spring:
-  application:
-    name: flow-auth
+  profiles:
+    group:
+      "local": "local"
+      "dev": "dev"
+      "prd": "prd"

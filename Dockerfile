@@ -22,6 +22,9 @@ FROM amazoncorretto:17.0.12-al2
 
 ENV TZ=Asia/Seoul
 ENV PROFILE=${PROFILE}
+ENV DB_URL=${DB_URL}
+ENV DB_USERNAME=${DB_USERNAME}
+ENV DB_PASSWORD=${DB_PASSWORD}
 
 RUN mkdir /flow-auth
 WORKDIR /flow-auth
