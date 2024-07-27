@@ -1,10 +1,10 @@
-package com.example.flowauth;
+package com.flow.main;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FlowAuthApplicationTests {
+class FlowMainApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,4 +1,4 @@
-package com.example.flowauth.controller;
+package com.flow.main.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

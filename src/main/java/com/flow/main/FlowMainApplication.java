@@ -1,13 +1,13 @@
-package com.example.flowauth;
+package com.flow.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FlowAuthApplication {
+public class FlowMainApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FlowAuthApplication.class, args);
+        SpringApplication.run(FlowMainApplication.class, args);
     }
 
 }
