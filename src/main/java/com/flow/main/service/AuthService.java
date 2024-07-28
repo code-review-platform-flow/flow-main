@@ -28,7 +28,7 @@ public class AuthService {
     private final SchoolRepository schoolRepository;
     private final MajorRepository majorRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final RegisterMapper registerMapper = RegisterMapper.INSTANCE;
+    private final RegisterMapper registerMapper;
 
     @Transactional
     public ResponseEntity<Void> registerUser(RegisterDto registerDto){

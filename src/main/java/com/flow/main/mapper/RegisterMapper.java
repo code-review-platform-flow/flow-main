@@ -8,11 +8,10 @@ import com.flow.main.entity.UserInfoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RegisterMapper {
-
-    RegisterMapper INSTANCE = Mappers.getMapper(RegisterMapper.class);
 
     @Mapping(source = "email", target = "email")
     @Mapping(source = "password", target = "password")
