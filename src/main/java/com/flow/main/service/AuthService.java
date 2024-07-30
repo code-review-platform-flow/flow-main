@@ -53,6 +53,7 @@ public class AuthService {
 
         UserEntity userEntity = registerMapper.toUserEntity(registerRequestDto);
         UserInfoEntity userInfoEntity = registerMapper.toUserInfoEntity(userEntity, schoolEntity, majorEntity, registerRequestDto);
+        userInfoEntity.setRole("ROLE_USER");
 
         try{
             userRepository.save(userEntity);

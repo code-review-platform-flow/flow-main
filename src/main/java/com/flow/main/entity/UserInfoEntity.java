@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
@@ -44,6 +46,9 @@ public class UserInfoEntity extends BaseEntity {
 
     @Column(name = "student_number", nullable = false)
     private String studentNumber;
+
+    @Column(name = "role", nullable = false)
+    private String role;
 
     @Version
     private int version;
