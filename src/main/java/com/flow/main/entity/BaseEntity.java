@@ -3,6 +3,7 @@ package com.flow.main.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +19,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class BaseEntity {
 
     @Column(name = "use_yn", nullable = false)
-    private boolean useYn = true;
+    private boolean useYn;
 
     @Column(name = "create_code", updatable = false)
-    private String createCode = "flow-api-gateway";
+    private String createCode;
 
     @CreatedDate
     @Column(name = "create_date", updatable = false)
@@ -40,6 +41,13 @@ public class BaseEntity {
 
     @Column(name = "delete_date")
     private LocalDateTime deleteDate;
+
+    @PrePersist
+    public void prePersist(){
+        this.createDate = LocalDateTime.now();
+        this.deleteCode = "flow-main";
+        this.useYn = true;
+    }
 
     public void markDeleted(String delete_code){
         this.deleteDate = LocalDateTime.now();
