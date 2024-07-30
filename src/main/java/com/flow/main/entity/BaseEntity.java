@@ -45,7 +45,7 @@ public class BaseEntity {
     @PrePersist
     public void prePersist(){
         this.createDate = LocalDateTime.now();
-        this.deleteCode = "flow-main";
+        this.createCode = "flow-main";
         this.useYn = true;
     }
 
