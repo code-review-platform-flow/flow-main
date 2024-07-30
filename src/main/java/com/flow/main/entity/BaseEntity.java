@@ -44,5 +44,6 @@ public class BaseEntity {
     public void markDeleted(String delete_code){
         this.deleteDate = LocalDateTime.now();
         this.deleteCode = delete_code;
+        this.useYn = false;
     }
 }
