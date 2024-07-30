@@ -1,6 +1,6 @@
 package com.flow.main.mapper;
 
-import com.flow.main.dto.request.RegisterDto;
+import com.flow.main.dto.request.RegisterRequestDto;
 import com.flow.main.entity.MajorEntity;
 import com.flow.main.entity.SchoolEntity;
 import com.flow.main.entity.UserEntity;
@@ -15,13 +15,13 @@ public interface RegisterMapper {
 
     @Mapping(source = "email", target = "email")
     @Mapping(source = "password", target = "password")
-    UserEntity toUserEntity(RegisterDto dto);
+    UserEntity toUserEntity(RegisterRequestDto dto);
 
     @Mapping(source = "dto.studentNumber", target = "studentNumber")
     @Mapping(source = "user", target = "user")
     @Mapping(source = "school", target = "school")
     @Mapping(source = "major", target = "major")
     @Mapping(target = "version", ignore = true)
-    UserInfoEntity toUserInfoEntity(UserEntity user, SchoolEntity school, MajorEntity major, RegisterDto dto);
+    UserInfoEntity toUserInfoEntity(UserEntity user, SchoolEntity school, MajorEntity major, RegisterRequestDto dto);
 
 }

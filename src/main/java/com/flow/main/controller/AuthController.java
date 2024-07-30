@@ -1,7 +1,8 @@
 package com.flow.main.controller;
 
 
-import com.flow.main.dto.request.RegisterDto;
+import com.flow.main.dto.request.RegisterRequestDto;
+import com.flow.main.dto.request.RegisterRequestDto;
 import com.flow.main.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,8 @@ public class AuthController {
 
     private final AuthService authService;
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterDto registerDto){
-        log.info("RegisterDto : {}", registerDto);
-        return authService.registerUser(registerDto);
+    public ResponseEntity<Void> register(@RequestBody RegisterRequestDto registerRequestDto){
+        log.info("RegisterDto : {}", registerRequestDto);
+        return authService.registerUser(registerRequestDto);
     }
 }
