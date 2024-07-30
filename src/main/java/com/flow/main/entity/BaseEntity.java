@@ -28,11 +28,9 @@ public class BaseEntity {
     @Column(name = "create_date", updatable = false)
     private LocalDateTime createDate;
 
-    @LastModifiedBy
     @Column(name = "modify_code")
     private String modifyCode;
 
-    @LastModifiedDate
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;
 
@@ -49,9 +47,14 @@ public class BaseEntity {
         this.useYn = true;
     }
 
-    public void markDeleted(String delete_code){
+    public void markModified(){
+        this.modifyDate = LocalDateTime.now();
+        this.modifyCode = "flow-main";
+    }
+
+    public void markDeleted(){
         this.deleteDate = LocalDateTime.now();
-        this.deleteCode = delete_code;
+        this.deleteCode = "flow-main";
         this.useYn = false;
     }
 }
