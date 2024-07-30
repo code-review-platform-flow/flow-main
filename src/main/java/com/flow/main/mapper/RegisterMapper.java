@@ -15,19 +15,13 @@ public interface RegisterMapper {
 
     @Mapping(source = "email", target = "email")
     @Mapping(source = "password", target = "password")
-    UserEntity registerDtoToUserEntity(RegisterDto dto);
-
-    @Mapping(source = "schoolName", target = "schoolName")
-    SchoolEntity registerDtoToSchoolEntity(RegisterDto dto);
-
-    @Mapping(source = "majorName", target = "majorName")
-    MajorEntity registerDtoToMajorEntity(RegisterDto dto);
+    UserEntity toUserEntity(RegisterDto dto);
 
     @Mapping(source = "dto.studentNumber", target = "studentNumber")
     @Mapping(source = "user", target = "user")
     @Mapping(source = "school", target = "school")
     @Mapping(source = "major", target = "major")
     @Mapping(target = "version", ignore = true)
-    UserInfoEntity registerDtoToUserInfoEntity(UserEntity user, SchoolEntity school, MajorEntity major, RegisterDto dto);
+    UserInfoEntity toUserInfoEntity(UserEntity user, SchoolEntity school, MajorEntity major, RegisterDto dto);
 
 }

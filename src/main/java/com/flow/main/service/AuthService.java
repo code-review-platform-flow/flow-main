@@ -12,6 +12,7 @@ import com.flow.main.repository.SchoolRepository;
 import com.flow.main.repository.UserInfoRepository;
 import com.flow.main.repository.UserRepository;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,25 +34,44 @@ public class AuthService {
     @Transactional
     public ResponseEntity<Void> registerUser(RegisterDto registerDto){
 
+        String email = registerDto.getEmail();
         registerDto.setPassword(bCryptPasswordEncoder.encode(registerDto.getPassword()));
+        String schoolName = registerDto.getSchoolName();
+        String majorName = registerDto.getMajorName();
 
-        if(userRepository.existsByEmail(registerDto.getEmail())){
+        if(userRepository.existsByEmail(email)){
            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        UserEntity userEntity = registerMapper.registerDtoToUserEntity(registerDto);
-        SchoolEntity schoolEntity = registerMapper.registerDtoToSchoolEntity(registerDto);
-        MajorEntity majorEntity = registerMapper.registerDtoToMajorEntity(registerDto);
-        UserInfoEntity userInfoEntity = registerMapper.registerDtoToUserInfoEntity(userEntity, schoolEntity, majorEntity, registerDto);
+        SchoolEntity schoolEntity = findSchoolEntity(schoolName);
+        if(schoolEntity == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        MajorEntity majorEntity = findMajorEntity(majorName);
+        if(majorEntity == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        UserEntity userEntity = registerMapper.toUserEntity(registerDto);
+        UserInfoEntity userInfoEntity = registerMapper.toUserInfoEntity(userEntity, schoolEntity, majorEntity, registerDto);
 
         try {
             userRepository.save(userEntity);
-            schoolRepository.save(schoolEntity);
-            majorRepository.save(majorEntity);
             userInfoRepository.save(userInfoEntity);
         } catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public SchoolEntity findSchoolEntity(String schoolName){
+        Optional<SchoolEntity> schoolEntity = schoolRepository.findBySchoolName(schoolName);
+        return schoolEntity.orElse(null);
+    }
+
+    public MajorEntity findMajorEntity(String majorName){
+        Optional<MajorEntity> majorEntity = majorRepository.findByMajorName(majorName);
+        return majorEntity.orElse(null);
     }
 }

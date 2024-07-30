@@ -17,8 +17,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
-    @Column(name = "use_yn")
-    private boolean useYn;
+    @Column(name = "use_yn", nullable = false)
+    private boolean useYn = true;
 
     @Column(name = "create_code", updatable = false)
     private String createCode = "flow-api-gateway";
