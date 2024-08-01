@@ -39,9 +39,6 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserInfoEntity> userInfoEntities = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserSessionEntity> userSessionEntities = new ArrayList<>();
 
     @Version
