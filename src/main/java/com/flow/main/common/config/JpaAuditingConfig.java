@@ -1,4 +1,4 @@
-package com.flow.main.config;
+package com.flow.main.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
