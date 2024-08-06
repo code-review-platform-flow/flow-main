@@ -16,4 +16,5 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface MajorMapper extends GenericMapper<MajorDto, MajorEntity> {
 
+
 }

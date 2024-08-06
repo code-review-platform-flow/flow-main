@@ -22,16 +22,10 @@ public class UserInfoService {
 
     private final UserInfoRepository userInfoRepository;
     private final UserInfoMapper userInfoMapper;
-    private final UsersMapper usersMapper;
-    private final SchoolMapper schoolMapper;
-    private final MajorMapper majorMapper;
 
     @Transactional
-    public UserInfoDto registerSave(UserInfoDto userInfoDto, UsersDto usersDto, SchoolDto schoolDto, MajorDto majorDto){
+    public UserInfoDto save(UserInfoDto userInfoDto){
         UserInfoEntity userInfoEntity = userInfoMapper.toEntity(userInfoDto);
-        userInfoEntity.setUser(usersMapper.toEntity(usersDto));
-        userInfoEntity.setSchool(schoolMapper.toEntity(schoolDto));
-        userInfoEntity.setMajor(majorMapper.toEntity(majorDto));
         return userInfoMapper.toDto(userInfoRepository.save(userInfoEntity));
     }
 
