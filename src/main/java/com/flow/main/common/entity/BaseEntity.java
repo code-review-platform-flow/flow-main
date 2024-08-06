@@ -1,4 +1,4 @@
-package com.flow.main.entity;
+package com.flow.main.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class BaseEntity {
 
     @Column(name = "use_yn", nullable = false)
-    private boolean useYn;
+    private boolean useYn = true;
 
     @Column(name = "create_code", updatable = false)
     private String createCode;

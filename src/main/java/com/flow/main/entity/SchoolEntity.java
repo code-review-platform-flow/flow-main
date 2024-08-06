@@ -1,5 +1,6 @@
 package com.flow.main.entity;
 
+import com.flow.main.common.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
@@ -24,6 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Table(name = "schools")
+@Where(clause = "use_yn = true")
 public class SchoolEntity extends BaseEntity {
 
     @Id
