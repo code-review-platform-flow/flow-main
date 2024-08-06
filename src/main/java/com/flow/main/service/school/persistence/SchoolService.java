@@ -1,6 +1,6 @@
 package com.flow.main.service.school.persistence;
 
-import com.flow.main.dto.school.SchoolDto;
+import com.flow.main.dto.jpa.school.SchoolDto;
 import com.flow.main.mapper.SchoolMapper;
 import com.flow.main.repository.SchoolRepository;
 import jakarta.persistence.EntityNotFoundException;

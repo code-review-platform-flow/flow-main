@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
@@ -25,37 +24,23 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "user_info")
+@Table(name = "post_tags")
 @Where(clause = "use_yn = true")
-public class UserInfoEntity extends BaseEntity {
+public class PostTagsEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_info_id")
-    private Long userInfoId;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UsersEntity user;
+    @Column(name = "post_tag_id")
+    private Long postTagId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
-    private SchoolEntity school;
+    @JoinColumn(name = "post_id", nullable = false)
+    private PostsEntity post;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id")
-    private MajorEntity major;
-
-    @Column(name = "student_number", nullable = false)
-    private String studentNumber;
-
-    @Column(name = "role", nullable = false)
-    private String role;
-
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @JoinColumn(name = "tag_id", nullable = false)
+    private TagsEntity tag;
 
     @Version
     private int version;
-
 }

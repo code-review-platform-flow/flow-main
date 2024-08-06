@@ -1,13 +1,12 @@
 package com.flow.main.controller;
 
 
-import com.flow.main.dto.login.request.LoginRequestDto;
-import com.flow.main.dto.login.response.LoginResponseDto;
-import com.flow.main.dto.register.request.RegisterRequestDto;
+import com.flow.main.dto.controller.auth.login.request.LoginRequestDto;
+import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
+import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
