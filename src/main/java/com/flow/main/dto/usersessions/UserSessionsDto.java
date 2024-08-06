@@ -1,5 +1,6 @@
 package com.flow.main.dto.usersessions;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,5 +17,6 @@ public class UserSessionsDto {
     private Long userId;
     private String accessToken;
     private String refreshToken;
+    private LocalDateTime expiration;
     private Long version;
 }

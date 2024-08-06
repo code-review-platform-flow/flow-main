@@ -1,8 +1,10 @@
 package com.flow.main.service.usersessions.persistence;
 
+import com.flow.main.dto.users.UsersDto;
 import com.flow.main.dto.usersessions.UserSessionsDto;
 import com.flow.main.entity.UserSessionsEntity;
 import com.flow.main.mapper.UserSessionsMapper;
+import com.flow.main.mapper.UsersMapper;
 import com.flow.main.repository.UserSessionsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +17,13 @@ public class UserSessionsService {
 
     private final UserSessionsRepository userSessionsRepository;
     private final UserSessionsMapper userSessionsMapper;
+    private final UsersMapper usersMapper;
 
     @Transactional
-    public UserSessionsDto save(UserSessionsDto userSessionsDto){
+    public UserSessionsDto loginSave(UserSessionsDto userSessionsDto, UsersDto usersDto){
         UserSessionsEntity userSessionsEntity = userSessionsMapper.toEntity(userSessionsDto);
-        return userSessionsMapper.toDto(userSessionsEntity);
+        userSessionsEntity.setUser(usersMapper.toEntity(usersDto));
+        return userSessionsMapper.toDto(userSessionsRepository.save(userSessionsEntity));
     }
 
     public boolean existsByUserId(Long userId){

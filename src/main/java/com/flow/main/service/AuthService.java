@@ -1,6 +1,7 @@
 package com.flow.main.service;
 
 
+import com.flow.main.common.property.JwtProperty;
 import com.flow.main.dto.login.request.LoginRequestDto;
 import com.flow.main.dto.login.response.LoginResponseDto;
 import com.flow.main.dto.major.MajorDto;
@@ -26,6 +27,9 @@ import com.flow.main.service.userinfo.persistence.UserInfoService;
 import com.flow.main.service.users.persistence.UsersService;
 import com.flow.main.service.usersessions.persistence.UserSessionsService;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +48,7 @@ public class AuthService {
     private final UserSessionsService userSessionsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtUtil jwtUtil;
+    private final JwtProperty jwtProperty;
 
 
     @Transactional
@@ -65,14 +70,11 @@ public class AuthService {
             UsersDto savedUsers = usersService.save(usersDto);
 
             UserInfoDto userInfoDto = UserInfoDto.builder()
-                .userId(usersDto.getUserId())
-                .schoolId(schoolDto.getSchoolId())
-                .majorId(majorDto.getMajorId())
                 .studentNumber(registerRequestDto.getStudentNumber())
                 .role("ROLE_USER")
                 .build();
 
-            userInfoService.save(userInfoDto);
+            userInfoService.registerSave(userInfoDto, savedUsers, schoolDto, majorDto);
         } catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -104,15 +106,17 @@ public class AuthService {
                 .userId(userId)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .expiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000))
                 .build();
         } else {
             userSessionsDto = userSessionsService.findByUserId(userId);
             userSessionsDto.setAccessToken(accessToken);
             userSessionsDto.setRefreshToken(refreshToken);
+            userSessionsDto.setExpiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000));
         }
 
         try{
-            userSessionsService.save(userSessionsDto);
+            userSessionsService.loginSave(userSessionsDto, usersDto);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

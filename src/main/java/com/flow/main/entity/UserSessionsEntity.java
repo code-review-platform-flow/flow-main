@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +44,9 @@ public class UserSessionsEntity extends BaseEntity {
 
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
+
+    @Column(name = "expiration", nullable = false)
+    private LocalDateTime expiration;
 
     @Version
     private int version;

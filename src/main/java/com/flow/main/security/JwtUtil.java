@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public class JwtUtil {
 
     private final SecretKey secretKey;
-    private final JwtProperty jwtTokenProperty;
+    private final JwtProperty jwtProperty;
 
     public JwtUtil(JwtProperty jwtProperty) {
-        this.jwtTokenProperty = jwtProperty;
+        this.jwtProperty = jwtProperty;
         secretKey = new SecretKeySpec(jwtProperty.getSecret().getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
@@ -50,7 +50,7 @@ public class JwtUtil {
             .claim("email", email)
             .claim("role", role)
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + jwtTokenProperty.getAccess().getExpiration()))
+            .expiration(new Date(System.currentTimeMillis() + jwtProperty.getAccess().getExpiration()))
             .signWith(secretKey)
             .compact();
     }
@@ -61,7 +61,7 @@ public class JwtUtil {
             .claim("email", email)
             .claim("role", role)
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + jwtTokenProperty.getRefresh().getExpiration()))
+            .expiration(new Date(System.currentTimeMillis() + jwtProperty.getRefresh().getExpiration()))
             .signWith(secretKey)
             .compact();
     }
