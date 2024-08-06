@@ -71,10 +71,13 @@ public class AuthService {
 
             UserInfoDto userInfoDto = UserInfoDto.builder()
                 .studentNumber(registerRequestDto.getStudentNumber())
+                .majorId(majorDto.getMajorId())
+                .schoolId(schoolDto.getSchoolId())
+                .userId(savedUsers.getUserId())
                 .role("ROLE_USER")
                 .build();
 
-            userInfoService.registerSave(userInfoDto, savedUsers, schoolDto, majorDto);
+            userInfoService.save(userInfoDto);
         } catch (RuntimeException e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -99,24 +102,14 @@ public class AuthService {
             .refreshToken(refreshToken)
             .build();
 
-        UserSessionsDto userSessionsDto;
-        boolean check = userSessionsService.existsByUserId(userId);
-        if(!check){
-            userSessionsDto = UserSessionsDto.builder()
-                .userId(userId)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .expiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000))
-                .build();
-        } else {
-            userSessionsDto = userSessionsService.findByUserId(userId);
-            userSessionsDto.setAccessToken(accessToken);
-            userSessionsDto.setRefreshToken(refreshToken);
-            userSessionsDto.setExpiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000));
-        }
+        UserSessionsDto userSessionsDto = userSessionsService.existsByUserId(userId);
+        userSessionsDto.setUserId(userId);
+        userSessionsDto.setAccessToken(accessToken);
+        userSessionsDto.setRefreshToken(refreshToken);
+        userSessionsDto.setExpiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000));
 
         try{
-            userSessionsService.loginSave(userSessionsDto, usersDto);
+            userSessionsService.save(userSessionsDto);
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

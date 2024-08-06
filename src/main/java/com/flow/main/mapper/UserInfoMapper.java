@@ -12,8 +12,14 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.springframework.security.core.parameters.P;
 
 @Mapper(componentModel = "spring")
 public interface UserInfoMapper extends GenericMapper<UserInfoDto, UserInfoEntity> {
+
+    @Mapping(source = "majorId", target = "major.majorId")
+    @Mapping(source = "schoolId", target = "school.schoolId")
+    @Mapping(source = "userId", target = "user.userId")
+    UserInfoEntity toEntity(UserInfoDto userInfoDto);
 
 }

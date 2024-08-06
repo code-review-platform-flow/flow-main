@@ -20,14 +20,15 @@ public class UserSessionsService {
     private final UsersMapper usersMapper;
 
     @Transactional
-    public UserSessionsDto loginSave(UserSessionsDto userSessionsDto, UsersDto usersDto){
+    public UserSessionsDto save(UserSessionsDto userSessionsDto){
         UserSessionsEntity userSessionsEntity = userSessionsMapper.toEntity(userSessionsDto);
-        userSessionsEntity.setUser(usersMapper.toEntity(usersDto));
         return userSessionsMapper.toDto(userSessionsRepository.save(userSessionsEntity));
     }
 
-    public boolean existsByUserId(Long userId){
-        return userSessionsRepository.existsByUserId(userId);
+    public UserSessionsDto existsByUserId(Long userId){
+        boolean check =  userSessionsRepository.existsByUserId(userId);
+        if(!check) return UserSessionsDto.builder().build();
+        else return findByUserId(userId);
     }
 
     public UserSessionsDto findByUserId(Long userId){

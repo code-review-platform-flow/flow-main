@@ -13,4 +13,7 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface UserSessionsMapper extends GenericMapper<UserSessionsDto, UserSessionsEntity> {
 
+    @Mapping(source = "userId", target = "user.userId")
+    UserSessionsEntity toEntity(UserSessionsDto userSessionsDto);
+
 }
