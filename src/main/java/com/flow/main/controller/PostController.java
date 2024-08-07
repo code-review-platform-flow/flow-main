@@ -5,6 +5,7 @@ import com.flow.main.dto.controller.post.save.response.PostSaveResponseDto;
 import com.flow.main.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,5 +28,10 @@ public class PostController {
     @PatchMapping("/{postId}")
     public ResponseEntity<PostSaveResponseDto> modify(@RequestBody final PostSaveRequestDto postSaveRequestDto, @PathVariable("postId") Long postId){
         return postService.modify(postSaveRequestDto, postId);
+    }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> delete(@PathVariable("postId") Long postId){
+        return postService.delete(postId);
     }
 }

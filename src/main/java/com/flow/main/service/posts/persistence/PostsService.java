@@ -18,7 +18,6 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
     private final PostsMapper postsMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(PostService.class);
 
     @Transactional
     public PostsDto save(PostsDto postsDto){
@@ -29,13 +28,14 @@ public class PostsService {
     public PostsDto findByPostId(Long postId){
         PostsEntity postsEntity = postsRepository.findByPostId(postId)
             .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
-        LOGGER.info("postId : {}", postsEntity.getPostId());
-        LOGGER.info("userId : {}", postsEntity.getUser().getUserId());
-        LOGGER.info("title : {}", postsEntity.getTitle());
-        LOGGER.info("content : {}", postsEntity.getContent());
-        LOGGER.info("categoryId : {}", postsEntity.getCategory().getCategoryId());
-        LOGGER.info("version : {}", postsEntity.getVersion());
-        LOGGER.info("PostTags : {}", postsEntity.getPostTagsEntities().get(1).getTag().getTagId());
         return postsMapper.toDto(postsEntity);
+    }
+
+    @Transactional
+    public PostsDto delete(Long postId){
+        PostsEntity postsEntity = postsRepository.findByPostId(postId)
+            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
+        postsEntity.markDeleted();
+        return postsMapper.toDto(postsRepository.save(postsEntity));
     }
 }

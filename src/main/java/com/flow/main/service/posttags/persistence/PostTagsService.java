@@ -46,6 +46,7 @@ public class PostTagsService {
             .orElseThrow(() -> new EntityNotFoundException("PostTags not found with postId : " + postId + " and tagId : " + tagId)));
     }
 
+    @Transactional
     public PostTagsDto reuseOrSavePostTags(PostTagsDto postTagsDto){
         PostTagsEntity postTagsEntity = postTagsRepository.findByPostIdAndTagIdUseYnFalse(
                 postTagsDto.getPostId(), postTagsDto.getTagId()).orElse(null);
