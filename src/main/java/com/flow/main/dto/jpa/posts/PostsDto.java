@@ -1,5 +1,8 @@
 package com.flow.main.dto.jpa.posts;
 
+import com.flow.main.dto.jpa.posttags.PostTagsDto;
+import com.flow.main.entity.PostTagsEntity;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +20,6 @@ public class PostsDto {
     private String title;
     private String content;
     private Long categoryId;
+    private List<PostTagsDto> postTagsDtos;
     private int version;
 }

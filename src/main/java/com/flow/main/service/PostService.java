@@ -12,10 +12,16 @@ import com.flow.main.service.posts.persistence.PostsService;
 import com.flow.main.service.posttags.persistence.PostTagsService;
 import com.flow.main.service.tags.persistence.TagsService;
 import com.flow.main.service.users.persistence.UsersService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,14 +34,6 @@ public class PostService {
     private final PostTagsService postTagsService;
 
     public ResponseEntity<PostSaveResponseDto> save(PostSaveRequestDto postSaveRequestDto){
-
-        /*
-        * 1. email을 이용하여 사용자 정보 얻어오기
-        * 2. category를 이용하여 카테고리 Dto 얻어오기
-        * 3. tag를 이용하여 있는 지 확인 후 없다면 새로 추가하기
-        * 4. Post 저장하기
-        * 5. PostTags 저장하기
-        * */
 
         UsersDto usersDto = usersService.findByEmail(postSaveRequestDto.getEmail());
         CategoriesDto categoriesDto = categoriesService.findByCategoryName(
@@ -68,6 +66,56 @@ public class PostService {
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    public ResponseEntity<PostSaveResponseDto> modify(PostSaveRequestDto postSaveRequestDto, Long postId){
+
+        PostsDto postsDto = postsService.findByPostId(postId);
+
+        CategoriesDto categoriesDto = categoriesService.findByCategoryName(postSaveRequestDto.getCategory());
+
+        postsDto.setCategoryId(categoriesDto.getCategoryId());
+        postsDto.setTitle(postSaveRequestDto.getTitle());
+        postsDto.setContent(postSaveRequestDto.getContent());
+
+        PostsDto savedDto = postsService.save(postsDto);
+
+        Set<Long> oldTagsId = new HashSet<>();
+        Set<Long> newTagsId = new HashSet<>();
+
+        List<PostTagsDto> postTagsDtos = postTagsService.findListByPostId(postId);
+
+        for (PostTagsDto pt : postTagsDtos) {
+            oldTagsId.add(pt.getTagId());
+        }
+
+        for (String tag : postSaveRequestDto.getTags()) {
+            TagsDto tagsDto = tagsService.saveOrFindByTagName(tag);
+            newTagsId.add(tagsDto.getTagId());
+        }
+
+        Set<Long> intersection = new HashSet<>(oldTagsId);
+        intersection.retainAll(newTagsId);
+        oldTagsId.removeAll(intersection);
+        newTagsId.removeAll(intersection);
+
+        for (Long tagId : oldTagsId) {
+            PostTagsDto postTagsDto = postTagsService.findByPostIdAndTagId(postId, tagId);
+            postTagsService.delete(postTagsDto);
+        }
+
+        for (Long tagId : newTagsId) {
+            PostTagsDto postTagsDto = PostTagsDto.builder()
+                .tagId(tagId)
+                .postId(postId)
+                .build();
+            postTagsService.reuseOrSavePostTags(postTagsDto);
+        }
+
+        PostSaveResponseDto postSaveResponseDto = PostSaveResponseDto.builder()
+            .postId(savedDto.getPostId())
+            .build();
+        return ResponseEntity.ok(postSaveResponseDto);
     }
 
 }

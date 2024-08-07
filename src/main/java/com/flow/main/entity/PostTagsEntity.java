@@ -25,7 +25,6 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Builder
 @Table(name = "post_tags")
-@Where(clause = "use_yn = true")
 public class PostTagsEntity extends BaseEntity {
 
     @Id
