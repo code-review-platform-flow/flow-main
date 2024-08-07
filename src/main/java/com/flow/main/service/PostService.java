@@ -33,8 +33,6 @@ public class PostService {
     private final PostsService postsService;
     private final PostTagsService postTagsService;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(PostService.class);
-
     public ResponseEntity<PostSaveResponseDto> save(PostSaveRequestDto postSaveRequestDto){
 
         UsersDto usersDto = usersService.findByEmail(postSaveRequestDto.getEmail());

@@ -27,4 +27,7 @@ public interface PostsMapper extends GenericMapper<PostsDto, PostsEntity> {
     @Mapping(source = "tag.tagId", target = "tagId")
     List<PostTagsDto> toListDto(List<PostTagsEntity> postTagsEntities);
 
+    @Mapping(source = "postId", target = "post.postId")
+    @Mapping(source = "tagId", target = "tag.tagId")
+    List<PostTagsEntity> toListEntity(List<PostTagsDto> postTagsDtos);
 }
