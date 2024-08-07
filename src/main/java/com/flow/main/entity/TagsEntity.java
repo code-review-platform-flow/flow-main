@@ -7,8 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.util.ArrayList;
@@ -26,32 +26,21 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "users")
+@Table(name = "tags")
 @Where(clause = "use_yn = true")
-public class UsersEntity extends BaseEntity {
+public class TagsEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "tag_id")
+    private Long tagId;
 
-    @Column(nullable = false)
-    private String email;
+    @Column(name = "tag_name", nullable = false)
+    private String tagName;
 
-    @Column(nullable = false)
-    private String password;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserInfoEntity userInfoEntity;
-
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private UserSessionsEntity userSessionEntity;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostsEntity> postsEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostTagsEntity> postTagsEntities = new ArrayList<>();
 
     @Version
     private int version;
-
 }

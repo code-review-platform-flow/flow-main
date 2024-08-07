@@ -1,6 +1,6 @@
 package com.flow.main.mapper;
 
-import com.flow.main.dto.register.request.RegisterRequestDto;
+import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.entity.MajorEntity;
 import com.flow.main.entity.SchoolEntity;
 import com.flow.main.entity.UserInfoEntity;

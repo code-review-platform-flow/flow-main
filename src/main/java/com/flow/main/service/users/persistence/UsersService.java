@@ -1,6 +1,6 @@
 package com.flow.main.service.users.persistence;
 
-import com.flow.main.dto.users.UsersDto;
+import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.mapper.UsersMapper;
 import com.flow.main.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;

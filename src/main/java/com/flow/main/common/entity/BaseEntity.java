@@ -44,19 +44,19 @@ public class BaseEntity {
     @PrePersist
     public void prePersist(){
         this.createDate = LocalDateTime.now();
-        this.createCode = "flow-api-gateway";
+        this.createCode = "flow-main";
         this.useYn = true;
     }
 
     @PreUpdate
     public void markModified(){
         this.modifyDate = LocalDateTime.now();
-        this.modifyCode = "flow-api-gateway";
+        this.modifyCode = "flow-main";
     }
 
     public void markDeleted(){
         this.deleteDate = LocalDateTime.now();
-        this.deleteCode = "flow-api-gateway";
+        this.deleteCode = "flow-main";
         this.useYn = false;
     }
 }

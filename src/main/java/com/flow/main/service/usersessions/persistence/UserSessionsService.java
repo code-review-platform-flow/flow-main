@@ -1,7 +1,6 @@
 package com.flow.main.service.usersessions.persistence;
 
-import com.flow.main.dto.users.UsersDto;
-import com.flow.main.dto.usersessions.UserSessionsDto;
+import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.entity.UserSessionsEntity;
 import com.flow.main.mapper.UserSessionsMapper;
 import com.flow.main.mapper.UsersMapper;

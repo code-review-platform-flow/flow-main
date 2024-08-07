@@ -1,6 +1,6 @@
 package com.flow.main.service.major.persistence;
 
-import com.flow.main.dto.major.MajorDto;
+import com.flow.main.dto.jpa.major.MajorDto;
 import com.flow.main.mapper.MajorMapper;
 import com.flow.main.repository.MajorRepository;
 import jakarta.persistence.EntityNotFoundException;
