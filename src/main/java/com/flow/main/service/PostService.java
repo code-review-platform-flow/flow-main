@@ -119,16 +119,7 @@ public class PostService {
     }
 
     public ResponseEntity<Void> delete(Long postId){
-        /*
-        * 1. post Entity delete 처리
-        * 2. postTagsEntity들 delete 처리
-        * */
-
         postsService.delete(postId);
-        List<PostTagsDto> postTagsDtos = postTagsService.findListByPostId(postId);
-        for(PostTagsDto p : postTagsDtos){
-            postTagsService.delete(p);
-        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
