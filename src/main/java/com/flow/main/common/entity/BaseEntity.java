@@ -59,4 +59,10 @@ public class BaseEntity {
         this.deleteCode = "flow-main";
         this.useYn = false;
     }
+
+    public void markReuse(){
+        this.deleteDate = null;
+        this.deleteCode = null;
+        this.useYn = true;
+    }
 }
