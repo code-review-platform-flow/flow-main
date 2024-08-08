@@ -15,4 +15,6 @@ public interface UserSessionsRepository extends JpaRepository<UserSessionsEntity
     @Query("SELECT CASE WHEN COUNT(us) > 0 THEN TRUE ELSE FALSE END FROM UserSessionsEntity us WHERE us.user.userId = :userId")
     boolean existsByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT us FROM UserSessionsEntity us WHERE us.refreshToken = :refreshToken")
+    Optional<UserSessionsEntity> findByRefreshToken(@Param("refreshToken") String refreshToken);
 }

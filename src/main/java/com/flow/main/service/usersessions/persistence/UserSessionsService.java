@@ -34,4 +34,9 @@ public class UserSessionsService {
         return userSessionsMapper.toDto(userSessionsRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with userId : " + userId)));
     }
+
+    public UserSessionsDto findByRefreshToken(String refreshToken){
+        return userSessionsMapper.toDto(userSessionsRepository.findByRefreshToken(refreshToken)
+            .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with refreshToken : " + refreshToken)));
+    }
 }

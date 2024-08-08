@@ -4,6 +4,7 @@ package com.flow.main.service;
 import com.flow.main.common.property.JwtProperty;
 import com.flow.main.dto.controller.auth.login.request.LoginRequestDto;
 import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
+import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.jpa.major.MajorDto;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.jpa.school.SchoolDto;
@@ -17,6 +18,7 @@ import com.flow.main.service.school.persistence.SchoolService;
 import com.flow.main.service.userinfo.persistence.UserInfoService;
 import com.flow.main.service.users.persistence.UsersService;
 import com.flow.main.service.usersessions.persistence.UserSessionsService;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,8 +40,6 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final JwtProperty jwtProperty;
 
-
-    @Transactional
     public ResponseEntity<Void> registerUser(RegisterRequestDto registerRequestDto){
         registerRequestDto.setPassword(bCryptPasswordEncoder.encode(registerRequestDto.getPassword()));
 
@@ -72,7 +72,6 @@ public class AuthService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<LoginResponseDto> login(LoginRequestDto loginRequestDto){
         UsersDto usersDto = usersService.findByEmail(loginRequestDto.getEmail());
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
@@ -102,5 +101,29 @@ public class AuthService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return ResponseEntity.ok(loginResponseDto);
+    }
+
+    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(String refreshToken)
+        throws IOException {
+        if (refreshToken.isEmpty() || !refreshToken.startsWith("Bearer ")){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String token = jwtUtil.getToken(refreshToken);
+        boolean checkValid = jwtUtil.isExpired(token);
+        if (checkValid){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        UserSessionsDto userSessionsDto = userSessionsService.findByRefreshToken(token);
+        Long userId = jwtUtil.getUserId(token);
+        String email = jwtUtil.getEmail(token);
+        String role = jwtUtil.getRole(token);
+        String accessToken = jwtUtil.createAccessToken(userId, email, role);
+
+        userSessionsDto.setAccessToken(accessToken);
+
+        userSessionsService.save(userSessionsDto);
+        RecreateAccessTokenResponseDto recreateAccessTokenResponseDto = RecreateAccessTokenResponseDto.builder()
+            .accessToken(accessToken).build();
+        return ResponseEntity.ok(recreateAccessTokenResponseDto);
     }
 }

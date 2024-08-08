@@ -41,9 +41,6 @@ public class PostsEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UsersEntity user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostTagsEntity> postTagsEntities = new ArrayList<>();
-
     @Column(name = "title", nullable = false)
     private String title;
 
