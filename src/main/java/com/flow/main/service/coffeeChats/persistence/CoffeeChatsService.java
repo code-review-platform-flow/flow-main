@@ -1,5 +1,6 @@
 package com.flow.main.service.coffeeChats.persistence;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class CoffeeChatsService {
 	private final CoffeeChatsMapper coffeeChatsMapper;
 
 	@Transactional(readOnly = true)
-	public List<CoffeeChatsDto> getAllByInitiatorUserId(Long initiatorUserId) {
-		return coffeeChatsMapper.toListDto(coffeeChatsRepository.findAllCoffeeChatsByInitiatorUserId(initiatorUserId));
+	public List<CoffeeChatsDto> getAllByInitiatorUserIdWithPageable(Long initiatorUserId, Pageable pageable) {
+		return coffeeChatsMapper.toListDto(coffeeChatsRepository.findAllCoffeeChatsByInitiatorUserIdWithPageable(initiatorUserId, pageable));
 	}
 
 	@Transactional

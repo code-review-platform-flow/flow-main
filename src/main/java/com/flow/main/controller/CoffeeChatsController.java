@@ -1,6 +1,6 @@
 package com.flow.main.controller;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +32,8 @@ public class CoffeeChatsController {
 	}
 
 	@GetMapping
-	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(@RequestBody final CoffeeChatsGetAllRequestDto requestDto) {
-		return ResponseEntity.ok().body(coffeeChatsGetAllService.getAll(requestDto));
+	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(@RequestBody final CoffeeChatsGetAllRequestDto requestDto, Pageable pageable) {
+		return ResponseEntity.ok().body(coffeeChatsGetAllService.getAllWithPageable(requestDto, pageable));
 	}
 
 }
