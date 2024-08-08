@@ -1,5 +1,6 @@
 package com.flow.main.dto.controller.coffeeChats.response;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import com.flow.main.dto.jpa.coffeeChats.CoffeeChatsDto;
@@ -15,4 +16,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CoffeeChatsGetAllResponseDto {
 	private List<CoffeeChatsDto> coffeeChat;
+	private Pageable pageable;
 }
