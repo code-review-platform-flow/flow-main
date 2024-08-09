@@ -45,12 +45,6 @@ public class AuthService {
         String accessToken = jwtUtil.createAccessToken(userId, email, role);
         String refreshToken = jwtUtil.createRefreshToken(userId, email, role);
 
-        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
-            .email(email)
-            .accessToken(accessToken)
-            .refreshToken(refreshToken)
-            .build();
-
         UserSessionsDto userSessionsDto = userSessionsService.existsByUserId(userId);
         userSessionsDto.setUserId(userId);
         userSessionsDto.setAccessToken(accessToken);
@@ -58,30 +52,13 @@ public class AuthService {
         userSessionsDto.setExpiration(LocalDateTime.now().plusSeconds(jwtProperty.getAccess().getExpiration() / 1000));
 
         userSessionsService.save(userSessionsDto);
+
+        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
+            .email(email)
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
+
         return ResponseEntity.ok(loginResponseDto);
-    }
-
-    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(String refreshToken)
-        throws IOException {
-        if (refreshToken.isEmpty() || !refreshToken.startsWith("Bearer ")){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        String token = jwtUtil.getToken(refreshToken);
-        boolean checkValid = jwtUtil.isExpired(token);
-        if (checkValid){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        UserSessionsDto userSessionsDto = userSessionsService.findByRefreshToken(token);
-        Long userId = jwtUtil.getUserId(token);
-        String email = jwtUtil.getEmail(token);
-        String role = jwtUtil.getRole(token);
-        String accessToken = jwtUtil.createAccessToken(userId, email, role);
-
-        userSessionsDto.setAccessToken(accessToken);
-
-        userSessionsService.save(userSessionsDto);
-        RecreateAccessTokenResponseDto recreateAccessTokenResponseDto = RecreateAccessTokenResponseDto.builder()
-            .accessToken(accessToken).build();
-        return ResponseEntity.ok(recreateAccessTokenResponseDto);
     }
 }
