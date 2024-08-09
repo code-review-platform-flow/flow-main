@@ -1,4 +1,4 @@
-package com.flow.main.security;
+package com.flow.main.service.security;
 
 import com.flow.main.common.property.JwtProperty;
 import io.jsonwebtoken.Jwts;

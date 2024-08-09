@@ -6,6 +6,8 @@ import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
 import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.service.AuthService;
+import com.flow.main.service.userinfo.UserInfoCreateService;
+import com.flow.main.service.userinfo.persistence.UserInfoService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserInfoCreateService userInfoCreateService;
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody final RegisterRequestDto registerRequestDto){
         log.info("Email : {}", registerRequestDto.getEmail());
@@ -31,7 +34,9 @@ public class AuthController {
         log.info("SchoolName : {}", registerRequestDto.getSchoolName());
         log.info("MajorName : {}", registerRequestDto.getMajorName());
 
-        return authService.registerUser(registerRequestDto);
+        userInfoCreateService.create(registerRequestDto);
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
