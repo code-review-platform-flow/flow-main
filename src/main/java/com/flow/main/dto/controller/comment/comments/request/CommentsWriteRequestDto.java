@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comments.comments.response;
+package com.flow.main.dto.controller.comment.comments.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentsWriteResponseDto {
-    private Long commentId;
+public class CommentsWriteRequestDto {
+    private String commentContent;
 }
