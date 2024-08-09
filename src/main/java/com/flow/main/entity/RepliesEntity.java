@@ -1,5 +1,6 @@
 package com.flow.main.entity;
 
+import com.flow.main.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,9 +24,9 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "comments")
+@Table(name = "replies")
 @Where(clause = "use_yn = true")
-public class RepliesEntity {
+public class RepliesEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
