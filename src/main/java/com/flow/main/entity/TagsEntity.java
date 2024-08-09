@@ -38,9 +38,6 @@ public class TagsEntity extends BaseEntity {
     @Column(name = "tag_name", nullable = false)
     private String tagName;
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostTagsEntity> postTagsEntities = new ArrayList<>();
-
     @Version
     private int version;
 }

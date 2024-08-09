@@ -1,10 +1,6 @@
-package com.flow.main.dto.jpa.users;
+package com.flow.main.dto.jpa.comments;
 
-import com.flow.main.dto.jpa.comments.CommentsDto;
-import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.replies.RepliesDto;
-import com.flow.main.dto.jpa.userinfo.UserInfoDto;
-import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +13,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UsersDto {
+public class CommentsDto {
+    private Long commentId;
+    private Long postId;
     private Long userId;
-    private String email;
-    private String password;
+    private String content;
     private int version;
 }

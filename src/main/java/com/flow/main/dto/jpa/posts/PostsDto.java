@@ -1,5 +1,6 @@
 package com.flow.main.dto.jpa.posts;
 
+import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posttags.PostTagsDto;
 import com.flow.main.entity.PostTagsEntity;
 import java.util.List;
@@ -20,6 +21,5 @@ public class PostsDto {
     private String title;
     private String content;
     private Long categoryId;
-    private List<PostTagsDto> postTagsDtos;
     private int version;
 }

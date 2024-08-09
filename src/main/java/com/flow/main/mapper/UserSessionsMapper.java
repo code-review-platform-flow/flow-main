@@ -12,4 +12,7 @@ public interface UserSessionsMapper extends GenericMapper<UserSessionsDto, UserS
     @Mapping(source = "userId", target = "user.userId")
     UserSessionsEntity toEntity(UserSessionsDto userSessionsDto);
 
+    @Mapping(source = "user.userId", target = "userId")
+    UserSessionsDto toDto(UserSessionsEntity userSessionsEntity);
+
 }

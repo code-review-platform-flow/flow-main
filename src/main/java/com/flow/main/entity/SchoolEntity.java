@@ -40,9 +40,6 @@ public class SchoolEntity extends BaseEntity {
     @Column(name = "note")
     private String note;
 
-    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserInfoEntity> userInfoEntities = new ArrayList<>();
-
     @Version
     private int version;
 }

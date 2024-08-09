@@ -1,4 +1,4 @@
-package com.flow.main.security;
+package com.flow.main.service.security;
 
 import com.flow.main.common.property.JwtProperty;
 import io.jsonwebtoken.Jwts;
@@ -7,7 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 public class JwtUtil {
@@ -18,6 +21,11 @@ public class JwtUtil {
     public JwtUtil(JwtProperty jwtProperty) {
         this.jwtProperty = jwtProperty;
         secretKey = new SecretKeySpec(jwtProperty.getSecret().getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+    }
+    public void checkValidToken(String token){
+        if (token.isEmpty() || !token.startsWith("Bearer ")){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is empty or no Bearer");
+        }
     }
 
     public String getToken(String authHeader){
@@ -39,9 +47,11 @@ public class JwtUtil {
             .get("user_id", Long.class);
     }
 
-    public boolean isExpired(String token) throws IOException {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
-            .getExpiration().before(new Date());
+    public void isExpired(String token) {
+        if(Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload()
+            .getExpiration().before(new Date())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is expired");
+        }
     }
 
     public String createAccessToken(Long userId, String email, String role) {
