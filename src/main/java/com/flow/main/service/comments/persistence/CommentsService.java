@@ -33,4 +33,11 @@ public class CommentsService {
         return commentsMapper.toDto(commentsRepository.findByCommentId(commentId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Comments not found with commentId : " + commentId + " , userId : " + userId)));
     }
+
+    @Transactional
+    public CommentsDto delete(CommentsDto commentsDto){
+        CommentsEntity commentsEntity = commentsMapper.toEntity(commentsDto);
+        commentsEntity.markDeleted();
+        return commentsMapper.toDto(commentsRepository.save(commentsEntity));
+    }
 }

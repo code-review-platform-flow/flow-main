@@ -22,6 +22,7 @@ public class UserInfoService {
         return userInfoMapper.toDto(userInfoRepository.save(userInfoEntity));
     }
 
+    @Transactional(readOnly = true)
     public UserInfoDto findByUserId(Long userId){
         return userInfoMapper.toDto(userInfoRepository.findByUserId(userId).orElseThrow(
             () -> new EntityNotFoundException("UserInfo not found with userI : " + userId)

@@ -24,10 +24,10 @@ public class UsersService {
         return usersRepository.existsByEmail(email);
     }
 
+    @Transactional(readOnly = true)
     public UsersDto findByEmail(String email){
         return usersMapper.toDto(usersRepository.findByEmail(email).orElseThrow(
-            () -> new EntityNotFoundException("User not found with email : " + email)
-        ));
+            () -> new EntityNotFoundException("User not found with email : " + email)));
     }
 
 }
