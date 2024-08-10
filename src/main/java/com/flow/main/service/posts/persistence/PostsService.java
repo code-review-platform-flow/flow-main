@@ -4,7 +4,6 @@ import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.entity.PostsEntity;
 import com.flow.main.mapper.PostsMapper;
 import com.flow.main.repository.PostsRepository;
-import com.flow.main.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public class PostsService {
     @Transactional
     public PostsDto delete(Long postId, Long userId){
         PostsEntity postsEntity = postsRepository.findByPostId(postId, userId)
-            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
+            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId + " , userId : " + userId));
         postsEntity.markDeleted();
         return postsMapper.toDto(postsRepository.save(postsEntity));
     }

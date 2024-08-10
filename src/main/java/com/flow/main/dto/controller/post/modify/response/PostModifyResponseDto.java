@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.post.save.response;
+package com.flow.main.dto.controller.post.modify.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostSaveResponseDto {
+public class PostModifyResponseDto {
     private Long postId;
 }

@@ -1,5 +1,6 @@
-package com.flow.main.dto.controller.post.save.request;
+package com.flow.main.dto.controller.post.write.request;
 
+import com.flow.main.dto.controller.post.PostTagsNameDto;
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +13,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostSaveRequestDto {
+public class PostWriteRequestDto {
     private String email;
     private String category;
-    private ArrayList<String> tags;
+    private ArrayList<PostTagsNameDto> tags;
     private String title;
     private String content;
 }
