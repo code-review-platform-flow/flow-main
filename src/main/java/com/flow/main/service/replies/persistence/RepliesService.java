@@ -22,6 +22,7 @@ public class RepliesService {
         return repliesMapper.toDto(repliesRepository.save(repliesEntity));
     }
 
+    @Transactional(readOnly = true)
     public RepliesDto findByReplyId(Long replyId, Long userId){
         RepliesEntity repliesEntity = repliesRepository.findByReplyId(replyId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Replies not found with replyId : " + replyId + " , userId : " + userId));

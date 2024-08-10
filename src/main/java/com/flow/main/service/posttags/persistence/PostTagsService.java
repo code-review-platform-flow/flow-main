@@ -41,6 +41,7 @@ public class PostTagsService {
         return postTagsDtos;
     }
 
+    @Transactional(readOnly = true)
     public PostTagsDto findByPostIdAndTagId(Long postId, Long tagId){
         return postTagsMapper.toDto(postTagsRepository.findByPostIdAndTagId(postId, tagId)
             .orElseThrow(() -> new EntityNotFoundException("PostTags not found with postId : " + postId + " and tagId : " + tagId)));

@@ -7,6 +7,7 @@ import com.flow.main.repository.TagsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class TagsService {
     private final TagsRepository tagsRepository;
     private final TagsMapper tagsMapper;
 
+    @Transactional
     public TagsDto saveOrFindByTagName(String tagName){
         boolean check = tagsRepository.existsByTagName(tagName);
         if(!check)
@@ -22,6 +24,7 @@ public class TagsService {
         else return findByTagName(tagName);
     }
 
+    @Transactional(readOnly = true)
     public TagsDto findByTagName(String tagName){
         return tagsMapper.toDto(tagsRepository.findByTagName(tagName)
             .orElseThrow(() -> new EntityNotFoundException("Tag not found with tagName : " + tagName)));

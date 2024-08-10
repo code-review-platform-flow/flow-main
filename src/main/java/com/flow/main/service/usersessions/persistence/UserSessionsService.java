@@ -30,11 +30,13 @@ public class UserSessionsService {
         else return findByUserId(userId);
     }
 
+    @Transactional(readOnly = true)
     public UserSessionsDto findByUserId(Long userId){
         return userSessionsMapper.toDto(userSessionsRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with userId : " + userId)));
     }
 
+    @Transactional(readOnly = true)
     public UserSessionsDto findByRefreshToken(String refreshToken){
         return userSessionsMapper.toDto(userSessionsRepository.findByRefreshToken(refreshToken)
             .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with refreshToken : " + refreshToken)));
