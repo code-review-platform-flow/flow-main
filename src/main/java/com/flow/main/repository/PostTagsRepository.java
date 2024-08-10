@@ -13,7 +13,7 @@ import org.springframework.security.core.parameters.P;
 public interface PostTagsRepository extends JpaRepository<PostTagsEntity, Long> {
 
     @Query("SELECT p FROM PostTagsEntity p WHERE p.post.postId = :postId AND p.useYn = true")
-    Optional<List<PostTagsEntity>> findByPostId(@Param("postId") Long postId);
+    Optional<List<PostTagsEntity>> findAllByPostId(@Param("postId") Long postId);
 
     @Query("SELECT p FROM PostTagsEntity p WHERE p.post.postId = :postId AND p.tag.tagId = :tagId AND p.useYn = true")
     Optional<PostTagsEntity> findByPostIdAndTagId(@Param("postId") Long postId, @Param("tagId") Long tagId);

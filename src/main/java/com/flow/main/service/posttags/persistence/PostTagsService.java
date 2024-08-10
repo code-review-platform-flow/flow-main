@@ -4,7 +4,6 @@ import com.flow.main.dto.jpa.posttags.PostTagsDto;
 import com.flow.main.entity.PostTagsEntity;
 import com.flow.main.mapper.PostTagsMapper;
 import com.flow.main.repository.PostTagsRepository;
-import com.flow.main.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +20,6 @@ public class PostTagsService {
 
     private final PostTagsRepository postTagsRepository;
     private final PostTagsMapper postTagsMapper;
-    private final Logger LOGGER = LoggerFactory.getLogger(PostService.class);
 
     @Transactional
     public PostTagsDto save(PostTagsDto postTagsDto){
@@ -29,16 +27,11 @@ public class PostTagsService {
         return postTagsMapper.toDto(postTagsRepository.save(postTagsEntity));
     }
 
-    public List<PostTagsDto> findListByPostId(Long postId){
-        List<PostTagsEntity> postTagsEntities = postTagsRepository.findByPostId(postId).orElse(
+    @Transactional(readOnly = true)
+    public List<PostTagsDto> findAllByPostId(Long postId){
+        List<PostTagsEntity> postTagsEntities = postTagsRepository.findAllByPostId(postId).orElse(
             Collections.emptyList());
-        LOGGER.info("postTagsEntities : {}", postTagsEntities);
-        List<PostTagsDto> postTagsDtos = new ArrayList<>();
-        for (PostTagsEntity p : postTagsEntities){
-            postTagsDtos.add(postTagsMapper.toDto(p));
-        }
-        LOGGER.info("postTagsDtos : {}", postTagsDtos);
-        return postTagsDtos;
+        return postTagsMapper.toListDto(postTagsEntities);
     }
 
     @Transactional(readOnly = true)

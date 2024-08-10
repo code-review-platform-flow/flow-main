@@ -42,7 +42,7 @@ public class PostsService {
     @Transactional
     public PostsDto delete(Long postId, Long userId){
         PostsEntity postsEntity = postsRepository.findByPostId(postId, userId)
-            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
+            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId + " , userId : " + userId));
         postsEntity.markDeleted();
         return postsMapper.toDto(postsRepository.save(postsEntity));
     }
