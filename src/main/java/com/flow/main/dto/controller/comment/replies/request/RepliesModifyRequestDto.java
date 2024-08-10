@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RepliesWriteRequestDto {
+public class RepliesModifyRequestDto {
 
     private String email;
     private String replyContent;

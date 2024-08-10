@@ -1,5 +1,6 @@
 package com.flow.main.service;
 
+import com.flow.main.dto.controller.post.delete.request.PostDeleteRequestDto;
 import com.flow.main.dto.controller.post.save.request.PostSaveRequestDto;
 import com.flow.main.dto.controller.post.save.response.PostSaveResponseDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
@@ -70,7 +71,8 @@ public class PostService {
 
     public ResponseEntity<PostSaveResponseDto> modify(PostSaveRequestDto postSaveRequestDto, Long postId){
 
-        PostsDto postsDto = postsService.findByPostId(postId);
+        UsersDto usersDto = usersService.findByEmail(postSaveRequestDto.getEmail());
+        PostsDto postsDto = postsService.findByPostId(postId, usersDto.getUserId());
 
         CategoriesDto categoriesDto = categoriesService.findByCategoryName(postSaveRequestDto.getCategory());
 
@@ -118,8 +120,9 @@ public class PostService {
         return ResponseEntity.ok(postSaveResponseDto);
     }
 
-    public ResponseEntity<Void> delete(Long postId){
-        postsService.delete(postId);
+    public ResponseEntity<Void> delete(Long postId, PostDeleteRequestDto postDeleteRequestDto){
+        UsersDto usersDto = usersService.findByEmail(postDeleteRequestDto.getEmail());
+        postsService.delete(postId, usersDto.getUserId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

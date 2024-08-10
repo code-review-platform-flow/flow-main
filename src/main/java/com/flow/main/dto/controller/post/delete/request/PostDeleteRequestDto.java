@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.replies.request;
+package com.flow.main.dto.controller.post.delete.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RepliesWriteRequestDto {
+public class PostDeleteRequestDto {
 
     private String email;
-    private String replyContent;
 
 }

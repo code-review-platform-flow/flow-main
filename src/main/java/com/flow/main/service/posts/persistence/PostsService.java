@@ -25,15 +25,23 @@ public class PostsService {
         return postsMapper.toDto(postsRepository.save(postsEntity));
     }
 
+    @Transactional(readOnly = true)
     public PostsDto findByPostId(Long postId){
         PostsEntity postsEntity = postsRepository.findByPostId(postId)
             .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
         return postsMapper.toDto(postsEntity);
     }
 
+    @Transactional(readOnly = true)
+    public PostsDto findByPostId(Long postId, Long userId){
+        PostsEntity postsEntity = postsRepository.findByPostId(postId, userId)
+            .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId + " , userId : " + userId));
+        return postsMapper.toDto(postsEntity);
+    }
+
     @Transactional
-    public PostsDto delete(Long postId){
-        PostsEntity postsEntity = postsRepository.findByPostId(postId)
+    public PostsDto delete(Long postId, Long userId){
+        PostsEntity postsEntity = postsRepository.findByPostId(postId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Posts not found with postId : " + postId));
         postsEntity.markDeleted();
         return postsMapper.toDto(postsRepository.save(postsEntity));
