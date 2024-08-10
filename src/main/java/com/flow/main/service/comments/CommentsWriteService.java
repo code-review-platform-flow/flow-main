@@ -4,7 +4,6 @@ import com.flow.main.dto.controller.comment.comments.request.CommentsWriteReques
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
-import com.flow.main.service.PostService;
 import com.flow.main.service.comments.persistence.CommentsService;
 import com.flow.main.service.posts.persistence.PostsService;
 import com.flow.main.service.users.persistence.UsersService;

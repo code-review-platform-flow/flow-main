@@ -4,7 +4,6 @@ import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.entity.PostsEntity;
 import com.flow.main.mapper.PostsMapper;
 import com.flow.main.repository.PostsRepository;
-import com.flow.main.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
