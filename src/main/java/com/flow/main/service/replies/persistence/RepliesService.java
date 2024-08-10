@@ -28,4 +28,11 @@ public class RepliesService {
             .orElseThrow(() -> new EntityNotFoundException("Replies not found with replyId : " + replyId + " , userId : " + userId));
         return repliesMapper.toDto(repliesEntity);
     }
+
+    @Transactional
+    public RepliesDto delete(RepliesDto repliesDto){
+        RepliesEntity repliesEntity = repliesMapper.toEntity(repliesDto);
+        repliesEntity.markDeleted();
+        return repliesMapper.toDto(repliesRepository.save(repliesEntity));
+    }
 }

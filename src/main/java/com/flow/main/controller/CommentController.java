@@ -6,8 +6,10 @@ import com.flow.main.dto.controller.comment.comments.request.CommentsWriteReques
 import com.flow.main.dto.controller.comment.comments.response.CommentsDeleteResponseDto;
 import com.flow.main.dto.controller.comment.comments.response.CommentsModifyResponseDto;
 import com.flow.main.dto.controller.comment.comments.response.CommentsWriteResponseDto;
+import com.flow.main.dto.controller.comment.replies.request.RepliesDeleteRequestDto;
 import com.flow.main.dto.controller.comment.replies.request.RepliesModifyRequestDto;
 import com.flow.main.dto.controller.comment.replies.request.RepliesWriteRequestDto;
+import com.flow.main.dto.controller.comment.replies.response.RepliesDeleteResponseDto;
 import com.flow.main.dto.controller.comment.replies.response.RepliesModifyResponseDto;
 import com.flow.main.dto.controller.comment.replies.response.RepliesWriteResponseDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
@@ -15,6 +17,7 @@ import com.flow.main.dto.jpa.replies.RepliesDto;
 import com.flow.main.service.comments.CommentsDeleteService;
 import com.flow.main.service.comments.CommentsModifyService;
 import com.flow.main.service.comments.CommentsWriteService;
+import com.flow.main.service.replies.RepliesDeleteService;
 import com.flow.main.service.replies.RepliesModifyService;
 import com.flow.main.service.replies.RepliesWriteService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,7 @@ public class CommentController {
     private final CommentsDeleteService commentsDeleteService;
     private final RepliesWriteService repliesWriteService;
     private final RepliesModifyService repliesModifyService;
+    private final RepliesDeleteService repliesDeleteService;
 
     @PostMapping("/{postId}")
     public ResponseEntity<CommentsWriteResponseDto> writeComments(@PathVariable("postId") Long postId, @RequestBody final CommentsWriteRequestDto commentsWriteRequestDto){
@@ -76,5 +80,10 @@ public class CommentController {
             .build());
     }
 
+    @DeleteMapping("/{postId}/{commentId}/reply/{replyId}")
+    public ResponseEntity<RepliesDeleteResponseDto> deleteReplies(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @PathVariable("replyId") Long replyId, @RequestBody final RepliesDeleteRequestDto repliesDeleteRequestDto){
+        RepliesDto repliesDto = repliesDeleteService.deleteReplies(postId, commentId, replyId, repliesDeleteRequestDto);
+        return ResponseEntity.ok().build();
+    }
 
 }
