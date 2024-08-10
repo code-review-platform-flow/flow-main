@@ -11,4 +11,7 @@ public interface CommentsRepository extends JpaRepository<CommentsEntity, Long> 
     @Query("SELECT c FROM CommentsEntity c WHERE c.commentId = :commentId")
     Optional<CommentsEntity> findByCommentId(@Param("commentId") Long commentId);
 
+    @Query("SELECT c FROM CommentsEntity c WHERE c.commentId = :commentId AND c.user.userId = :userId")
+    Optional<CommentsEntity> findByCommentId(@Param("commentId") Long commentId, @Param("userId") Long userId);
+
 }

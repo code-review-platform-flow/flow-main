@@ -1,5 +1,6 @@
 package com.flow.main.controller;
 
+import com.flow.main.dto.controller.post.delete.request.PostDeleteRequestDto;
 import com.flow.main.dto.controller.post.save.request.PostSaveRequestDto;
 import com.flow.main.dto.controller.post.save.response.PostSaveResponseDto;
 import com.flow.main.service.PostService;
@@ -31,7 +32,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> delete(@PathVariable("postId") Long postId){
-        return postService.delete(postId);
+    public ResponseEntity<Void> delete(@PathVariable("postId") Long postId, @RequestBody final
+        PostDeleteRequestDto postDeleteRequestDto){
+        return postService.delete(postId, postDeleteRequestDto);
     }
 }

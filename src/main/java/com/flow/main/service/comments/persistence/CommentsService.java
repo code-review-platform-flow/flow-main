@@ -22,8 +22,15 @@ public class CommentsService {
         return commentsMapper.toDto(commentsRepository.save(commentsEntity));
     }
 
+    @Transactional(readOnly = true)
     public CommentsDto findByCommentId(Long commentId){
         return commentsMapper.toDto(commentsRepository.findByCommentId(commentId)
             .orElseThrow(() -> new EntityNotFoundException("Comments not found with commentId : " + commentId)));
+    }
+
+    @Transactional(readOnly = true)
+    public CommentsDto findByCommentId(Long commentId, Long userId){
+        return commentsMapper.toDto(commentsRepository.findByCommentId(commentId, userId)
+            .orElseThrow(() -> new EntityNotFoundException("Comments not found with commentId : " + commentId + " , userId : " + userId)));
     }
 }

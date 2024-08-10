@@ -11,4 +11,7 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
     @Query("SELECT p FROM PostsEntity p WHERE p.postId = :postId")
     Optional<PostsEntity> findByPostId(@Param("postId") Long postId);
 
+    @Query("SELECT p FROM PostsEntity p WHERE p.postId = :postId AND p.user.userId = :userId")
+    Optional<PostsEntity> findByPostId(@Param("postId") Long postId, @Param("userId") Long userId);
+
 }

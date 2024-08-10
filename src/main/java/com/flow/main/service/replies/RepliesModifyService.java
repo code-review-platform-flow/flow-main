@@ -1,7 +1,6 @@
 package com.flow.main.service.replies;
 
-import com.flow.main.dto.controller.comment.replies.request.RepliesWriteRequestDto;
-import com.flow.main.dto.jpa.comments.CommentsDto;
+import com.flow.main.dto.controller.comment.replies.request.RepliesModifyRequestDto;
 import com.flow.main.dto.jpa.replies.RepliesDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.comments.persistence.CommentsService;
@@ -13,24 +12,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RepliesWriteService {
+public class RepliesModifyService {
 
     private final PostsService postsService;
     private final CommentsService commentsService;
-    private final UsersService usersService;
     private final RepliesService repliesService;
+    private final UsersService usersService;
 
-    public RepliesDto writeReplies(Long postId, Long commentId, RepliesWriteRequestDto repliesWriteRequestDto){
+    public RepliesDto updateReplies(Long postId, Long commentId, Long replyId, RepliesModifyRequestDto repliesModifyRequestDto){
 
         postsService.findByPostId(postId); //check valid post
-        CommentsDto commentsDto = commentsService.findByCommentId(commentId);
-        UsersDto usersDto = usersService.findByEmail(repliesWriteRequestDto.getEmail());
+        commentsService.findByCommentId(commentId); //check valid comment
+        UsersDto usersDto = usersService.findByEmail(repliesModifyRequestDto.getEmail());
 
-        RepliesDto repliesDto = RepliesDto.builder()
-            .commentId(commentsDto.getCommentId())
-            .userId(usersDto.getUserId())
-            .content(repliesWriteRequestDto.getReplyContent())
-            .build();
+        RepliesDto repliesDto = repliesService.findByReplyId(replyId, usersDto.getUserId());
+        repliesDto.setContent(repliesModifyRequestDto.getReplyContent());
 
         return repliesService.save(repliesDto);
     }
