@@ -55,7 +55,7 @@ public class CommentController {
     @DeleteMapping("/{postId}/{commentId}")
     public ResponseEntity<CommentsDeleteResponseDto> deleteComments(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody final CommentsDeleteRequestDto commentsDeleteRequestDto){
         CommentsDto commentsDto = commentsDeleteService.deleteComments(postId, commentId, commentsDeleteRequestDto);
-        return ResponseEntity.ok(CommentsDeleteResponseDto.builder().build());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{postId}/{commentId}")
