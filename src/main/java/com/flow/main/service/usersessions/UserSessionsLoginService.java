@@ -15,7 +15,7 @@ public class UserSessionsLoginService {
     private final UsersService usersService;
     private final JwtUtil jwtUtil;
 
-    public LoginResponseDto login(LoginRequestDto loginRequestDto){
+    public void login(LoginRequestDto loginRequestDto){
 
         /*
         * 1. 회원가입된 사용자여야 함
