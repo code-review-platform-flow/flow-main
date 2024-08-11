@@ -16,7 +16,6 @@ public class UserSessionsService {
 
     private final UserSessionsRepository userSessionsRepository;
     private final UserSessionsMapper userSessionsMapper;
-    private final UsersMapper usersMapper;
 
     @Transactional
     public UserSessionsDto save(UserSessionsDto userSessionsDto){
@@ -24,21 +23,28 @@ public class UserSessionsService {
         return userSessionsMapper.toDto(userSessionsRepository.save(userSessionsEntity));
     }
 
-    public UserSessionsDto existsByUserId(Long userId){
-        boolean check =  userSessionsRepository.existsByUserId(userId);
-        if(!check) return UserSessionsDto.builder().build();
-        else return findByUserId(userId);
-    }
-
     @Transactional(readOnly = true)
-    public UserSessionsDto findByUserId(Long userId){
+    public UserSessionsDto findOrEmptyUserSessionsByUserId(Long userId){
         return userSessionsMapper.toDto(userSessionsRepository.findByUserId(userId)
-            .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with userId : " + userId)));
+                .orElse(new UserSessionsEntity()));
     }
 
     @Transactional(readOnly = true)
     public UserSessionsDto findByRefreshToken(String refreshToken){
         return userSessionsMapper.toDto(userSessionsRepository.findByRefreshToken(refreshToken)
             .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with refreshToken : " + refreshToken)));
+    }
+
+    @Transactional(readOnly = true)
+    public UserSessionsDto findByAccessToken(String accessToken){
+        return userSessionsMapper.toDto(userSessionsRepository.findByAccessToken(accessToken)
+                .orElseThrow(() -> new EntityNotFoundException("UserSessions not found with accessToken : " + accessToken)));
+    }
+
+    @Transactional
+    public UserSessionsDto delete(UserSessionsDto userSessionsDto){
+        UserSessionsEntity userSessionsEntity = userSessionsMapper.toEntity(userSessionsDto);
+        userSessionsEntity.markDeleted();
+        return userSessionsMapper.toDto(userSessionsRepository.save(userSessionsEntity));
     }
 }
