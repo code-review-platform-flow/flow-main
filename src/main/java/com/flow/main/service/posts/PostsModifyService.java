@@ -1,6 +1,6 @@
 package com.flow.main.service.posts;
 
-import com.flow.main.dto.controller.post.PostTagsNameDto;
+import com.flow.main.dto.controller.post.TagsNameDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
@@ -48,7 +48,7 @@ public class PostsModifyService {
             oldTagsId.add(pt.getTagId());
         }
 
-        for (PostTagsNameDto tag : postModifyRequestDto.getTags()) {
+        for (TagsNameDto tag : postModifyRequestDto.getTags()) {
             TagsDto tagsDto = tagsService.saveOrFindByTagName(tag.getTagName());
             newTagsId.add(tagsDto.getTagId());
         }

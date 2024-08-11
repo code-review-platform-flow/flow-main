@@ -1,6 +1,6 @@
 package com.flow.main.service.posttags;
 
-import com.flow.main.dto.controller.post.PostTagsNameDto;
+import com.flow.main.dto.controller.post.TagsNameDto;
 import com.flow.main.dto.jpa.posttags.PostTagsDto;
 import com.flow.main.dto.jpa.tags.TagsDto;
 import com.flow.main.service.posttags.persistence.PostTagsService;
@@ -16,8 +16,8 @@ public class PostTagsSaveAllService {
     private final PostTagsService postTagsService;
     private final TagsService tagsService;
 
-    public void saveAll(Long postId, ArrayList<PostTagsNameDto> postTagsNameDtos){
-        for(PostTagsNameDto tag : postTagsNameDtos){
+    public void saveAll(Long postId, ArrayList<TagsNameDto> tagsNameDtos){
+        for(TagsNameDto tag : tagsNameDtos){
             String tagName = tag.getTagName();
             TagsDto tagsDto = tagsService.saveOrFindByTagName(tagName);
 

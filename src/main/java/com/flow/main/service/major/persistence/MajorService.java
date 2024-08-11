@@ -20,4 +20,10 @@ public class MajorService {
         return majorMapper.toDto(majorRepository.findByMajorName(majorName)
             .orElseThrow(() -> new EntityNotFoundException("Major not found with majorName : " + majorName)));
     }
+
+    @Transactional(readOnly = true)
+    public MajorDto findByMajorId(Long majorId){
+        return majorMapper.toDto(majorRepository.findByMajorId(majorId)
+            .orElseThrow(() -> new EntityNotFoundException("Major not found with majorId : " + majorId)));
+    }
 }

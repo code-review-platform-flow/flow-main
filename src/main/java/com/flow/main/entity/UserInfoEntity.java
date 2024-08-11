@@ -55,6 +55,9 @@ public class UserInfoEntity extends BaseEntity {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
+    @Column(name = "profile_url", nullable = false)
+    private String profileUrl;
+
     @Version
     private int version;
 

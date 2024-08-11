@@ -21,6 +21,7 @@ public interface PostsMapper extends GenericMapper<PostsDto, PostsEntity> {
 
     @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "category.categoryId", target = "categoryId")
+    @Mapping(source = "createDate", target = "createDate")
     PostsDto toDto(PostsEntity postsEntity);
 
 }

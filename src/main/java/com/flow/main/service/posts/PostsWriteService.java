@@ -1,18 +1,12 @@
 package com.flow.main.service.posts;
 
-import com.flow.main.dto.controller.post.PostTagsNameDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
-import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
-import com.flow.main.dto.jpa.posttags.PostTagsDto;
-import com.flow.main.dto.jpa.tags.TagsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.categories.persistence.CategoriesService;
 import com.flow.main.service.posts.persistence.PostsService;
 import com.flow.main.service.posttags.PostTagsSaveAllService;
-import com.flow.main.service.posttags.persistence.PostTagsService;
-import com.flow.main.service.tags.persistence.TagsService;
 import com.flow.main.service.users.persistence.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

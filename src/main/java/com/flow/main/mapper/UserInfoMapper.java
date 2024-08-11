@@ -15,4 +15,9 @@ public interface UserInfoMapper extends GenericMapper<UserInfoDto, UserInfoEntit
     @Mapping(source = "userId", target = "user.userId")
     UserInfoEntity toEntity(UserInfoDto userInfoDto);
 
+    @Mapping(source = "major.majorId", target = "majorId")
+    @Mapping(source = "school.schoolId", target = "schoolId")
+    @Mapping(source = "user.userId", target = "userId")
+    UserInfoDto toDto(UserInfoEntity userInfoEntity);
+
 }

@@ -12,4 +12,7 @@ public interface CategoriesRepository extends JpaRepository<CategoriesEntity, Lo
     @Query("SELECT c FROM CategoriesEntity c WHERE c.categoryName = :categoryName")
     Optional<CategoriesEntity> findByCategoryName(@Param("categoryName") String categoryName);
 
+    @Query("SELECT c FROM CategoriesEntity c WHERE c.categoryId = :categoryId")
+    Optional<CategoriesEntity> findByCategoryId(@Param("categoryId") Long categoryId);
+
 }

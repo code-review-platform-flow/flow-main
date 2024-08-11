@@ -1,6 +1,6 @@
 package com.flow.main.dto.controller.post.modify.request;
 
-import com.flow.main.dto.controller.post.PostTagsNameDto;
+import com.flow.main.dto.controller.post.TagsNameDto;
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ public class PostModifyRequestDto {
 
     private String email;
     private String category;
-    private ArrayList<PostTagsNameDto> tags;
+    private ArrayList<TagsNameDto> tags;
     private String title;
     private String content;
 }
