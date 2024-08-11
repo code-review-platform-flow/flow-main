@@ -20,5 +20,6 @@ public class UserInfoDto {
     private String studentNumber;
     private String role;
     private String userName;
+    private String profileUrl;
     private int version;
 }

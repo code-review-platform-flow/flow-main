@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostTagsNameDto {
+public class TagsNameDto {
 
     private String tagName;
 }

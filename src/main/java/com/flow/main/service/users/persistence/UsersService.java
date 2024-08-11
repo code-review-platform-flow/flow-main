@@ -30,4 +30,10 @@ public class UsersService {
             () -> new EntityNotFoundException("User not found with email : " + email)));
     }
 
+    @Transactional(readOnly = true)
+    public UsersDto findByUserId(Long userId){
+        return usersMapper.toDto(usersRepository.findByUserId(userId)
+            .orElseThrow(() -> new EntityNotFoundException("User not found with userId : " + userId)));
+    }
+
 }

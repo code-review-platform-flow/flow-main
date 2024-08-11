@@ -6,6 +6,7 @@ import com.flow.main.mapper.TagsMapper;
 import com.flow.main.repository.TagsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.metrics.StartupStep.Tags;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +31,9 @@ public class TagsService {
             .orElseThrow(() -> new EntityNotFoundException("Tag not found with tagName : " + tagName)));
     }
 
+    @Transactional(readOnly = true)
+    public TagsDto findByTagId(Long tagId){
+        return tagsMapper.toDto(tagsRepository.findByTagId(tagId)
+            .orElseThrow(() -> new EntityNotFoundException("Tag not found with tagId : " + tagId)));
+    }
 }

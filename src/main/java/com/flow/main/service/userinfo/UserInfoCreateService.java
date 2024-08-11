@@ -1,5 +1,6 @@
 package com.flow.main.service.userinfo;
 
+import com.flow.main.common.property.UserInfoProperty;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.jpa.major.MajorDto;
 import com.flow.main.dto.jpa.school.SchoolDto;
@@ -22,6 +23,7 @@ public class UserInfoCreateService {
     private final UserInfoService userInfoService;
     private final UsersCreateService usersCreateService;
     private final UsersCheckService usersCheckService;
+    private final UserInfoProperty userInfoProperty;
 
     public UserInfoDto create(RegisterRequestDto registerRequestDto){
         usersCheckService.checkExistUser(registerRequestDto.getEmail());
@@ -29,11 +31,13 @@ public class UserInfoCreateService {
         MajorDto majorDto = majorService.findByMajorName(registerRequestDto.getMajorName());
         SchoolDto schoolDto = schoolService.findBySchoolName(registerRequestDto.getSchoolName());
         UserInfoDto userInfoDto = UserInfoDto.builder()
-            .studentNumber(registerRequestDto.getStudentNumber())
-            .majorId(majorDto.getMajorId())
-            .schoolId(schoolDto.getSchoolId())
             .userId(usersDto.getUserId())
+            .schoolId(schoolDto.getSchoolId())
+            .majorId(majorDto.getMajorId())
+            .studentNumber(registerRequestDto.getStudentNumber())
             .role("ROLE_USER")
+            .userName(registerRequestDto.getUserName())
+            .profileUrl(userInfoProperty.getUrl())
             .build();
         return userInfoService.save(userInfoDto);
     }
