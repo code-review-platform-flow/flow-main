@@ -59,7 +59,7 @@ public class CommentController {
     @DeleteMapping("/{postId}/{commentId}")
     public ResponseEntity<CommentsDeleteResponseDto> deleteComments(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody final CommentsDeleteRequestDto commentsDeleteRequestDto){
         CommentsDto commentsDto = commentsDeleteService.deleteComments(postId, commentId, commentsDeleteRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CommentsDeleteResponseDto.builder().build());
     }
 
     @PostMapping("/{postId}/{commentId}")
@@ -83,7 +83,7 @@ public class CommentController {
     @DeleteMapping("/{postId}/{commentId}/reply/{replyId}")
     public ResponseEntity<RepliesDeleteResponseDto> deleteReplies(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @PathVariable("replyId") Long replyId, @RequestBody final RepliesDeleteRequestDto repliesDeleteRequestDto){
         RepliesDto repliesDto = repliesDeleteService.deleteReplies(postId, commentId, replyId, repliesDeleteRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(RepliesDeleteResponseDto.builder().build());
     }
 
 }

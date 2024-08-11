@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 public interface LikesRepository extends JpaRepository<LikesEntity, Long> {
 
-    @Query("SELECT l FROM LikesEntity l WHERE l.user.userId = :userId AND l.post.postId = :postId")
-    Optional<LikesEntity> findByUserIdAndPostId(@Param("userId") Long userId, @Param("postId") Long postId);
+    @Query("SELECT l FROM LikesEntity l WHERE l.user.userId = :userId AND l.post.postId = :postId AND l.useYn = :useYn")
+    Optional<LikesEntity> findByUserIdAndPostId(@Param("userId") Long userId, @Param("postId") Long postId, @Param("useYn") Boolean useYn);
+
+    @Query("SELECT COUNT(l) FROM LikesEntity l WHERE l.post.postId = :postId")
+    Long countByPostId(@Param("postId") Long postId);
 
 }
