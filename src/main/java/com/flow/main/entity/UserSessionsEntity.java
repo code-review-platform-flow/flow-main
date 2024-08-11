@@ -27,7 +27,6 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Builder
 @Table(name = "user_sessions")
-@Where(clause = "use_yn = true")
 public class UserSessionsEntity extends BaseEntity {
 
     @Id
