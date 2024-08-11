@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.like.click.response;
+package com.flow.main.dto.controller.like.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LikeCLickResponseDto {
-
-    private Long likeId;
-
+public class LikeCountResponseDto {
+    private Long postId;
+    private Long likeCount;
 }

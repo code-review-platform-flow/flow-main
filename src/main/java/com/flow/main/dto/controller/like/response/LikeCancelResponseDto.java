@@ -1,10 +1,9 @@
-package com.flow.main.dto.controller.comment.replies.response;
+package com.flow.main.dto.controller.like.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -12,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RepliesDeleteResponseDto {
+public class LikeCancelResponseDto {
 
 }
