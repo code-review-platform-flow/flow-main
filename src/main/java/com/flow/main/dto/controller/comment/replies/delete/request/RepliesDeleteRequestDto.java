@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.comments.response;
+package com.flow.main.dto.controller.comment.replies.delete.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentsModifyResponseDto {
-    private Long commentId;
+public class RepliesDeleteRequestDto {
+
+    private String email;
+
 }

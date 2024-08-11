@@ -1,6 +1,6 @@
 package com.flow.main.service.comments;
 
-import com.flow.main.dto.controller.comment.comments.request.CommentsDeleteRequestDto;
+import com.flow.main.dto.controller.comment.comments.delete.request.CommentsDeleteRequestDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.comments.persistence.CommentsService;

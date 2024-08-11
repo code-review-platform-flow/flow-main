@@ -22,4 +22,11 @@ public interface CommentsMapper extends GenericMapper<CommentsDto, CommentsEntit
     @Mapping(source = "post.postId", target = "postId")
     CommentsDto toDto(CommentsEntity commentsEntity);
 
+    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "post.postId", target = "postId")
+    List<CommentsDto> toListDto(List<CommentsEntity> commentsEntities);
+
+    @Mapping(source = "userId", target = "user.userId")
+    @Mapping(source = "postId", target = "post.postId")
+    List<CommentsEntity> toListEntity(List<CommentsDto> commentsDtos);
 }

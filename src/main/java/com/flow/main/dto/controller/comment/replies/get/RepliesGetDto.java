@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.replies.request;
+package com.flow.main.dto.controller.comment.replies.get;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RepliesWriteRequestDto {
+public class RepliesGetDto {
 
-    private String email;
+    private Long replyId;
+    private String profileUrl;
+    private String userName;
+    private String majorName;
+    private String studentNumber;
     private String replyContent;
 
 }

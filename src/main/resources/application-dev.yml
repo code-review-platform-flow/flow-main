@@ -19,3 +19,6 @@ spring:
       expiration: ${ACCESS_EXPIRATION}
     refresh:
       expiration: ${REFRESH_EXPIRATION}
+user:
+  profile:
+    url: ${PROFILE_URL}
