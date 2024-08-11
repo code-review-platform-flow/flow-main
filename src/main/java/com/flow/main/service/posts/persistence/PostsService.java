@@ -18,6 +18,12 @@ public class PostsService {
     private final PostsRepository postsRepository;
     private final PostsMapper postsMapper;
 
+    @Transactional(readOnly = true)
+    public PostsDto findLatestByCreateDate(){
+        return postsMapper.toDto(postsRepository.findLatestByCreateDate()
+            .orElseThrow(() -> new EntityNotFoundException("No Latest Post")));
+    }
+
     @Transactional
     public PostsDto save(PostsDto postsDto){
         PostsEntity postsEntity = postsMapper.toEntity(postsDto);

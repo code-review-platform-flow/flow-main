@@ -3,11 +3,13 @@ package com.flow.main.controller;
 import com.flow.main.dto.controller.post.delete.request.PostDeleteRequestDto;
 import com.flow.main.dto.controller.post.delete.response.PostDeleteResponseDto;
 import com.flow.main.dto.controller.post.get.response.PostGetResponseDto;
+import com.flow.main.dto.controller.post.latest.response.PostLatestResponseDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
 import com.flow.main.dto.controller.post.modify.response.PostModifyResponseDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
+import com.flow.main.service.posts.PostsLatestService;
 import com.flow.main.service.posts.PostsDeleteService;
 import com.flow.main.service.posts.PostsGetService;
 import com.flow.main.service.posts.PostsModifyService;
@@ -28,10 +30,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
 
+    private final PostsLatestService postsLatestService;
     private final PostsGetService postsGetService;
     private final PostsWriteService postsWriteService;
     private final PostsModifyService postsModifyService;
     private final PostsDeleteService postsDeleteService;
+
+    @GetMapping("/latest")
+    public ResponseEntity<PostLatestResponseDto> getLatest(){
+        PostsDto postsDto = postsLatestService.getLatest();
+        return ResponseEntity.ok(PostLatestResponseDto.builder()
+                .postId(postsDto.getPostId())
+                .build());
+    }
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostGetResponseDto> get(@PathVariable("postId") Long postId){
