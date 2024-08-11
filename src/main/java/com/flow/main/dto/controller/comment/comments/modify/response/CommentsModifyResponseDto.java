@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.replies.response;
+package com.flow.main.dto.controller.comment.comments.modify.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RepliesModifyResponseDto {
-
-    public Long commentId;
-    public Long replyId;
-
+public class CommentsModifyResponseDto {
+    private Long commentId;
 }

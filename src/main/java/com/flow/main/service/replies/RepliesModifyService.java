@@ -1,6 +1,6 @@
 package com.flow.main.service.replies;
 
-import com.flow.main.dto.controller.comment.replies.request.RepliesModifyRequestDto;
+import com.flow.main.dto.controller.comment.replies.modify.request.RepliesModifyRequestDto;
 import com.flow.main.dto.jpa.replies.RepliesDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.comments.persistence.CommentsService;

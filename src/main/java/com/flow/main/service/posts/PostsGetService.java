@@ -62,7 +62,7 @@ public class PostsGetService {
             .title(postsDto.getTitle())
             .content(postsDto.getContent())
             .categoryName(categoriesDto.getCategoryName())
-            .tagsNameDtos(tagsNameDtos)
+            .tags(tagsNameDtos)
             .profileUrl(userInfoDto.getProfileUrl())
             .createDate(postsDto.getCreateDate())
             .build();

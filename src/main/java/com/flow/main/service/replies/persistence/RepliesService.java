@@ -5,6 +5,8 @@ import com.flow.main.entity.RepliesEntity;
 import com.flow.main.mapper.RepliesMapper;
 import com.flow.main.repository.RepliesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,13 @@ public class RepliesService {
         RepliesEntity repliesEntity = repliesRepository.findByReplyId(replyId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Replies not found with replyId : " + replyId + " , userId : " + userId));
         return repliesMapper.toDto(repliesEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RepliesDto> findAllByCommentId(Long commentId){
+        List<RepliesEntity> repliesEntities = repliesRepository.findAllByCommentId(commentId)
+            .orElse(Collections.emptyList());
+        return repliesMapper.toListDto(repliesEntities);
     }
 
     @Transactional

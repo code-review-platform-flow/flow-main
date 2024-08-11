@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.replies.response;
+package com.flow.main.dto.controller.comment.replies.delete.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

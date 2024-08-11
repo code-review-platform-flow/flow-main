@@ -24,6 +24,6 @@ public class PostGetResponseDto {
     private String title;
     private String content;
     private String categoryName;
-    private List<TagsNameDto> tagsNameDtos;
+    private List<TagsNameDto> tags;
     private LocalDateTime createDate;
 }

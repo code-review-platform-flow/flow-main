@@ -1,6 +1,6 @@
 package com.flow.main.service.comments;
 
-import com.flow.main.dto.controller.comment.comments.request.CommentsWriteRequestDto;
+import com.flow.main.dto.controller.comment.comments.write.request.CommentsWriteRequestDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
