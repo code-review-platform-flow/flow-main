@@ -46,6 +46,8 @@ dependencies {
 
     //university
     implementation 'com.github.in-seo:univcert:master-SNAPSHOT'
+    //SMTP
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

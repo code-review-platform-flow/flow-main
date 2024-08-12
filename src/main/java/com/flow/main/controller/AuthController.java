@@ -30,19 +30,20 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthVerifyCodeService authVerifyCodeService;
-    private final AuthSendEmailService authSendEmailService;
+    private final AuthSendVerifyEmailService authSendVerifyEmailService;
     private final UserSessionsLoginService userSessionsLoginService;
     private final UserInfoRegisterService userInfoRegisterService;
     private final UserSessionsUpdateService userSessionsUpdateService;
     private final UserSessionsLogoutService userSessionsLogoutService;
 
     @PostMapping("/email")
-    public ResponseEntity<SendEmailResponseDto> sendEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
+
+    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
 
         log.info("email : {}", sendEmailRequestDto.getEmail());
         log.info("universityName : {}", sendEmailRequestDto.getUniversityName());
 
-        return ResponseEntity.ok(authSendEmailService.sendEmail(sendEmailRequestDto));
+        return ResponseEntity.ok(authSendVerifyEmailService.sendVerifyEmail(sendEmailRequestDto));
     }
 
     @PostMapping("/code")
@@ -71,5 +72,10 @@ public class AuthController {
     @DeleteMapping("/logout")
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
+    }
+
+    @PostMapping("/password")
+    public void sendPwdChangeEmail(@RequestBody final SendPwdChangeEmailRequestDto sendPwdChangeEmailRequestDto){
+
     }
 }
