@@ -6,12 +6,13 @@ import com.flow.main.dto.controller.auth.code.response.VerifyCodeResponseDto;
 import com.flow.main.dto.controller.auth.login.request.LoginRequestDto;
 import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
 import com.flow.main.dto.controller.auth.logout.response.LogoutResponseDto;
+import com.flow.main.dto.controller.auth.password.send.request.SendPwdChangeEmailRequestDto;
 import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
-import com.flow.main.service.auth.AuthSendEmailService;
+import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
 import com.flow.main.service.userinfo.UserInfoRegisterService;
 import com.flow.main.service.usersessions.UserSessionsLoginService;
@@ -30,15 +31,15 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthVerifyCodeService authVerifyCodeService;
-    private final AuthSendEmailService authSendEmailService;
+    private final AuthSendVerifyEmailService authSendVerifyEmailService;
     private final UserSessionsLoginService userSessionsLoginService;
     private final UserInfoRegisterService userInfoRegisterService;
     private final UserSessionsUpdateService userSessionsUpdateService;
     private final UserSessionsLogoutService userSessionsLogoutService;
 
     @PostMapping("/email")
-    public ResponseEntity<SendEmailResponseDto> sendEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
-        return ResponseEntity.ok(authSendEmailService.sendEmail(sendEmailRequestDto));
+    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
+        return ResponseEntity.ok(authSendVerifyEmailService.sendVerifyEmail(sendEmailRequestDto));
     }
 
     @PostMapping("/code")
@@ -67,5 +68,10 @@ public class AuthController {
     @DeleteMapping("/logout")
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
+    }
+
+    @PostMapping("/password")
+    public void sendPwdChangeEmail(@RequestBody final SendPwdChangeEmailRequestDto sendPwdChangeEmailRequestDto){
+
     }
 }

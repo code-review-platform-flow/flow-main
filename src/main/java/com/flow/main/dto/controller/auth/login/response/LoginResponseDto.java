@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class LoginResponseDto {
+    private String role;
     private String email;
     private String accessToken;
     private String refreshToken;
