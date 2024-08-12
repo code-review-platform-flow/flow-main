@@ -29,14 +29,6 @@ public class UserSessionsLoginService {
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
 
-        /*
-        * 1. 회원가입된 사용자여야 함
-        * 2. DB의 이메일과 비밀번호가 일치하는 지 확인
-        * 3. 처음 로그인하는 경우, 다시 로그인 하는 경우로 나누기
-        *    - 처음 로그인 시 : UserSessions 생성
-        *    - 다시 로그인 시 : false 처리된 userSessions를 찾아서 true 및 accessToken, refreshToken 생성해주기
-        * */
-
         UsersDto usersDto = usersService.findByEmail(loginRequestDto.getEmail());
         userPasswordVerifyService.verifyPassword(usersDto.getPassword(), loginRequestDto.getPassword());
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
