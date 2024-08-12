@@ -22,3 +22,5 @@ spring:
 user:
   profile:
     url: ${PROFILE_URL}
+  verify:
+    key: ${UNIV_API_KEY}
