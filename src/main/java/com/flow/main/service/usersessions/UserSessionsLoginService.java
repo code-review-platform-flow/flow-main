@@ -49,6 +49,7 @@ public class UserSessionsLoginService {
         userSessionsService.save(userSessionsDto);
 
         return LoginResponseDto.builder()
+                .role(userInfoDto.getRole())
                 .email(email)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
