@@ -25,7 +25,7 @@ public class UserInfoFileUploadService {
         UsersDto usersDto = usersService.findByEmail(fileUploadRequestDto.getEmail());
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
 
-        FileUploadResponseDto fileUploadResponseDto = fileForwardService.fileForward(fileUploadRequestDto.getMultipartFile());
+        FileUploadResponseDto fileUploadResponseDto = fileForwardService.fileForward(fileUploadRequestDto.getFile());
         userInfoDto.setProfileUrl(fileUploadResponseDto.getFilePath());
         userInfoService.save(userInfoDto);
 

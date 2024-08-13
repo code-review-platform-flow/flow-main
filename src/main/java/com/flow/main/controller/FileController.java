@@ -17,7 +17,7 @@ public class FileController {
     private final UserInfoFileUploadService userInfoFileUploadService;
 
     @PostMapping("/upload")
-    public ResponseEntity<FileUploadResponseDto> upload(@RequestBody final FileUploadRequestDto fileUploadRequestDto){
+    public ResponseEntity<FileUploadResponseDto> upload(@ModelAttribute final FileUploadRequestDto fileUploadRequestDto){
         return ResponseEntity.ok(userInfoFileUploadService.fileUpload(fileUploadRequestDto));
     }
 
