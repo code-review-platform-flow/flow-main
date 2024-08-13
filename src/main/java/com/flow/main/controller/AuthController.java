@@ -73,9 +73,4 @@ public class AuthController {
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
     }
-
-    @PostMapping("/password")
-    public void sendPwdChangeEmail(@RequestBody final SendPwdChangeEmailRequestDto sendPwdChangeEmailRequestDto){
-
-    }
 }
