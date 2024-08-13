@@ -27,6 +27,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    //WebFlux
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     //Security
     implementation 'org.springframework.security:spring-security-core:6.3.0'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
@@ -46,8 +49,6 @@ dependencies {
 
     //university
     implementation 'com.github.in-seo:univcert:master-SNAPSHOT'
-    //SMTP
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
