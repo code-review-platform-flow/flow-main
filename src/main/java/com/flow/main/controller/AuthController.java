@@ -6,7 +6,6 @@ import com.flow.main.dto.controller.auth.code.response.VerifyCodeResponseDto;
 import com.flow.main.dto.controller.auth.login.request.LoginRequestDto;
 import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
 import com.flow.main.dto.controller.auth.logout.response.LogoutResponseDto;
-import com.flow.main.dto.controller.auth.password.send.request.SendPwdChangeEmailRequestDto;
 import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
@@ -68,10 +67,5 @@ public class AuthController {
     @DeleteMapping("/logout")
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
-    }
-
-    @PostMapping("/password")
-    public void sendPwdChangeEmail(@RequestBody final SendPwdChangeEmailRequestDto sendPwdChangeEmailRequestDto){
-
     }
 }
