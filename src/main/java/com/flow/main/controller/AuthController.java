@@ -38,6 +38,10 @@ public class AuthController {
 
     @PostMapping("/email")
     public ResponseEntity<SendEmailResponseDto> sendEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
+
+        log.info("email : {}", sendEmailRequestDto.getEmail());
+        log.info("universityName : {}", sendEmailRequestDto.getUniversityName());
+
         return ResponseEntity.ok(authSendEmailService.sendEmail(sendEmailRequestDto));
     }
 
