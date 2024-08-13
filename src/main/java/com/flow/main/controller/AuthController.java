@@ -10,9 +10,11 @@ import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenRe
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
+import com.flow.main.dto.controller.file.response.FileUploadResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
+import com.flow.main.service.userinfo.UserInfoFileUploadService;
 import com.flow.main.service.userinfo.UserInfoRegisterService;
 import com.flow.main.service.usersessions.UserSessionsLoginService;
 import com.flow.main.service.usersessions.UserSessionsLogoutService;
@@ -23,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -35,6 +38,7 @@ public class AuthController {
     private final UserInfoRegisterService userInfoRegisterService;
     private final UserSessionsUpdateService userSessionsUpdateService;
     private final UserSessionsLogoutService userSessionsLogoutService;
+    private final UserInfoFileUploadService userInfoFileUploadService;
 
     @PostMapping("/email")
 
@@ -72,5 +76,16 @@ public class AuthController {
     @DeleteMapping("/logout")
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
+    }
+
+    @PostMapping("/file/upload")
+    public ResponseEntity<FileUploadResponseDto> upload(
+        @RequestPart("file") MultipartFile file,
+        @RequestPart("email") String email){
+
+        log.info("file.getOriginalFileName : {}", file.getOriginalFilename());
+        log.info("email : {}", email);
+
+        return ResponseEntity.ok(userInfoFileUploadService.fileUpload(file, email));
     }
 }
