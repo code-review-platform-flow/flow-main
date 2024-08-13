@@ -20,12 +20,13 @@ public class UserInfoFileUploadService {
     private final UserInfoService userInfoService;
     private final FileForwardService fileForwardService;
 
-    public FileUploadResponseDto fileUpload(FileUploadRequestDto fileUploadRequestDto) {
+    public FileUploadResponseDto fileUpload(MultipartFile file, String email) {
 
-        UsersDto usersDto = usersService.findByEmail(fileUploadRequestDto.getEmail());
+        UsersDto usersDto = usersService.findByEmail(email);
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
 
-        FileUploadResponseDto fileUploadResponseDto = fileForwardService.fileForward(fileUploadRequestDto.getFile());
+
+        FileUploadResponseDto fileUploadResponseDto = fileForwardService.fileForward(file);
         userInfoDto.setProfileUrl(fileUploadResponseDto.getFilePath());
         userInfoService.save(userInfoDto);
 
