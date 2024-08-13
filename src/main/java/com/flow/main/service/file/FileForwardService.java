@@ -1,7 +1,7 @@
 package com.flow.main.service.file;
 
 import com.flow.main.common.property.FileProperty;
-import com.flow.main.dto.controller.file.response.FileUploadResponseDto;
+import com.flow.main.dto.controller.auth.file.response.FileUploadResponseDto;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +12,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
 
 import java.net.URI;
 

@@ -38,6 +38,11 @@ public class RepliesService {
         return repliesMapper.toListDto(repliesEntities);
     }
 
+    @Transactional(readOnly = true)
+    public Long countByCommentId(Long commentId){
+        return repliesRepository.countByCommentId(commentId);
+    }
+
     @Transactional
     public RepliesDto delete(RepliesDto repliesDto){
         RepliesEntity repliesEntity = repliesMapper.toEntity(repliesDto);

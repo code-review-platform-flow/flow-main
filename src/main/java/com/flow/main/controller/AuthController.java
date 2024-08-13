@@ -10,7 +10,7 @@ import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenRe
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
-import com.flow.main.dto.controller.file.response.FileUploadResponseDto;
+import com.flow.main.dto.controller.auth.file.response.FileUploadResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
@@ -57,17 +57,26 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody final RegisterRequestDto registerRequestDto) throws IOException {
+        log.info("email : {}",registerRequestDto.getEmail());
+        log.info("password : {}",registerRequestDto.getPassword());
+        log.info("majorName : {}",registerRequestDto.getMajorName());
+        log.info("schoolName : {}",registerRequestDto.getSchoolName());
+        log.info("studentNumber : {}",registerRequestDto.getStudentNumber());
+        log.info("userName : {}",registerRequestDto.getUserName());
         userInfoRegisterService.register(registerRequestDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody final LoginRequestDto loginRequestDto){
+        log.info("email : {}", loginRequestDto.getEmail());
+        log.info("password : {}", loginRequestDto.getPassword());
         return ResponseEntity.ok(userSessionsLoginService.login(loginRequestDto));
     }
 
     @PatchMapping("/refresh-token")
     public ResponseEntity<RecreateAccessTokenResponseDto> recreate(@RequestHeader("RefreshToken") String refreshToken) {
+        log.info("refreshToken : {}", refreshToken);
         UserSessionsDto userSessionsDto = userSessionsUpdateService.recreateAccessToken(refreshToken);
         return ResponseEntity.ok(RecreateAccessTokenResponseDto.builder()
             .accessToken(userSessionsDto.getAccessToken()).build());
@@ -75,6 +84,7 @@ public class AuthController {
 
     @DeleteMapping("/logout")
     public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
+        log.info("accessToken : {}", accessToken);
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
     }
 
