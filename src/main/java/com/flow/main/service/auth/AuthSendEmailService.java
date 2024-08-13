@@ -5,6 +5,7 @@ import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
 import com.univcert.api.UnivCert;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthSendEmailService {
 
     private final UserVerifyProperty userVerifyProperty;
@@ -23,6 +25,12 @@ public class AuthSendEmailService {
                 sendEmailRequestDto.getEmail(),
                 sendEmailRequestDto.getUniversityName(),
                 false);
+
+        if (map != null && !map.isEmpty()) {
+            map.forEach((key, value) -> log.info("Key: {}, Value: {}", key, value));
+        } else {
+            log.info("Map is empty or null");
+        }
 
         return SendEmailResponseDto.builder()
                 .apiResponse(map)
