@@ -24,3 +24,7 @@ user:
     url: ${PROFILE_URL}
   verify:
     key: ${UNIV_API_KEY}
+file:
+  upload:
+    url: ${UPLOAD_URL}
+    path: ${UPLOAD_PATH}
