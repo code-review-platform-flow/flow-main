@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.file.response;
+package com.flow.main.dto.controller.auth.file.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

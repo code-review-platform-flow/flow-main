@@ -43,6 +43,11 @@ public class CommentsService {
         return commentsMapper.toListDto(commentsEntities);
     }
 
+    @Transactional(readOnly = true)
+    public Long countByPostId(Long postId){
+        return commentsRepository.countByPostId(postId);
+    }
+
     @Transactional
     public CommentsDto delete(CommentsDto commentsDto){
         CommentsEntity commentsEntity = commentsMapper.toEntity(commentsDto);

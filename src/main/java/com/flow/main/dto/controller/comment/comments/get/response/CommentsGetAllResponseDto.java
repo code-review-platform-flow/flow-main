@@ -17,5 +17,4 @@ public class CommentsGetAllResponseDto {
 
     private List<CommentsGetDto> comments;
 
-
 }

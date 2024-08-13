@@ -17,4 +17,7 @@ public interface CommentsRepository extends JpaRepository<CommentsEntity, Long> 
 
     @Query("SELECT c FROM CommentsEntity c WHERE c.post.postId = :postId")
     Optional<List<CommentsEntity>> findAllByPostId(@Param("postId") Long postId);
+
+    @Query("SELECT COUNT(c) FROM CommentsEntity c WHERE c.post.postId = :postId")
+    Long countByPostId(@Param("postId") Long postId);
 }

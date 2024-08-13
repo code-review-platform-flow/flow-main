@@ -17,4 +17,7 @@ public interface RepliesRepository extends JpaRepository<RepliesEntity, Long> {
 
     @Query("SELECT r FROM RepliesEntity r WHERE r.comment.commentId = :commentId")
     Optional<List<RepliesEntity>> findAllByCommentId(@Param("commentId") Long commentId);
+
+    @Query("SELECT COUNT(r) FROM RepliesEntity r WHERE r.comment.commentId = :commentId")
+    Long countByCommentId(@Param("commentId") Long commentId);
 }

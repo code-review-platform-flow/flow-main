@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.file.request;
+package com.flow.main.dto.controller.auth.file.request;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;

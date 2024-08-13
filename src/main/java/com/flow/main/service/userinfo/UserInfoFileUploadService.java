@@ -1,7 +1,6 @@
 package com.flow.main.service.userinfo;
 
-import com.flow.main.dto.controller.file.request.FileUploadRequestDto;
-import com.flow.main.dto.controller.file.response.FileUploadResponseDto;
+import com.flow.main.dto.controller.auth.file.response.FileUploadResponseDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.file.FileForwardService;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
