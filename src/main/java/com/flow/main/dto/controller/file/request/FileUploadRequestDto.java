@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class FileUploadRequestDto {
 
-    private MultipartFile multipartFile;
+    private MultipartFile file;
     private String email;
 
 }
