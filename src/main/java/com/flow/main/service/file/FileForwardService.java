@@ -31,8 +31,6 @@ public class FileForwardService {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", file);
 
-        log.info("file.getOriginalFileName : {}", file.getOriginalFilename());
-
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         URI uri = UriComponentsBuilder
