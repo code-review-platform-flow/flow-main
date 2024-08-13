@@ -11,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class UserPasswordVerifyService {
 
-    private final UsersService usersService;
     private final PasswordEncoder passwordEncoder;
     public void verifyPassword(String userPassword, String loginPassword){
         if (!passwordEncoder.matches(loginPassword, userPassword)){

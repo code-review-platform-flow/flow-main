@@ -14,11 +14,11 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthSendEmailService {
+public class AuthSendVerifyEmailService {
 
     private final UserVerifyProperty userVerifyProperty;
 
-    public SendEmailResponseDto sendEmail(SendEmailRequestDto sendEmailRequestDto) throws IOException {
+    public SendEmailResponseDto sendVerifyEmail(SendEmailRequestDto sendEmailRequestDto) throws IOException {
 
         Map<String, Object> map = UnivCert.certify(
                 userVerifyProperty.getKey(),

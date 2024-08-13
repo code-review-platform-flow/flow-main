@@ -11,7 +11,7 @@ import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
-import com.flow.main.service.auth.AuthSendEmailService;
+import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
 import com.flow.main.service.userinfo.UserInfoRegisterService;
 import com.flow.main.service.usersessions.UserSessionsLoginService;
@@ -30,19 +30,20 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthVerifyCodeService authVerifyCodeService;
-    private final AuthSendEmailService authSendEmailService;
+    private final AuthSendVerifyEmailService authSendVerifyEmailService;
     private final UserSessionsLoginService userSessionsLoginService;
     private final UserInfoRegisterService userInfoRegisterService;
     private final UserSessionsUpdateService userSessionsUpdateService;
     private final UserSessionsLogoutService userSessionsLogoutService;
 
     @PostMapping("/email")
-    public ResponseEntity<SendEmailResponseDto> sendEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
+
+    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
 
         log.info("email : {}", sendEmailRequestDto.getEmail());
         log.info("universityName : {}", sendEmailRequestDto.getUniversityName());
 
-        return ResponseEntity.ok(authSendEmailService.sendEmail(sendEmailRequestDto));
+        return ResponseEntity.ok(authSendVerifyEmailService.sendVerifyEmail(sendEmailRequestDto));
     }
 
     @PostMapping("/code")
