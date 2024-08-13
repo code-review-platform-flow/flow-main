@@ -18,7 +18,7 @@ public class AuthSendVerifyEmailService {
 
     private final UserVerifyProperty userVerifyProperty;
 
-    public SendEmailResponseDto sendVerifyEmail(SendEmailRequestDto sendEmailRequestDto) throws IOException {
+    public SendEmailResponseDto sendEmail(SendEmailRequestDto sendEmailRequestDto) throws IOException {
 
         Map<String, Object> map = UnivCert.certify(
                 userVerifyProperty.getKey(),

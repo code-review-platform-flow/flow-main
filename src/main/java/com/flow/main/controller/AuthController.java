@@ -11,7 +11,7 @@ import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
-import com.flow.main.service.auth.AuthSendEmailService;
+import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
 import com.flow.main.service.userinfo.UserInfoRegisterService;
 import com.flow.main.service.usersessions.UserSessionsLoginService;
