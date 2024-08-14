@@ -1,11 +1,16 @@
 package com.flow.main.service.likes.persistence;
 
 import com.flow.main.dto.jpa.likes.LikesDto;
+import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.entity.LikesEntity;
+import com.flow.main.entity.PostsEntity;
 import com.flow.main.mapper.LikesMapper;
+import com.flow.main.mapper.PostsMapper;
 import com.flow.main.repository.LikesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +22,17 @@ public class LikesService {
 
     private final LikesRepository likesRepository;
     private final LikesMapper likesMapper;
+    private final PostsMapper postsMapper;
 
     @Transactional
     public LikesDto save(LikesDto likesDto){
         LikesEntity likesEntity = likesMapper.toEntity(likesDto);
         return likesMapper.toDto(likesRepository.save(likesEntity));
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsDto> findPostsOrderByLikeCount(Pageable pageable){
+        return postsMapper.toDtoList(likesRepository.findPostIdsOrderByLikeCount(pageable));
     }
 
     @Transactional(readOnly = true)

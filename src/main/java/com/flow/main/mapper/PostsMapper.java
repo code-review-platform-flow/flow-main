@@ -1,6 +1,7 @@
 package com.flow.main.mapper;
 
 import com.flow.main.common.mapper.GenericMapper;
+import com.flow.main.dto.controller.post.tranding.TrandingPostDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.posttags.PostTagsDto;
@@ -11,6 +12,7 @@ import java.util.List;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.jpa.repository.Query;
 
 @Mapper(componentModel = "spring")
 public interface PostsMapper extends GenericMapper<PostsDto, PostsEntity> {
@@ -24,4 +26,11 @@ public interface PostsMapper extends GenericMapper<PostsDto, PostsEntity> {
     @Mapping(source = "createDate", target = "createDate")
     PostsDto toDto(PostsEntity postsEntity);
 
+    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "category.categoryId", target = "categoryId")
+    @Mapping(source = "createDate", target = "createDate")
+    List<PostsDto> toDtoList(List<PostsEntity> postsEntities);
+
+    @Mapping(source = "postId", target = "postId")
+    List<TrandingPostDto> toTrandingPostDtoList(List<PostsDto> postsDtos);
 }
