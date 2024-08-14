@@ -6,15 +6,18 @@ import com.flow.main.dto.controller.post.get.response.PostGetResponseDto;
 import com.flow.main.dto.controller.post.latest.response.PostLatestResponseDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
 import com.flow.main.dto.controller.post.modify.response.PostModifyResponseDto;
+import com.flow.main.dto.controller.post.tranding.response.GetTrandingPostsResponseDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
+import com.flow.main.service.posts.PostsGetTrandingService;
 import com.flow.main.service.posts.PostsLatestService;
 import com.flow.main.service.posts.PostsDeleteService;
 import com.flow.main.service.posts.PostsGetService;
 import com.flow.main.service.posts.PostsModifyService;
 import com.flow.main.service.posts.PostsWriteService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -32,6 +36,7 @@ public class PostController {
 
     private final PostsLatestService postsLatestService;
     private final PostsGetService postsGetService;
+    private final PostsGetTrandingService postsGetTrandingService;
     private final PostsWriteService postsWriteService;
     private final PostsModifyService postsModifyService;
     private final PostsDeleteService postsDeleteService;
@@ -47,6 +52,13 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostGetResponseDto> get(@PathVariable("postId") Long postId){
         return ResponseEntity.ok(postsGetService.get(postId));
+    }
+
+    @GetMapping("/tranding/{page}/{count}")
+    public ResponseEntity<GetTrandingPostsResponseDto> getTrandingPosts(@PathVariable("page") Long page, @PathVariable("count") Long count){
+        log.info("page : {}", page);
+        log.info("count : {}", count);
+        return ResponseEntity.ok(postsGetTrandingService.getTrandingPosts(page, count));
     }
 
     @PostMapping("")
