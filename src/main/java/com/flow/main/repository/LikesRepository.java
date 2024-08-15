@@ -21,5 +21,5 @@ public interface LikesRepository extends JpaRepository<LikesEntity, Long> {
 
     //@Query("SELECT l.post FROM LikesEntity l GROUP BY l.post.postId ORDER BY COUNT(l.likeId) DESC")
     @Query("SELECT p FROM PostsEntity p WHERE p.postId IN (SELECT l.post.postId FROM LikesEntity l WHERE l.useYn = true GROUP BY l.post.postId ORDER BY COUNT(l.likeId) DESC)")
-    List<PostsEntity> findPostIdsOrderByLikeCount(Pageable pageable);
+    Optional<List<PostsEntity>> findPostIdsOrderByLikeCount(Pageable pageable);
 }

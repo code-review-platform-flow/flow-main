@@ -5,9 +5,12 @@ import com.flow.main.entity.PostsEntity;
 import com.flow.main.mapper.PostsMapper;
 import com.flow.main.repository.PostsRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,11 @@ public class PostsService {
     public PostsDto findLatestByCreateDate(){
         return postsMapper.toDto(postsRepository.findLatestByCreateDate()
             .orElseThrow(() -> new EntityNotFoundException("No Latest Post")));
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsDto> findPostsByKeyword(String keyword, Pageable pageable){
+        return postsMapper.toDtoList(postsRepository.findPostsByKeyword(keyword, pageable).getContent());
     }
 
     @Transactional

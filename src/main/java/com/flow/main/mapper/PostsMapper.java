@@ -1,6 +1,7 @@
 package com.flow.main.mapper;
 
 import com.flow.main.common.mapper.GenericMapper;
+import com.flow.main.dto.controller.post.keyword.FindByKeywordDto;
 import com.flow.main.dto.controller.post.tranding.TrandingPostDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
@@ -33,4 +34,7 @@ public interface PostsMapper extends GenericMapper<PostsDto, PostsEntity> {
 
     @Mapping(source = "postId", target = "postId")
     List<TrandingPostDto> toTrandingPostDtoList(List<PostsDto> postsDtos);
+
+    @Mapping(source = "postId", target = "postId")
+    List<FindByKeywordDto> toFindByKeywordDtoList(List<PostsDto> postsDtos);
 }
