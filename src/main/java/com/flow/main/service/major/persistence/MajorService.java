@@ -4,6 +4,7 @@ import com.flow.main.dto.jpa.major.MajorDto;
 import com.flow.main.mapper.MajorMapper;
 import com.flow.main.repository.MajorRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,11 @@ public class MajorService {
 
     private final MajorRepository majorRepository;
     private final MajorMapper majorMapper;
+
+    @Transactional(readOnly = true)
+    public List<MajorDto> getAllMajor(){
+        return majorMapper.toDtoList(majorRepository.findAll());
+    }
 
     @Transactional(readOnly = true)
     public MajorDto findByMajorName(String majorName){

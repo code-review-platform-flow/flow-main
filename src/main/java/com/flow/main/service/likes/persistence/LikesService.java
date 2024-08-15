@@ -8,6 +8,7 @@ import com.flow.main.mapper.LikesMapper;
 import com.flow.main.mapper.PostsMapper;
 import com.flow.main.repository.LikesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,8 @@ public class LikesService {
 
     @Transactional(readOnly = true)
     public List<PostsDto> findPostsOrderByLikeCount(Pageable pageable){
-        return postsMapper.toDtoList(likesRepository.findPostIdsOrderByLikeCount(pageable));
+        return postsMapper.toDtoList(likesRepository.findPostIdsOrderByLikeCount(pageable)
+            .orElse(Collections.emptyList()));
     }
 
     @Transactional(readOnly = true)

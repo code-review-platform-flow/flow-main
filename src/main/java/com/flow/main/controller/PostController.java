@@ -3,6 +3,7 @@ package com.flow.main.controller;
 import com.flow.main.dto.controller.post.delete.request.PostDeleteRequestDto;
 import com.flow.main.dto.controller.post.delete.response.PostDeleteResponseDto;
 import com.flow.main.dto.controller.post.get.response.PostGetResponseDto;
+import com.flow.main.dto.controller.post.keyword.response.FindByKeywordResponseDto;
 import com.flow.main.dto.controller.post.latest.response.PostLatestResponseDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
 import com.flow.main.dto.controller.post.modify.response.PostModifyResponseDto;
@@ -10,6 +11,7 @@ import com.flow.main.dto.controller.post.tranding.response.GetTrandingPostsRespo
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
+import com.flow.main.service.posts.PostsGetByKeywordService;
 import com.flow.main.service.posts.PostsGetTrandingService;
 import com.flow.main.service.posts.PostsLatestService;
 import com.flow.main.service.posts.PostsDeleteService;
@@ -37,6 +39,7 @@ public class PostController {
     private final PostsLatestService postsLatestService;
     private final PostsGetService postsGetService;
     private final PostsGetTrandingService postsGetTrandingService;
+    private final PostsGetByKeywordService postsGetByKeywordService;
     private final PostsWriteService postsWriteService;
     private final PostsModifyService postsModifyService;
     private final PostsDeleteService postsDeleteService;
@@ -59,6 +62,14 @@ public class PostController {
         log.info("page : {}", page);
         log.info("count : {}", count);
         return ResponseEntity.ok(postsGetTrandingService.getTrandingPosts(page, count));
+    }
+
+    @GetMapping("/search/{keyword}/{page}/{count}")
+    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count){
+        log.info("keyword : {}", keyword);
+        log.info("page : {}", page);
+        log.info("count : {}", count);
+        return ResponseEntity.ok(postsGetByKeywordService.findPostsByKeyword(keyword, page, count));
     }
 
     @PostMapping("")

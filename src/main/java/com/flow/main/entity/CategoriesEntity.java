@@ -37,9 +37,6 @@ public class CategoriesEntity extends BaseEntity {
     @Column(name = "category_name")
     private String categoryName;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostsEntity> postsEntities = new ArrayList<>();
-
     @Version
     private int version;
 }

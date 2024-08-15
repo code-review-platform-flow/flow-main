@@ -6,6 +6,7 @@ import com.flow.main.dto.controller.auth.code.response.VerifyCodeResponseDto;
 import com.flow.main.dto.controller.auth.login.request.LoginRequestDto;
 import com.flow.main.dto.controller.auth.login.response.LoginResponseDto;
 import com.flow.main.dto.controller.auth.logout.response.LogoutResponseDto;
+import com.flow.main.dto.controller.auth.major.response.MajorGetAllResponseDto;
 import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
@@ -14,6 +15,7 @@ import com.flow.main.dto.controller.auth.file.response.FileUploadResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
+import com.flow.main.service.major.MajorGetAllService;
 import com.flow.main.service.userinfo.UserInfoFileUploadService;
 import com.flow.main.service.userinfo.UserInfoRegisterService;
 import com.flow.main.service.usersessions.UserSessionsLoginService;
@@ -32,6 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
+
+    private final MajorGetAllService majorGetAllService;
     private final AuthVerifyCodeService authVerifyCodeService;
     private final AuthSendVerifyEmailService authSendVerifyEmailService;
     private final UserSessionsLoginService userSessionsLoginService;
@@ -40,8 +44,12 @@ public class AuthController {
     private final UserSessionsLogoutService userSessionsLogoutService;
     private final UserInfoFileUploadService userInfoFileUploadService;
 
-    @PostMapping("/email")
+    @GetMapping("/major")
+    public ResponseEntity<MajorGetAllResponseDto> getAllMajor(){
+        return ResponseEntity.ok(majorGetAllService.getAllMajor());
+    }
 
+    @PostMapping("/email")
     public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
 
         log.info("email : {}", sendEmailRequestDto.getEmail());
@@ -75,7 +83,7 @@ public class AuthController {
     }
 
     @PatchMapping("/refresh-token")
-    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(@RequestHeader("RefreshToken") String refreshToken) {
+    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(@RequestHeader("Authorization") String refreshToken) {
         log.info("refreshToken : {}", refreshToken);
         UserSessionsDto userSessionsDto = userSessionsUpdateService.recreateAccessToken(refreshToken);
         return ResponseEntity.ok(RecreateAccessTokenResponseDto.builder()
@@ -83,7 +91,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("AccessToken") String accessToken) {
+    public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("Authorization") String accessToken) {
         log.info("accessToken : {}", accessToken);
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
     }
