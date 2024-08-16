@@ -11,7 +11,7 @@ import com.flow.main.dto.controller.post.tranding.response.GetTrandingPostsRespo
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
-import com.flow.main.service.posts.PostsGetByKeywordService;
+import com.flow.main.service.posts.PostsFindByKeywordService;
 import com.flow.main.service.posts.PostsGetTrandingService;
 import com.flow.main.service.posts.PostsLatestService;
 import com.flow.main.service.posts.PostsDeleteService;
@@ -39,7 +39,7 @@ public class PostController {
     private final PostsLatestService postsLatestService;
     private final PostsGetService postsGetService;
     private final PostsGetTrandingService postsGetTrandingService;
-    private final PostsGetByKeywordService postsGetByKeywordService;
+    private final PostsFindByKeywordService postsFindByKeywordService;
     private final PostsWriteService postsWriteService;
     private final PostsModifyService postsModifyService;
     private final PostsDeleteService postsDeleteService;
@@ -69,7 +69,7 @@ public class PostController {
         log.info("keyword : {}", keyword);
         log.info("page : {}", page);
         log.info("count : {}", count);
-        return ResponseEntity.ok(postsGetByKeywordService.findPostsByKeyword(keyword, page, count));
+        return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count));
     }
 
     @PostMapping("")
