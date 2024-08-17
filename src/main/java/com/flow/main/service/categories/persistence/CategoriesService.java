@@ -27,4 +27,10 @@ public class CategoriesService {
             .orElseThrow(() -> new EntityNotFoundException("Category not found with categoryId : " + categoryId)));
     }
 
+    @Transactional(readOnly = true)
+    public CategoriesDto findCategoryByKeyword(String keyword){
+        return categoriesMapper.toDto(categoriesRepository.searchByKeyword(keyword)
+            .orElse(null));
+    }
+
 }

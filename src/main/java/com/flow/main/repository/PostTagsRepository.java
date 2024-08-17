@@ -20,4 +20,7 @@ public interface PostTagsRepository extends JpaRepository<PostTagsEntity, Long> 
 
     @Query("SELECT p FROM PostTagsEntity p WHERE p.post.postId = :postId AND p.tag.tagId = :tagId AND p.useYn = false")
     Optional<PostTagsEntity> findByPostIdAndTagIdUseYnFalse(@Param("postId") Long postId, @Param("tagId") Long tagId);
+
+    @Query("SELECT p FROM PostTagsEntity p WHERE p.tag.tagId = :tagId")
+    Optional<List<PostTagsEntity>> findAllByTagId(@Param("tagId") Long tagId);
 }

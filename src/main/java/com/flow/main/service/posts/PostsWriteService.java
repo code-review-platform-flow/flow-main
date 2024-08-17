@@ -1,5 +1,6 @@
 package com.flow.main.service.posts;
 
+import com.flow.main.dto.controller.post.TagsNameDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
@@ -8,6 +9,7 @@ import com.flow.main.service.categories.persistence.CategoriesService;
 import com.flow.main.service.posts.persistence.PostsService;
 import com.flow.main.service.posttags.PostTagsSaveAllService;
 import com.flow.main.service.users.persistence.UsersService;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

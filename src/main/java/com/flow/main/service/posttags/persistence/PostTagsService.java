@@ -40,6 +40,12 @@ public class PostTagsService {
             .orElseThrow(() -> new EntityNotFoundException("PostTags not found with postId : " + postId + " and tagId : " + tagId)));
     }
 
+    @Transactional(readOnly = true)
+    public List<PostTagsDto> findAllByTagId(Long tagId){
+        return postTagsMapper.toListDto(postTagsRepository.findAllByTagId(tagId)
+            .orElse(Collections.emptyList()));
+    }
+
     @Transactional
     public PostTagsDto reuseOrSavePostTags(PostTagsDto postTagsDto){
         PostTagsEntity postTagsEntity = postTagsRepository.findByPostIdAndTagIdUseYnFalse(
