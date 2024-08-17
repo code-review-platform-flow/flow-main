@@ -28,8 +28,21 @@ public class PostsService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostsDto> findPostsByKeyword(String keyword, Pageable pageable){
-        return postsMapper.toDtoList(postsRepository.findPostsByKeyword(keyword, pageable).getContent());
+    public List<PostsDto> findPostsByKeyword(String keyword){
+        return postsMapper.toDtoList(postsRepository.searchByKeyword(keyword)
+            .orElse(Collections.emptyList()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Object[]> findPostsByKewordWithCount(String keyword){
+        return postsRepository.searchByKeywordWithCount(keyword)
+            .orElse(Collections.emptyList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostsDto> findPostsByCategoryId(Long categoryId){
+        return postsMapper.toDtoList(postsRepository.findAllByCategoryId(categoryId)
+            .orElse(Collections.emptyList()));
     }
 
     @Transactional

@@ -20,99 +20,21 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
     @Query("SELECT p FROM PostsEntity p ORDER BY p.createDate DESC LIMIT 1")
     Optional<PostsEntity> findLatestByCreateDate();
 
+    @Query("SELECT p FROM PostsEntity p " +
+        "WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword% " +
+        "ORDER BY " +
+        "(LENGTH(p.title) - LENGTH(REPLACE(p.title, :keyword, '')) + " +
+        "LENGTH(p.content) - LENGTH(REPLACE(p.content, :keyword, ''))) DESC")
+    Optional<List<PostsEntity>> searchByKeyword(@Param("keyword") String keyword);
 
-//@Query(value = "SELECT DISTINCT ON (p.post_id) p.*, " +
-//    "(COALESCE(LENGTH(p.content) - LENGTH(REPLACE(LOWER(p.content), LOWER(:keyword), '')), 0) / LENGTH(:keyword) + " +
-//    "COALESCE(LENGTH(p.title) - LENGTH(REPLACE(LOWER(p.title), LOWER(:keyword), '')), 0) / LENGTH(:keyword) + " +
-//    "COALESCE(LENGTH(c.category_name) - LENGTH(REPLACE(LOWER(c.category_name), LOWER(:keyword), '')), 0) / LENGTH(:keyword) + " +
-//    "COALESCE(LENGTH(t.tag_name) - LENGTH(REPLACE(LOWER(t.tag_name), LOWER(:keyword), '')), 0) / LENGTH(:keyword)) AS keyword_count " +
-//    "FROM posts p " +
-//    "LEFT JOIN categories c ON p.category_id = c.category_id " +
-//    "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-//    "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-//    "WHERE p.content ILIKE %:keyword% " +
-//    "OR p.title ILIKE %:keyword% " +
-//    "OR c.category_name ILIKE %:keyword% " +
-//    "OR t.tag_name ILIKE %:keyword% " +
-//    "ORDER BY p.post_id, keyword_count DESC",
-//    countQuery = "SELECT COUNT(DISTINCT p.post_id) FROM posts p " +
-//        "LEFT JOIN categories c ON p.category_id = c.category_id " +
-//        "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-//        "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-//        "WHERE p.content ILIKE %:keyword% " +
-//        "OR p.title ILIKE %:keyword% " +
-//        "OR c.category_name ILIKE %:keyword% " +
-//        "OR t.tag_name ILIKE %:keyword%",
-//    nativeQuery = true)
-//@Query("SELECT p FROM PostsEntity p " +
-//    "LEFT JOIN p.category c " +
-//    "LEFT JOIN PostTagsEntity pt ON pt.post = p " +
-//    "LEFT JOIN pt.tag t " +
-//    "WHERE p.content LIKE %:keyword% " +
-//    "OR p.title LIKE %:keyword% " +
-//    "OR c.categoryName LIKE %:keyword% " +
-//    "OR t.tagName LIKE %:keyword% " +
-//    "GROUP BY p.postId, p.content, p.title, c.categoryId, c.categoryName, t.tagId, t.tagName " +
-//    "ORDER BY ( " +
-//    "    COALESCE(LENGTH(p.content) - LENGTH(REPLACE(p.content, :keyword, '')), 0) + " +
-//    "    COALESCE(LENGTH(p.title) - LENGTH(REPLACE(p.title, :keyword, '')), 0) + " +
-//    "    COALESCE(LENGTH(c.categoryName) - LENGTH(REPLACE(c.categoryName, :keyword, '')), 0) + " +
-//    "    COALESCE(SUM(CASE WHEN t.tagName LIKE %:keyword% THEN 1 ELSE 0 END), 0) " +
-//    ") DESC")
-//    @Query(
-//    value = "SELECT p.* " +
-//        "FROM posts p " +
-//        "LEFT JOIN categories c ON p.category_id = c.category_id " +
-//        "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-//        "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-//        "WHERE (p.title LIKE %:keyword% " +
-//        "OR p.content LIKE %:keyword% " +
-//        "OR c.category_name LIKE %:keyword% " +
-//        "OR t.tag_name LIKE %:keyword%) " +
-//        "GROUP BY p.post_id " +
-//        "ORDER BY " +
-//        "(COUNT(CASE WHEN p.title LIKE %:keyword% THEN 1 END) + " +
-//        "COUNT(CASE WHEN p.content LIKE %:keyword% THEN 1 END) + " +
-//        "COUNT(CASE WHEN c.category_name LIKE %:keyword% THEN 1 END) + " +
-//        "COUNT(CASE WHEN t.tag_name LIKE %:keyword% THEN 1 END)) DESC",
-//    countQuery = "SELECT COUNT(DISTINCT p.post_id) " +
-//        "FROM posts p " +
-//        "LEFT JOIN categories c ON p.category_id = c.category_id " +
-//        "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-//        "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-//        "WHERE (p.title LIKE %:keyword% " +
-//        "OR p.content LIKE %:keyword% " +
-//        "OR c.category_name LIKE %:keyword% " +
-//        "OR t.tag_name LIKE %:keyword%)",
-//    nativeQuery = true)
+    @Query("SELECT p, " +
+        "(LENGTH(p.title) - LENGTH(REPLACE(p.title, :keyword, '')) + " +
+        "LENGTH(p.content) - LENGTH(REPLACE(p.content, :keyword, ''))) AS keywordCount " +
+        "FROM PostsEntity p " +
+        "WHERE p.title LIKE %:keyword% OR p.content LIKE %:keyword% " +
+        "ORDER BY keywordCount DESC")
+    Optional<List<Object[]>> searchByKeywordWithCount(@Param("keyword") String keyword);
 
-    @Query(
-        value = "SELECT p.*, " +
-            "((LENGTH(p.title) - LENGTH(REPLACE(p.title, :keyword, ''))) / LENGTH(:keyword) + " +
-            "(LENGTH(p.content) - LENGTH(REPLACE(p.content, :keyword, ''))) / LENGTH(:keyword) + " +
-            "(LENGTH(c.category_name) - LENGTH(REPLACE(c.category_name, :keyword, ''))) / LENGTH(:keyword) + " +
-            "(LENGTH(t.tag_name) - LENGTH(REPLACE(t.tag_name, :keyword, ''))) / LENGTH(:keyword)) AS relevance " +
-            "FROM posts p " +
-            "LEFT JOIN categories c ON p.category_id = c.category_id " +
-            "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-            "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-            "WHERE (p.title LIKE %:keyword% " +
-            "OR p.content LIKE %:keyword% " +
-            "OR c.category_name LIKE %:keyword% " +
-            "OR t.tag_name LIKE %:keyword%) " +
-            "GROUP BY p.post_id, p.title, p.content, c.category_name, t.tag_name " +
-            "ORDER BY relevance DESC",
-        countQuery = "SELECT COUNT(DISTINCT p.post_id) " +
-            "FROM posts p " +
-            "LEFT JOIN categories c ON p.category_id = c.category_id " +
-            "LEFT JOIN post_tags pt ON p.post_id = pt.post_id " +
-            "LEFT JOIN tags t ON pt.tag_id = t.tag_id " +
-            "WHERE (p.title LIKE %:keyword% " +
-            "OR p.content LIKE %:keyword% " +
-            "OR c.category_name LIKE %:keyword% " +
-            "OR t.tag_name LIKE %:keyword%)",
-        nativeQuery = true
-    )
-    Page<PostsEntity> findPostsByKeyword(@Param("keyword") String keyword, Pageable pageable);
-
+    @Query("SELECT p FROM PostsEntity p WHERE p.category.categoryId = :categoryId")
+    Optional<List<PostsEntity>> findAllByCategoryId(@Param("categoryId") Long categoryId);
 }
