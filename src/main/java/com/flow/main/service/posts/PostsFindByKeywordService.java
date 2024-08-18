@@ -40,48 +40,32 @@ public class PostsFindByKeywordService {
         HashMap<PostsDto, Integer> postsScores = new HashMap<>();
 
         List<Object[]> postsByKeywordWithCount = postsService.findPostsByKewordWithCount(keyword);
-        for (Object[] o : postsByKeywordWithCount){
-            PostsDto postsDto = postsMapper.toDto((PostsEntity) o[0]);
-            Integer keywordCount = (Integer) o[1];
-            postsScores.put(postsDto, keywordCount);
-        }
-        CategoriesDto categoriesDto = categoriesService.findCategoryByKeyword(keyword);
-        if(categoriesDto != null){
-            List<PostsDto> postsWithCategoryId = postsService.findPostsByCategoryId(categoriesDto.getCategoryId());
-            postsWithCategoryId.forEach(postsDto -> {
-                postsScores.put(postsDto, postsScores.getOrDefault(postsDto, 1) + 1);
-            });
-        }
+        postsByKeywordWithCount.forEach(object -> postsScores.put(postsMapper.toDto((PostsEntity) object[0]), (Integer) object[1]));
+
+        categoriesService.findCategoryByKeyword(keyword)
+            .ifPresent(categoriesDto -> postsService.findPostsByCategoryId(categoriesDto.getCategoryId())
+                .forEach(postsDto -> postsScores.put(postsDto, postsScores.getOrDefault(postsDto, 1) + 1)));
 
         List<TagsDto> tagsWithKeyword = tagsService.findTagsByKeyword(keyword);
         List<PostsDto> postsWithTagList = new ArrayList<>();
-        for (TagsDto t : tagsWithKeyword){
-            List<PostTagsDto> postTagsDtoList = postTagsService.findAllByTagId(t.getTagId());
-            for(PostTagsDto pt : postTagsDtoList){
-                PostsDto postsDto = postsService.findByPostId(pt.getPostId());
-                postsWithTagList.add(postsDto);
-            }
-        }
+        tagsWithKeyword.forEach(tagsDto -> postTagsService.findAllByTagId(tagsDto.getTagId())
+                .forEach(postTagsDto -> postsWithTagList.add(postsService.findByPostId(postTagsDto.getPostId()))));
 
-        postsWithTagList.forEach(postsDto -> {
-            postsScores.put(postsDto, postsScores.getOrDefault(postsDto, 1) + 1);
-        });
+        postsWithTagList.forEach(postsDto -> postsScores.put(postsDto, postsScores.getOrDefault(postsDto, 1) + 1));
 
         List<Map.Entry<PostsDto, Integer>> sortedPosts = new ArrayList<>(postsScores.entrySet());
         sortedPosts.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
         List<Map.Entry<PostsDto, Integer>> pagedPosts = sortedPosts.stream()
-            .skip((page - 1) * count) // Skip to the desired page
-            .limit(count) // Limit to the number of entries per page
+            .skip((page - 1) * count)
+            .limit(count)
             .toList();
 
         List<FindByKeywordDto> findByKeywordDtoList = new ArrayList<>();
-        pagedPosts.forEach(postsDtoLongEntry -> {
+        pagedPosts.forEach(postsDtoLongEntry ->
             findByKeywordDtoList.add(FindByKeywordDto.builder()
                 .postId(postsDtoLongEntry.getKey().getPostId())
-                .build());
-        });
-
+                .build()));
 
         return FindByKeywordResponseDto.builder()
             .findByKeywordDtoList(findByKeywordDtoList)
