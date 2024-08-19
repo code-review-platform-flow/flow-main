@@ -1,5 +1,6 @@
 package com.flow.main.entity;
 
+import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import com.flow.main.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,9 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,43 +29,31 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "user_info")
+@Table(name = "career")
 @Where(clause = "use_yn = true")
-public class UserInfoEntity extends BaseEntity {
+public class CareerEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_info_id")
-    private Long userInfoId;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UsersEntity user;
+    @Column(name = "career_id")
+    private Long careerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "school_id")
-    private SchoolEntity school;
+    @JoinColumn(name = "user_info_id")
+    private UserInfoEntity userInfo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id")
-    private MajorEntity major;
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
-    @Column(name = "student_number", nullable = false)
-    private String studentNumber;
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
-    @Column(name = "role", nullable = false)
-    private String role;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
-
-    @Column(name = "profile_url", nullable = false)
-    private String profileUrl;
-
-    @Column(name = "one_liner")
-    private String oneLiner;
+    @Column(name = "title")
+    private String title;
 
     @Version
     private int version;
-
 }
