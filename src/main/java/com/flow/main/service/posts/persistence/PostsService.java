@@ -7,6 +7,7 @@ import com.flow.main.repository.PostsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class PostsService {
     @Transactional(readOnly = true)
     public List<PostsDto> findPostsByCategoryId(Long categoryId){
         return postsMapper.toDtoList(postsRepository.findAllByCategoryId(categoryId)
-            .orElse(Collections.emptyList()));
+                .orElse(Collections.emptyList()));
     }
 
     @Transactional

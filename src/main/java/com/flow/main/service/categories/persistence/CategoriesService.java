@@ -4,6 +4,7 @@ import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.mapper.CategoriesMapper;
 import com.flow.main.repository.CategoriesRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +29,10 @@ public class CategoriesService {
     }
 
     @Transactional(readOnly = true)
-    public CategoriesDto findCategoryByKeyword(String keyword){
-        return categoriesMapper.toDto(categoriesRepository.searchByKeyword(keyword)
-            .orElse(null));
+    public Optional<CategoriesDto> findCategoryByKeyword(String keyword){
+        return Optional.ofNullable(
+            categoriesMapper.toDto(categoriesRepository.searchByKeyword(keyword)
+                .orElse(null)));
     }
 
 }
