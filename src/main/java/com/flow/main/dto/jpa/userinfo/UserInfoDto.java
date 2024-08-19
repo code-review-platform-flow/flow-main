@@ -21,5 +21,6 @@ public class UserInfoDto {
     private String role;
     private String userName;
     private String profileUrl;
+    private String oneLiner;
     private int version;
 }
