@@ -45,6 +45,11 @@ public class FollowsService {
             .orElse(new FollowsEntity()));
     }
 
+    @Transactional(readOnly = true)
+    public Long countByFolloweeId(Long followeeId){
+        return followsRepository.countFByFolloweeId(followeeId);
+    }
+
     @Transactional
     public FollowsDto reuse(FollowsDto followsDto){
         FollowsEntity followsEntity = followsMapper.toEntity(followsDto);
