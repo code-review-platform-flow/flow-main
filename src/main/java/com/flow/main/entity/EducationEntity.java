@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.time.LocalDate;
+import java.time.Year;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,10 +43,10 @@ public class EducationEntity extends BaseEntity {
     private String schoolName;
 
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    private Year startDate;
 
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private Year endDate;
 
     @Version
     private int version;

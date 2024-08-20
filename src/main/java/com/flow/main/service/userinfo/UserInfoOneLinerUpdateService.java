@@ -1,7 +1,7 @@
 package com.flow.main.service.userinfo;
 
-import com.flow.main.dto.controller.user.update.oneliner.request.UserOneLinerUpdateRequestDto;
-import com.flow.main.dto.controller.user.update.oneliner.response.UserOneLinerUpdateResponseDto;
+import com.flow.main.dto.controller.user.update.oneliner.request.OneLinerUpdateRequestDto;
+import com.flow.main.dto.controller.user.update.oneliner.response.OneLinerUpdateResponseDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.userinfo.persistence.UserInfoService;
@@ -16,16 +16,17 @@ public class UserInfoOneLinerUpdateService {
     private final UsersService usersService;
     private final UserInfoService userInfoService;
 
-    public UserOneLinerUpdateResponseDto updateOneLiner(UserOneLinerUpdateRequestDto userOneLinerUpdateRequestDto){
+    public OneLinerUpdateResponseDto updateOneLiner(
+        OneLinerUpdateRequestDto oneLinerUpdateRequestDto){
 
-        UsersDto usersDto = usersService.findByEmail(userOneLinerUpdateRequestDto.getEmail());
+        UsersDto usersDto = usersService.findByEmail(oneLinerUpdateRequestDto.getEmail());
 
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
-        userInfoDto.setOneLiner(userOneLinerUpdateRequestDto.getOneLiner());
+        userInfoDto.setOneLiner(oneLinerUpdateRequestDto.getOneLiner());
 
         UserInfoDto savedUserInfoDto = userInfoService.save(userInfoDto);
 
-        return UserOneLinerUpdateResponseDto.builder()
+        return OneLinerUpdateResponseDto.builder()
             .oneLiner(savedUserInfoDto.getOneLiner())
             .build();
     }

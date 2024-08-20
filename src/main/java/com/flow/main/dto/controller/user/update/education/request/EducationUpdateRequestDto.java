@@ -1,4 +1,4 @@
-package com.flow.main.dto.jpa.career;
+package com.flow.main.dto.controller.user.update.education.request;
 
 import java.time.LocalDate;
 import java.time.Year;
@@ -6,22 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CareerDto {
+public class EducationUpdateRequestDto {
 
-    private Long careerId;
-    private Long userInfoId;
+    private String email;
+    private String schoolName;
     private Year startDate;
     private Year endDate;
-    private String description;
-    private String title;
-    private int version;
 
 }
