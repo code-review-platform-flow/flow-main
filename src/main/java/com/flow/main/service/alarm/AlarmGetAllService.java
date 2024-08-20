@@ -23,7 +23,8 @@ public class AlarmGetAllService {
 	public AlarmGetAllResponseDto getAllByEmail(String email) {
 		UsersDto usersDto = usersService.findByEmail(email);
 		List<AlarmDto> alarmDtoList = alarmService.getAllByUserId(usersDto.getUserId());
-		return AlarmGetAllResponseDto.builder().items(alarmDtoList).build();
+		List<AlarmDto> filterAlarmDto = alarmDtoList.stream().filter(alarmDto -> alarmDto.getIsRead().equals(false)).toList();
+		return AlarmGetAllResponseDto.builder().items(filterAlarmDto).build();
 	}
 
 }
