@@ -15,9 +15,5 @@ import lombok.Setter;
 public class CareerUpdateResponseDto {
 
     private Long careerId;
-    private Year startDate;
-    private Year endDate;
-    private String description;
-    private String title;
 
 }

@@ -58,21 +58,8 @@ public class CareerUpdateService {
         careerDto.setDescription(description);
         CareerDto savedCareerDto = careerService.save(careerDto);
 
-        String responseDescription = savedCareerDto.getDescription();
-        String responseTitle = savedCareerDto.getTitle();
-        Year responseStartDate = Optional.ofNullable(savedCareerDto.getStartDate())
-            .map(date -> Year.of(date.getYear()))
-            .orElse(null);
-        Year responseEndDate = Optional.ofNullable(savedCareerDto.getEndDate())
-            .map(date -> Year.of(date.getYear()))
-            .orElse(null);
-
         return CareerUpdateResponseDto.builder()
             .careerId(savedCareerDto.getCareerId())
-            .description(responseDescription)
-            .title(responseTitle)
-            .startDate(responseStartDate)
-            .endDate(responseEndDate)
             .build();
     }
 }

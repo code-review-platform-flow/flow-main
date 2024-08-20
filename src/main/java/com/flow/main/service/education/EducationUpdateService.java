@@ -53,17 +53,8 @@ public class EducationUpdateService {
         educationDto.setSchoolName(schoolName);
         EducationDto savedEducationDto = educationService.save(educationDto);
 
-        String responseSchoolName = savedEducationDto.getSchoolName();
-        Year responseStartDate = Year.of(savedEducationDto.getStartDate().getYear());
-        Year responseEndDate = Optional.ofNullable(savedEducationDto.getEndDate())
-            .map(date -> Year.of(date.getYear()))
-            .orElse(null);
-
         return EducationUpdateResponseDto.builder()
             .educationId(savedEducationDto.getEducationId())
-            .schoolName(responseSchoolName)
-            .startDate(responseStartDate)
-            .endDate(responseEndDate)
             .build();
     }
 }

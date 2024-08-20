@@ -68,15 +68,14 @@ public class UserController {
         log.info("email : {}", oneLinerUpdateRequestDto.getEmail());
         log.info("oneLiner : {}", oneLinerUpdateRequestDto.getOneLiner());
 
-        return ResponseEntity.ok(userInfoOneLinerUpdateService.updateOneLiner(
-            oneLinerUpdateRequestDto));
+        return ResponseEntity.ok(userInfoOneLinerUpdateService.updateOneLiner(oneLinerUpdateRequestDto));
     }
 
     @PostMapping("/education")
     public ResponseEntity<EducationUpdateResponseDto> updateEducation(@RequestBody final EducationUpdateRequestDto educationUpdateRequestDto){
         log.info("email : {}", educationUpdateRequestDto.getEmail());
         log.info("educationId : {}", educationUpdateRequestDto.getEducationId());
-        log.info("schoolNAme : {}", educationUpdateRequestDto.getSchoolName());
+        log.info("schoolName : {}", educationUpdateRequestDto.getSchoolName());
         log.info("startDate : {}", educationUpdateRequestDto.getStartDate());
         log.info("endDate : {}", educationUpdateRequestDto.getEndDate());
 
