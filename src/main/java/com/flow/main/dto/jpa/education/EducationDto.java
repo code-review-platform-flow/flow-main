@@ -2,6 +2,7 @@ package com.flow.main.dto.jpa.education;
 
 import com.flow.main.entity.UserInfoEntity;
 import java.time.LocalDate;
+import java.time.Year;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +19,8 @@ public class EducationDto {
     private Long educationId;
     private Long userInfoId;
     private String schoolName;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Year startDate;
+    private Year endDate;
     private int version;
     
 }

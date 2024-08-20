@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserOneLinerUpdateResponseDto {
+public class OneLinerUpdateResponseDto {
 
     private String oneLiner;
 

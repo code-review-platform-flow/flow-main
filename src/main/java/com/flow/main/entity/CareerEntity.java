@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,10 +44,10 @@ public class CareerEntity extends BaseEntity {
     private UserInfoEntity userInfo;
 
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private Year startDate;
 
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private Year endDate;
 
     @Column(name = "description", nullable = false)
     private String description;
