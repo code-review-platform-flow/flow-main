@@ -5,6 +5,8 @@ import com.flow.main.entity.EducationEntity;
 import com.flow.main.mapper.EducationMapper;
 import com.flow.main.repository.EducationRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,12 @@ public class EducationService {
     public EducationDto findByEducationId(Long educationId){
         return educationMapper.toDto(educationRepository.findByEducationId(educationId)
             .orElseThrow(() -> new EntityNotFoundException("Education not found with educationId : " + educationId)));
+    }
+
+    @Transactional(readOnly = true)
+    public List<EducationDto> findAllByUserInfoId(Long userInfoId){
+        return educationMapper.toListDto(educationRepository.findAllByUserInfoId(userInfoId)
+            .orElse(Collections.emptyList()));
     }
 
     @Transactional

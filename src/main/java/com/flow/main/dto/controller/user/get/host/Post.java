@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.user.get.response;
+package com.flow.main.dto.controller.user.get.host;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class UserGetInfoResponseDto {
+public class Post {
 
-
+    private Long postId;
 
 }

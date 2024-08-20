@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.user.get.request;
+package com.flow.main.dto.controller.user.get.host;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserGetInfoRequestDto {
+public class Education {
 
-    private String email;
+    private Long educationId;
 
 }
