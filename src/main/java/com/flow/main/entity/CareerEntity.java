@@ -44,10 +44,10 @@ public class CareerEntity extends BaseEntity {
     private UserInfoEntity userInfo;
 
     @Column(name = "start_date")
-    private Year startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private Year endDate;
+    private LocalDate endDate;
 
     @Column(name = "description", nullable = false)
     private String description;

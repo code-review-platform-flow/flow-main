@@ -43,10 +43,10 @@ public class EducationEntity extends BaseEntity {
     private String schoolName;
 
     @Column(name = "start_date", nullable = false)
-    private Year startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private Year endDate;
+    private LocalDate endDate;
 
     @Version
     private int version;

@@ -1,27 +1,23 @@
-package com.flow.main.dto.jpa.career;
+package com.flow.main.dto.controller.user.update.career.response;
 
-import java.time.LocalDate;
 import java.time.Year;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CareerDto {
+public class CareerUpdateResponseDto {
 
     private Long careerId;
-    private Long userInfoId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Year startDate;
+    private Year endDate;
     private String description;
     private String title;
-    private int version;
 
 }

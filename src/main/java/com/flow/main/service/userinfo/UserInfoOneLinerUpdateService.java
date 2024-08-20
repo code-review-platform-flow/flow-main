@@ -27,6 +27,7 @@ public class UserInfoOneLinerUpdateService {
         UserInfoDto savedUserInfoDto = userInfoService.save(userInfoDto);
 
         return OneLinerUpdateResponseDto.builder()
+            .userInfoId(savedUserInfoDto.getUserInfoId())
             .oneLiner(savedUserInfoDto.getOneLiner())
             .build();
     }

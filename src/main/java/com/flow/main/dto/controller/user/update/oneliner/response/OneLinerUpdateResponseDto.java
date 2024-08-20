@@ -13,6 +13,7 @@ import lombok.Setter;
 @Builder
 public class OneLinerUpdateResponseDto {
 
+    private Long userInfoId;
     private String oneLiner;
 
 }

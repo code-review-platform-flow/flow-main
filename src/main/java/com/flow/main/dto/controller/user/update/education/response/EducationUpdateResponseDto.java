@@ -15,6 +15,7 @@ import lombok.Setter;
 @Builder
 public class EducationUpdateResponseDto {
 
+    private Long educationId;
     private String schoolName;
     private Year startDate;
     private Year endDate;

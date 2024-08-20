@@ -19,8 +19,8 @@ public class EducationDto {
     private Long educationId;
     private Long userInfoId;
     private String schoolName;
-    private Year startDate;
-    private Year endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private int version;
     
 }
