@@ -4,6 +4,8 @@ import com.flow.main.dto.controller.user.get.career.response.CareerGetResponseDt
 import com.flow.main.dto.controller.user.get.education.response.EducationGetResponseDto;
 import com.flow.main.dto.controller.user.get.host.request.HostUserGetInfoRequestDto;
 import com.flow.main.dto.controller.user.get.host.response.HostUserGetInfoResponseDto;
+import com.flow.main.dto.controller.user.get.summary.request.UserSummaryRequestDto;
+import com.flow.main.dto.controller.user.get.summary.response.UserSummaryResponseDto;
 import com.flow.main.dto.controller.user.update.career.request.CareerUpdateRequestDto;
 import com.flow.main.dto.controller.user.update.career.response.CareerUpdateResponseDto;
 import com.flow.main.dto.controller.user.update.education.request.EducationUpdateRequestDto;
@@ -17,6 +19,7 @@ import com.flow.main.service.education.EducationGetService;
 import com.flow.main.service.education.EducationUpdateService;
 import com.flow.main.service.user.HostUserGetInfoService;
 import com.flow.main.service.userinfo.UserInfoOneLinerUpdateService;
+import com.flow.main.service.userinfo.UserInfoSummaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final HostUserGetInfoService hostUserGetInfoService;
+    private final UserInfoSummaryService userInfoSummaryService;
     private final EducationGetService educationGetService;
     private final CareerGetService careerGetService;
     private final UserInfoOneLinerUpdateService userInfoOneLinerUpdateService;
@@ -47,6 +51,13 @@ public class UserController {
         log.info("visitorEmail : {}", hostUserGetInfoRequestDto.getVisitorEmail());
 
         return ResponseEntity.ok(hostUserGetInfoService.getHostUserInfo(hostEmail, hostUserGetInfoRequestDto));
+    }
+
+    @GetMapping("/summary")
+    public ResponseEntity<UserSummaryResponseDto> getUserSummary(@RequestBody final UserSummaryRequestDto userSummaryRequestDto){
+        log.info("email : {}", userSummaryRequestDto.getEmail());
+
+        return ResponseEntity.ok(userInfoSummaryService.getUserSummary(userSummaryRequestDto));
     }
 
     @GetMapping("/education/{educationId}")
