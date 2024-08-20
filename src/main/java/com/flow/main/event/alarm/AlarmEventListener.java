@@ -23,6 +23,8 @@ public class AlarmEventListener {
 			.alarmType(alarmEvent.getAlarmType())
 			.message(alarmEvent.getMessage())
 			.isRead(alarmEvent.getIsRead())
+			.referenceId(alarmEvent.getReferenceId())
+			.referenceTable(alarmEvent.getReferenceTable())
 			.build();
 
 		alarmCreateService.asyncCreate(alarmDto);

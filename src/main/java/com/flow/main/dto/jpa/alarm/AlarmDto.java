@@ -16,4 +16,6 @@ public class AlarmDto {
 	private String alarmType;
 	private String message;
 	private Boolean isRead;
+	private Long referenceId;
+	private String referenceTable;
 }

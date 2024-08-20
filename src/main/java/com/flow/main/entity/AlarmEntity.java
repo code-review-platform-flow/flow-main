@@ -47,4 +47,10 @@ public class AlarmEntity extends BaseEntity {
 	@Column(name = "isRead", nullable = false)
 	private Boolean isRead;
 
+	@Column(name = "reference_id")
+	private Long referenceId;
+
+	@Column(name = "reference_table")
+	private String referenceTable;
+
 }
