@@ -18,7 +18,7 @@ public class AuthCheckVerifiedEmailService {
 
     public void checkVerifiedEmail(String email) throws IOException {
         Map<String, Object> map = UnivCert.status(userVerifyProperty.getKey(), email);
-        if(map.get("success").equals(false)){
+        if(Boolean.FALSE.equals(map.get("success"))){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Email is not verified");
         }
     }

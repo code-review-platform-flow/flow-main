@@ -1,6 +1,7 @@
 package com.flow.main.service.users.persistence;
 
 import com.flow.main.dto.jpa.users.UsersDto;
+import com.flow.main.entity.UsersEntity;
 import com.flow.main.mapper.UsersMapper;
 import com.flow.main.repository.UsersRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +35,13 @@ public class UsersService {
     public UsersDto findByUserId(Long userId){
         return usersMapper.toDto(usersRepository.findByUserId(userId)
             .orElseThrow(() -> new EntityNotFoundException("User not found with userId : " + userId)));
+    }
+
+    @Transactional
+    public UsersDto delete(UsersDto usersDto){
+        UsersEntity usersEntity = usersMapper.toEntity(usersDto);
+        usersEntity.markDeleted();
+        return usersMapper.toDto(usersRepository.save(usersEntity));
     }
 
 }
