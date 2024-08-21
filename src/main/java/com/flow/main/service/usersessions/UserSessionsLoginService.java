@@ -8,7 +8,7 @@ import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.service.security.JwtUtil;
 import com.flow.main.service.userinfo.persistence.UserInfoService;
-import com.flow.main.service.users.UserPasswordVerifyService;
+import com.flow.main.service.users.UsersPasswordVerifyService;
 import com.flow.main.service.users.persistence.UsersService;
 import com.flow.main.service.usersessions.persistence.UserSessionsService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class UserSessionsLoginService {
 
     private final UsersService usersService;
-    private final UserPasswordVerifyService userPasswordVerifyService;
+    private final UsersPasswordVerifyService usersPasswordVerifyService;
     private final UserInfoService userInfoService;
     private final UserSessionsService userSessionsService;
     private final JwtUtil jwtUtil;
@@ -30,7 +30,7 @@ public class UserSessionsLoginService {
     public LoginResponseDto login(LoginRequestDto loginRequestDto){
 
         UsersDto usersDto = usersService.findByEmail(loginRequestDto.getEmail());
-        userPasswordVerifyService.verifyPassword(usersDto.getPassword(), loginRequestDto.getPassword());
+        usersPasswordVerifyService.verifyPassword(usersDto.getPassword(), loginRequestDto.getPassword());
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
 
         Long userId = userInfoDto.getUserId();

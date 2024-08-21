@@ -10,6 +10,7 @@ import com.flow.main.service.likes.LikesCancelService;
 import com.flow.main.service.likes.LikesClickService;
 import com.flow.main.service.likes.LikesCountService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/like")
 @RequiredArgsConstructor
@@ -35,6 +37,9 @@ public class LikeController {
 
     @PostMapping("/{postId}")
     public ResponseEntity<LikeCLickResponseDto> clickLike(@PathVariable("postId") Long postId, @RequestBody final LikeClickRequestDto likeClickRequestDto){
+        log.info("postId : {}", postId);
+        log.info("email : {}", likeClickRequestDto.getEmail());
+
         LikesDto likesDto = likesClickService.clickLike(postId, likeClickRequestDto);
         return ResponseEntity.ok(LikeCLickResponseDto.builder()
             .likeId(likesDto.getLikeId())
@@ -44,6 +49,9 @@ public class LikeController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<LikeCancelResponseDto> cancelLike(@PathVariable("postId") Long postId, @RequestBody final
         LikeCancelRequestDto likeCancelRequestDto){
+        log.info("postId : {}", postId);
+        log.info("email : {}", likeCancelRequestDto.getEmail());
+
         LikesDto likesDto = likesCancelService.cancelLike(postId, likeCancelRequestDto);
         return ResponseEntity.ok(LikeCancelResponseDto.builder().build());
     }

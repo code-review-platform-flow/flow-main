@@ -12,6 +12,8 @@ import com.flow.main.dto.controller.user.update.education.request.EducationUpdat
 import com.flow.main.dto.controller.user.update.education.response.EducationUpdateResponseDto;
 import com.flow.main.dto.controller.user.update.oneliner.request.OneLinerUpdateRequestDto;
 import com.flow.main.dto.controller.user.update.oneliner.response.OneLinerUpdateResponseDto;
+import com.flow.main.dto.controller.user.withdrawal.request.UserWithdrawalRequestDto;
+import com.flow.main.dto.controller.user.withdrawal.response.UserWithdrawalResponseDto;
 import com.flow.main.service.career.CareerGetService;
 import com.flow.main.service.career.CareerUpdateService;
 import com.flow.main.service.career.persistence.CareerService;
@@ -20,9 +22,11 @@ import com.flow.main.service.education.EducationUpdateService;
 import com.flow.main.service.user.HostUserGetInfoService;
 import com.flow.main.service.userinfo.UserInfoOneLinerUpdateService;
 import com.flow.main.service.userinfo.UserInfoSummaryService;
+import com.flow.main.service.users.UsersWithdrawalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +48,7 @@ public class UserController {
     private final UserInfoOneLinerUpdateService userInfoOneLinerUpdateService;
     private final EducationUpdateService educationUpdateService;
     private final CareerUpdateService careerUpdateService;
+    private final UsersWithdrawalService usersWithdrawalService;
 
     @GetMapping("/{hostEmail}")
     public ResponseEntity<HostUserGetInfoResponseDto> getHostUserInfo(@PathVariable("hostEmail") String hostEmail, @RequestBody(required = false) HostUserGetInfoRequestDto hostUserGetInfoRequestDto){
@@ -104,5 +109,14 @@ public class UserController {
         log.info("endDate : {}", careerUpdateRequestDto.getEndDate());
 
         return ResponseEntity.ok(careerUpdateService.updateCareer(careerUpdateRequestDto));
+    }
+
+    @DeleteMapping("/withdrawal")
+    public ResponseEntity<UserWithdrawalResponseDto> withdrawal(@RequestBody final
+        UserWithdrawalRequestDto userWithdrawalRequestDto){
+        log.info("email : {}", userWithdrawalRequestDto.getEmail());
+        log.info("reason : {}", userWithdrawalRequestDto.getReason());
+
+        return ResponseEntity.ok(usersWithdrawalService.withdrawal(userWithdrawalRequestDto));
     }
 }
