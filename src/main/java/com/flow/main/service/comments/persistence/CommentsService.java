@@ -1,12 +1,17 @@
 package com.flow.main.service.comments.persistence;
 
 import com.flow.main.dto.jpa.comments.CommentsDto;
+import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.entity.CommentsEntity;
+import com.flow.main.entity.UsersEntity;
 import com.flow.main.mapper.CommentsMapper;
+import com.flow.main.mapper.UsersMapper;
 import com.flow.main.repository.CommentsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +22,7 @@ public class CommentsService {
 
     private final CommentsRepository commentsRepository;
     private final CommentsMapper commentsMapper;
+    private final UsersMapper usersMapper;
 
     @Transactional
     public CommentsDto save(CommentsDto commentsDto){
@@ -44,8 +50,14 @@ public class CommentsService {
     }
 
     @Transactional(readOnly = true)
-    public Long countByPostId(Long postId){
-        return commentsRepository.countByPostId(postId);
+    public Map<Long, Integer> findUsersWithCommentCountOrdered(){
+        List<Object[]> result = commentsRepository.findUsersWithCommentCountOrdered()
+            .orElse(Collections.emptyList());
+        return result.stream()
+            .collect(Collectors.toMap(
+                objects -> usersMapper.toDto((UsersEntity) objects[0]).getUserId(),
+                objects -> ((Long) objects[1]).intValue()
+            ));
     }
 
     @Transactional

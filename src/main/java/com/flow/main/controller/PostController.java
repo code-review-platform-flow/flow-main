@@ -74,6 +74,12 @@ public class PostController {
 
     @PostMapping("")
     public ResponseEntity<PostWriteResponseDto> write(@RequestBody final PostWriteRequestDto postWriteRequestDto){
+        log.info("email : {}", postWriteRequestDto.getEmail());
+        log.info("category : {}", postWriteRequestDto.getCategory());
+        postWriteRequestDto.getTags().forEach(tagsNameDto -> { log.info("tagName : {}", tagsNameDto.getTagName());});
+        log.info("title : {}", postWriteRequestDto.getTitle());
+        log.info("content : {}", postWriteRequestDto.getContent());
+
         PostsDto postsDto = postsWriteService.write(postWriteRequestDto);
         return ResponseEntity.ok(PostWriteResponseDto.builder()
             .postId(postsDto.getPostId())
@@ -82,6 +88,13 @@ public class PostController {
 
     @PatchMapping("/{postId}")
     public ResponseEntity<PostModifyResponseDto> modify(@PathVariable("postId") Long postId, @RequestBody final PostModifyRequestDto postModifyRequestDto){
+        log.info("postId : {}", postId);
+        log.info("email : {}", postModifyRequestDto.getEmail());
+        log.info("category : {}", postModifyRequestDto.getCategory());
+        postModifyRequestDto.getTags().forEach(tagsNameDto -> { log.info("tagName : {}", tagsNameDto.getTagName());});
+        log.info("title : {}", postModifyRequestDto.getTitle());
+        log.info("content : {}", postModifyRequestDto.getContent());
+
         PostsDto postsDto = postsModifyService.modify(postId, postModifyRequestDto);
         return ResponseEntity.ok(PostModifyResponseDto.builder()
             .postId(postsDto.getPostId())
@@ -91,6 +104,9 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<PostDeleteResponseDto> delete(@PathVariable("postId") Long postId, @RequestBody final
         PostDeleteRequestDto postDeleteRequestDto){
+        log.info("postId : {}", postId);
+        log.info("email : {}", postDeleteRequestDto.getEmail());
+
         PostsDto postsDto = postsDeleteService.delete(postId, postDeleteRequestDto);
         return ResponseEntity.ok(PostDeleteResponseDto.builder().build());
     }
