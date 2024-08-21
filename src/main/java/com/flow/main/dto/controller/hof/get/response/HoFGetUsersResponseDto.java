@@ -1,6 +1,6 @@
 package com.flow.main.dto.controller.hof.get.response;
 
-import com.flow.main.dto.controller.hof.get.UserId;
+import com.flow.main.dto.controller.hof.get.UserEmail;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,6 @@ import lombok.Setter;
 @Builder
 public class HoFGetUsersResponseDto {
 
-    List<UserId> userList;
+    List<UserEmail> userList;
 
 }

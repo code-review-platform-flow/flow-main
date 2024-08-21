@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserId {
+public class UserEmail {
 
-    private Long userId;
+    private String email;
 
 }
