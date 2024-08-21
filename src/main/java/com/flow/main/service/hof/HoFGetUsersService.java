@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HoFGetUsersService {
 
-    private final UsersService usersService;
     private final HallOfFameService hallOfFameService;
 
     public HoFGetUsersResponseDto getHoFUsers(Long count){
