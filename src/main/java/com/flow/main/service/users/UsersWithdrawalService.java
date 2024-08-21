@@ -29,12 +29,12 @@ public class UsersWithdrawalService {
 
     public UserWithdrawalResponseDto withdrawal(UserWithdrawalRequestDto userWithdrawalRequestDto){
         UsersDto usersDto = usersService.findByEmail(userWithdrawalRequestDto.getEmail());
-        univCertService.clearVerifySpecificUser(userWithdrawalRequestDto.getEmail());
         withdrawalService.save(WithdrawalDto.builder()
             .userId(usersDto.getUserId())
             .reason(userWithdrawalRequestDto.getReason())
             .build());
         usersService.delete(usersDto);
+        univCertService.clearVerifySpecificUser(userWithdrawalRequestDto.getEmail());
 
         return UserWithdrawalResponseDto.builder().build();
     }
