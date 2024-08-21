@@ -20,4 +20,10 @@ public interface RepliesRepository extends JpaRepository<RepliesEntity, Long> {
 
     @Query("SELECT COUNT(r) FROM RepliesEntity r WHERE r.comment.commentId = :commentId")
     Long countByCommentId(@Param("commentId") Long commentId);
+
+    @Query("SELECT r.user, COUNT(r) as replyCount " +
+        "FROM RepliesEntity r " +
+        "GROUP BY r.user " +
+        "ORDER BY replyCount DESC")
+    Optional<List<Object[]>> findUsersWithReplyCountOrdered();
 }

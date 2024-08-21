@@ -20,4 +20,10 @@ public interface CommentsRepository extends JpaRepository<CommentsEntity, Long> 
 
     @Query("SELECT COUNT(c) FROM CommentsEntity c WHERE c.post.postId = :postId")
     Long countByPostId(@Param("postId") Long postId);
+
+    @Query("SELECT c.user, COUNT(c) as commentCount " +
+        "FROM CommentsEntity c " +
+        "GROUP BY c.user " +
+        "ORDER BY commentCount DESC")
+    Optional<List<Object[]>> findUsersWithCommentCountOrdered();
 }
