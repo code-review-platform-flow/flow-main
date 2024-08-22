@@ -1,9 +1,8 @@
-package com.flow.main.service.user;
+package com.flow.main.service.userinfo;
 
-import com.flow.main.dto.controller.user.get.host.Career;
-import com.flow.main.dto.controller.user.get.host.Education;
-import com.flow.main.dto.controller.user.get.host.Post;
-import com.flow.main.dto.controller.user.get.host.request.HostUserGetInfoRequestDto;
+import com.flow.main.dto.controller.user.get.host.CareerId;
+import com.flow.main.dto.controller.user.get.host.EducationId;
+import com.flow.main.dto.controller.user.get.host.PostId;
 import com.flow.main.dto.controller.user.get.host.response.HostUserGetInfoResponseDto;
 import com.flow.main.dto.jpa.career.CareerDto;
 import com.flow.main.dto.jpa.education.EducationDto;
@@ -26,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HostUserGetInfoService {
+public class UserInfoGetHostService {
 
     private final UsersService usersService;
     private final UserInfoService userInfoService;
@@ -36,9 +35,7 @@ public class HostUserGetInfoService {
     private final EducationService educationService;
     private final PostsService postsService;
 
-    public HostUserGetInfoResponseDto getHostUserInfo(String hostEmail, HostUserGetInfoRequestDto hostUserGetInfoRequestDto){
-
-        String visitorEmail = hostUserGetInfoRequestDto.getVisitorEmail();
+    public HostUserGetInfoResponseDto getHostUserInfo(String hostEmail, String visitorEmail){
 
         UsersDto hostUsersDto = usersService.findByEmail(hostEmail);
         UsersDto visitorUsersDto = visitorEmail != null ? usersService.findByEmail(visitorEmail) : null;
@@ -51,14 +48,14 @@ public class HostUserGetInfoService {
         List<CareerDto> hostAllCareer = careerService.findAllByUserInfoId(hostUserInfoDto.getUserInfoId());
         List<PostsDto> hostAllPosts = postsService.findAllByUserId(hostUsersDto.getUserId());
 
-        List<Education> educationList = hostAllEducation.stream()
-            .map(educationDto -> Education.builder().educationId(educationDto.getEducationId()).build())
+        List<EducationId> educationList = hostAllEducation.stream()
+            .map(educationDto -> EducationId.builder().educationId(educationDto.getEducationId()).build())
             .collect(Collectors.toList());
-        List<Career> careerList = hostAllCareer.stream()
-            .map(careerDto -> Career.builder().careerId(careerDto.getCareerId()).build())
+        List<CareerId> careerIdList = hostAllCareer.stream()
+            .map(careerDto -> CareerId.builder().careerId(careerDto.getCareerId()).build())
             .collect(Collectors.toList());
-        List<Post> postList = hostAllPosts.stream()
-            .map(postsDto -> Post.builder().postId(postsDto.getPostId()).build())
+        List<PostId> postIdList = hostAllPosts.stream()
+            .map(postsDto -> PostId.builder().postId(postsDto.getPostId()).build())
             .collect(Collectors.toList());
 
         return HostUserGetInfoResponseDto.builder()
@@ -70,8 +67,8 @@ public class HostUserGetInfoService {
             .oneLiner(hostUserInfoDto.getOneLiner())
             .followerCount(followerCount)
             .educationList(educationList)
-            .careerList(careerList)
-            .postList(postList)
+            .careerIdList(careerIdList)
+            .postIdList(postIdList)
             .build();
     }
 

@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Post {
+public class CareerId {
 
-    private Long postId;
+    private Long careerId;
 
 }

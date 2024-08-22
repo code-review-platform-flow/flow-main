@@ -54,12 +54,14 @@ public class CommentController {
     @GetMapping("/{postId}")
     public ResponseEntity<CommentsGetAllResponseDto> getAllCommentsAndReplies(@PathVariable("postId") Long postId){
         log.info("postId : {}", postId);
+
         return ResponseEntity.ok(commentsGetAllService.getAllCommentsAndReplies(postId));
     }
 
     @GetMapping("/count/{postId}")
     public ResponseEntity<CountCommentsAndRepliesResponseDto> countCommentsAndReplies(@PathVariable("postId") Long postId){
         log.info("postId : {}", postId);
+
         return ResponseEntity.ok(commentsCountService.countCommentsAndReplies(postId));
     }
 
@@ -68,8 +70,8 @@ public class CommentController {
         log.info("postId : {}", postId);
         log.info("email : {}", commentsWriteRequestDto.getEmail());
         log.info("commentContent : {}", commentsWriteRequestDto.getCommentContent());
-        CommentsDto commentsDto = commentsWriteService.writeComments(postId, commentsWriteRequestDto);
-        return ResponseEntity.ok(CommentsWriteResponseDto.builder().commentId(commentsDto.getCommentId()).build());
+
+        return ResponseEntity.ok(commentsWriteService.writeComments(postId, commentsWriteRequestDto));
     }
 
     @PatchMapping("/{postId}/{commentId}")
@@ -78,10 +80,8 @@ public class CommentController {
         log.info("commentId : {}", commentId);
         log.info("email : {}", commentsModifyRequestDto.getEmail());
         log.info("commentContent : {}", commentsModifyRequestDto.getCommentContent());
-        CommentsDto commentsDto = commentsModifyService.modifyComments(postId, commentId,
-            commentsModifyRequestDto);
-        return ResponseEntity.ok(CommentsModifyResponseDto.builder()
-            .commentId(commentsDto.getCommentId()).build());
+
+        return ResponseEntity.ok(commentsModifyService.modifyComments(postId, commentId, commentsModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}/{commentId}")
@@ -89,8 +89,8 @@ public class CommentController {
         log.info("postId : {}", postId);
         log.info("commentId : {}", commentId);
         log.info("email : {}", commentsDeleteRequestDto.getEmail());
-        CommentsDto commentsDto = commentsDeleteService.deleteComments(postId, commentId, commentsDeleteRequestDto);
-        return ResponseEntity.ok(CommentsDeleteResponseDto.builder().build());
+
+        return ResponseEntity.ok(commentsDeleteService.deleteComments(postId, commentId, commentsDeleteRequestDto));
     }
 
     @PostMapping("/{postId}/{commentId}")
@@ -99,11 +99,8 @@ public class CommentController {
         log.info("commentId : {}", commentId);
         log.info("email : {}", repliesWriteRequestDto.getEmail());
         log.info("replyContent : {}", repliesWriteRequestDto.getReplyContent());
-        RepliesDto repliesDto = repliesWriteService.writeReplies(postId, commentId, repliesWriteRequestDto);
-        return ResponseEntity.ok(RepliesWriteResponseDto.builder()
-            .commentId(repliesDto.getCommentId())
-            .replyId(repliesDto.getReplyId())
-            .build());
+
+        return ResponseEntity.ok(repliesWriteService.writeReplies(postId, commentId, repliesWriteRequestDto));
     }
 
     @PatchMapping("/{postId}/{commentId}/reply/{replyId}")
@@ -113,11 +110,8 @@ public class CommentController {
         log.info("replyId : {}", replyId);
         log.info("email : {}", repliesModifyRequestDto.getEmail());
         log.info("replyContent : {}", repliesModifyRequestDto.getReplyContent());
-        RepliesDto repliesDto = repliesModifyService.updateReplies(postId, commentId, replyId, repliesModifyRequestDto);
-        return ResponseEntity.ok(RepliesModifyResponseDto.builder()
-            .commentId(repliesDto.getCommentId())
-            .replyId(repliesDto.getReplyId())
-            .build());
+
+        return ResponseEntity.ok(repliesModifyService.updateReplies(postId, commentId, replyId, repliesModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}/{commentId}/reply/{replyId}")
@@ -126,8 +120,8 @@ public class CommentController {
         log.info("commentId : {}", commentId);
         log.info("replyId : {}", replyId);
         log.info("email : {}", repliesDeleteRequestDto.getEmail());
-        RepliesDto repliesDto = repliesDeleteService.deleteReplies(postId, commentId, replyId, repliesDeleteRequestDto);
-        return ResponseEntity.ok(RepliesDeleteResponseDto.builder().build());
+
+        return ResponseEntity.ok(repliesDeleteService.deleteReplies(postId, commentId, replyId, repliesDeleteRequestDto));
     }
 
 }

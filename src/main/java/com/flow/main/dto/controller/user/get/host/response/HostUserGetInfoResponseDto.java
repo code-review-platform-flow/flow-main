@@ -1,8 +1,8 @@
 package com.flow.main.dto.controller.user.get.host.response;
 
-import com.flow.main.dto.controller.user.get.host.Career;
-import com.flow.main.dto.controller.user.get.host.Education;
-import com.flow.main.dto.controller.user.get.host.Post;
+import com.flow.main.dto.controller.user.get.host.CareerId;
+import com.flow.main.dto.controller.user.get.host.EducationId;
+import com.flow.main.dto.controller.user.get.host.PostId;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,8 +24,8 @@ public class HostUserGetInfoResponseDto {
     private String studentNumber;
     private String oneLiner;
     private Long followerCount;
-    private List<Education> educationList;
-    private List<Career> careerList;
-    private List<Post> postList;
+    private List<EducationId> educationList;
+    private List<CareerId> careerIdList;
+    private List<PostId> postIdList;
 
 }

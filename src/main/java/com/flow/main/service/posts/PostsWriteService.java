@@ -2,6 +2,7 @@ package com.flow.main.service.posts;
 
 import com.flow.main.dto.controller.post.TagsNameDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
+import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
@@ -22,7 +23,7 @@ public class PostsWriteService {
     private final PostsService postsService;
     private final PostTagsSaveAllService postTagsSaveAllService;
 
-    public PostsDto write(PostWriteRequestDto postWriteRequestDto){
+    public PostWriteResponseDto write(PostWriteRequestDto postWriteRequestDto){
         UsersDto usersDto = usersService.findByEmail(postWriteRequestDto.getEmail());
         CategoriesDto categoriesDto = categoriesService.findByCategoryName(postWriteRequestDto.getCategory());
 
@@ -32,10 +33,12 @@ public class PostsWriteService {
             .title(postWriteRequestDto.getTitle())
             .content(postWriteRequestDto.getContent())
             .build();
-        PostsDto savedDto = postsService.save(postsDto);
+        PostsDto savedPostsDto = postsService.save(postsDto);
 
-        postTagsSaveAllService.saveAll(savedDto.getPostId(), postWriteRequestDto.getTags());
+        postTagsSaveAllService.saveAll(savedPostsDto.getPostId(), postWriteRequestDto.getTags());
 
-        return savedDto;
+        return PostWriteResponseDto.builder()
+            .postId(savedPostsDto.getPostId())
+            .build();
     }
 }

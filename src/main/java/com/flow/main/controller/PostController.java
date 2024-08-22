@@ -80,10 +80,7 @@ public class PostController {
         log.info("title : {}", postWriteRequestDto.getTitle());
         log.info("content : {}", postWriteRequestDto.getContent());
 
-        PostsDto postsDto = postsWriteService.write(postWriteRequestDto);
-        return ResponseEntity.ok(PostWriteResponseDto.builder()
-            .postId(postsDto.getPostId())
-            .build());
+        return ResponseEntity.ok(postsWriteService.write(postWriteRequestDto));
     }
 
     @PatchMapping("/{postId}")
@@ -95,10 +92,7 @@ public class PostController {
         log.info("title : {}", postModifyRequestDto.getTitle());
         log.info("content : {}", postModifyRequestDto.getContent());
 
-        PostsDto postsDto = postsModifyService.modify(postId, postModifyRequestDto);
-        return ResponseEntity.ok(PostModifyResponseDto.builder()
-            .postId(postsDto.getPostId())
-            .build());
+        return ResponseEntity.ok(postsModifyService.modify(postId, postModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}")
@@ -107,7 +101,6 @@ public class PostController {
         log.info("postId : {}", postId);
         log.info("email : {}", postDeleteRequestDto.getEmail());
 
-        PostsDto postsDto = postsDeleteService.delete(postId, postDeleteRequestDto);
-        return ResponseEntity.ok(PostDeleteResponseDto.builder().build());
+        return ResponseEntity.ok(postsDeleteService.delete(postId, postDeleteRequestDto));
     }
 }

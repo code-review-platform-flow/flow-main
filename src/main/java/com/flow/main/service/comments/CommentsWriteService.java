@@ -1,6 +1,7 @@
 package com.flow.main.service.comments;
 
 import com.flow.main.dto.controller.comment.comments.write.request.CommentsWriteRequestDto;
+import com.flow.main.dto.controller.comment.comments.write.response.CommentsWriteResponseDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
@@ -24,7 +25,7 @@ public class CommentsWriteService {
     private final CommentsService commentsService;
     private final AlarmEventPublisher alarmEventPublisher;
 
-    public CommentsDto writeComments(Long postId, CommentsWriteRequestDto commentsWriteRequestDto){
+    public CommentsWriteResponseDto writeComments(Long postId, CommentsWriteRequestDto commentsWriteRequestDto){
 
         PostsDto postsDto = postsService.findByPostId(postId);
         UsersDto usersDto = usersService.findByEmail(commentsWriteRequestDto.getEmail());
@@ -48,7 +49,9 @@ public class CommentsWriteService {
             .referenceTable("posts")
             .build());
 
-        return savedCommentsDto;
+        return CommentsWriteResponseDto.builder()
+            .commentId(savedCommentsDto.getCommentId())
+            .build();
     }
 
 }

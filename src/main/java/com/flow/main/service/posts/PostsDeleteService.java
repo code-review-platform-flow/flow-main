@@ -1,6 +1,7 @@
 package com.flow.main.service.posts;
 
 import com.flow.main.dto.controller.post.delete.request.PostDeleteRequestDto;
+import com.flow.main.dto.controller.post.delete.response.PostDeleteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.posts.persistence.PostsService;
@@ -15,9 +16,11 @@ public class PostsDeleteService {
     private final UsersService usersService;
     private final PostsService postsService;
 
-    public PostsDto delete(Long postId, PostDeleteRequestDto postDeleteRequestDto){
+    public PostDeleteResponseDto delete(Long postId, PostDeleteRequestDto postDeleteRequestDto){
         UsersDto usersDto = usersService.findByEmail(postDeleteRequestDto.getEmail());
-        return postsService.delete(postId, usersDto.getUserId());
+        postsService.delete(postId, usersDto.getUserId());
+
+        return PostDeleteResponseDto.builder().build();
     }
 
 }

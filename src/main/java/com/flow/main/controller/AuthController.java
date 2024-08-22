@@ -12,6 +12,7 @@ import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.flow.main.dto.controller.auth.email.response.SendEmailResponseDto;
 import com.flow.main.dto.controller.auth.file.response.FileUploadResponseDto;
+import com.flow.main.dto.controller.auth.register.response.RegisterResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.service.auth.AuthSendVerifyEmailService;
 import com.flow.main.service.auth.AuthVerifyCodeService;
@@ -50,8 +51,7 @@ public class AuthController {
     }
 
     @PostMapping("/email")
-    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto) throws IOException {
-
+    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto){
         log.info("email : {}", sendEmailRequestDto.getEmail());
         log.info("universityName : {}", sendEmailRequestDto.getUniversityName());
 
@@ -64,15 +64,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody final RegisterRequestDto registerRequestDto) throws IOException {
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody final RegisterRequestDto registerRequestDto) throws IOException {
         log.info("email : {}",registerRequestDto.getEmail());
         log.info("password : {}",registerRequestDto.getPassword());
         log.info("majorName : {}",registerRequestDto.getMajorName());
         log.info("schoolName : {}",registerRequestDto.getSchoolName());
         log.info("studentNumber : {}",registerRequestDto.getStudentNumber());
         log.info("userName : {}",registerRequestDto.getUserName());
-        userInfoRegisterService.register(registerRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userInfoRegisterService.register(registerRequestDto));
     }
 
     @PostMapping("/login")
@@ -85,9 +84,8 @@ public class AuthController {
     @PatchMapping("/refresh-token")
     public ResponseEntity<RecreateAccessTokenResponseDto> recreate(@RequestHeader("Authorization") String refreshToken) {
         log.info("refreshToken : {}", refreshToken);
-        UserSessionsDto userSessionsDto = userSessionsUpdateService.recreateAccessToken(refreshToken);
-        return ResponseEntity.ok(RecreateAccessTokenResponseDto.builder()
-            .accessToken(userSessionsDto.getAccessToken()).build());
+
+        return ResponseEntity.ok(userSessionsUpdateService.recreateAccessToken(refreshToken));
     }
 
     @DeleteMapping("/logout")

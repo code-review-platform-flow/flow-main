@@ -1,6 +1,7 @@
 package com.flow.main.service.univcert;
 
 import com.flow.main.common.property.UserVerifyProperty;
+import com.flow.main.dto.controller.auth.code.request.VerifyCodeRequestDto;
 import com.flow.main.dto.controller.auth.email.request.SendEmailRequestDto;
 import com.univcert.api.UnivCert;
 import java.io.IOException;
@@ -27,41 +28,50 @@ public class UnivCertService {
                 sendEmailRequestDto.getUniversityName(),
                 false);
 
-            Optional.ofNullable(responseMap)
-                .filter(map -> !map.isEmpty())
-                .ifPresentOrElse(
-                    map -> {
-                        map.forEach((key, value) -> log.info("Key: {}, Value: {}", key, value));
-                        if(Boolean.FALSE.equals(map.get("success"))){
-                            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-                        }
-                    },
-                    () -> log.info("Response map is empty or null")
-                );
-
+            responseVerify(responseMap);
             return responseMap;
         } catch (IOException e) {
             log.error("IO Exception occurred while clearing user verification: {}", e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to clear user verification due to IO issue", e);
-        } catch (ResponseStatusException e) {
-            log.error("Response status exception: {}", e.getMessage(), e);
-            throw e;
+        }
+    }
+
+    public Map<String, Object> verifyCode(VerifyCodeRequestDto verifyCodeRequestDto){
+        try{
+            Map<String, Object> responseMap = UnivCert.certifyCode(
+                userVerifyProperty.getKey(),
+                verifyCodeRequestDto.getEmail(),
+                verifyCodeRequestDto.getUniversityName(),
+                verifyCodeRequestDto.getCode());
+
+            responseVerify(responseMap);
+            return responseMap;
+        } catch (IOException e) {
+            log.error("IO Exception occurred while clearing user verification: {}", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to clear user verification due to IO issue", e);
         }
     }
 
     public void clearVerifySpecificUser(String email){
         try{
-            Map<String, Object> result = UnivCert.clear(userVerifyProperty.getKey(), email);
-            if (Boolean.FALSE.equals(result.get("success"))) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User verification clear failed");
-            }
+            Map<String, Object> responseMap = UnivCert.clear(userVerifyProperty.getKey(), email);
+
+            responseVerify(responseMap);
         } catch (IOException e) {
             log.error("IO Exception occurred while clearing user verification: {}", e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to clear user verification due to IO issue", e);
-        } catch (ResponseStatusException e) {
-            log.error("Response status exception: {}", e.getMessage(), e);
-            throw e;
         }
+    }
+
+    public void responseVerify(Map<String, Object> responseMap){
+        Optional.ofNullable(responseMap)
+            .filter(map -> !map.isEmpty())
+            .ifPresentOrElse(
+                map -> {
+                    map.forEach((key, value) -> log.info("Key: {}, Value: {}", key, value));
+                    if(Boolean.FALSE.equals(map.get("success"))){
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }},
+                () -> log.info("Response map is empty or null"));
     }
 
 }
