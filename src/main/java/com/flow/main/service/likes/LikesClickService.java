@@ -34,8 +34,12 @@ public class LikesClickService {
 
         LikesDto likesDto = likesService.findUseYnFalseOrCreateEmptyEntity(usersDto.getUserId(), postsDto.getPostId(), false);
 
+
         if(!likesDto.isUseYn()) { // reClick
-            return likesService.reuse(likesDto);
+            LikesDto reusedLikesDto = likesService.reuse(likesDto);
+            return LikeCLickResponseDto.builder()
+                .likeId(reusedLikesDto.getLikeId())
+                .build();
         }
 
         likesDto.setUserId(usersDto.getUserId());

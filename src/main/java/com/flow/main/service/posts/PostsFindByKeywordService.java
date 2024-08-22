@@ -5,13 +5,19 @@ import com.flow.main.dto.controller.post.keyword.response.FindByKeywordResponseD
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.posttags.PostTagsDto;
+import com.flow.main.dto.jpa.searches.SearchesDto;
 import com.flow.main.dto.jpa.tags.TagsDto;
+import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.entity.PostsEntity;
 import com.flow.main.mapper.PostsMapper;
 import com.flow.main.service.categories.persistence.CategoriesService;
 import com.flow.main.service.posts.persistence.PostsService;
 import com.flow.main.service.posttags.persistence.PostTagsService;
+import com.flow.main.service.searches.persistence.SearchesService;
 import com.flow.main.service.tags.persistence.TagsService;
+import com.flow.main.service.users.persistence.UsersService;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,23 +25,42 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostsFindByKeywordService {
 
+    private final UsersService usersService;
     private final PostsService postsService;
     private final CategoriesService categoriesService;
     private final TagsService tagsService;
     private final PostTagsService postTagsService;
     private final PostsMapper postsMapper;
+    private final SearchesService searchesService;
 
-    public FindByKeywordResponseDto findPostsByKeyword(String keyword, Long page, Long count){
+    public FindByKeywordResponseDto findPostsByKeyword(String keyword, Long page, Long count, String email){
+
+        UsersDto usersDto = email != null ? usersService.findByEmail(email) : null;
+        Optional.ofNullable(usersDto)
+            .ifPresent(dto -> {
+                SearchesDto searchesDto = SearchesDto.builder()
+                    .userId(dto.getUserId())
+                    .searchQuery(keyword)
+                    .searchDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+                    .build();
+
+                log.info("searchDate : {}", searchesDto.getSearchDate());
+
+                searchesService.save(searchesDto);
+            });
 
         HashMap<PostsDto, Integer> postsScores = new HashMap<>();
 

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -65,11 +66,12 @@ public class PostController {
     }
 
     @GetMapping("/search/{keyword}/{page}/{count}")
-    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count){
+    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count, @RequestParam(name = "email", required = false) String email){
         log.info("keyword : {}", keyword);
         log.info("page : {}", page);
         log.info("count : {}", count);
-        return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count));
+        log.info("email : {}", email);
+        return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count, email));
     }
 
     @PostMapping("")

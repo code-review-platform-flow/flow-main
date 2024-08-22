@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface HallOfFameMapper extends GenericMapper<LikesDto, LikesEntity> {
+public interface HallOfFameMapper extends GenericMapper<HallOfFameDto, HallOfFameEntity> {
 
     @Mapping(source = "user.userId", target = "userId")
     HallOfFameDto toDto(HallOfFameEntity hallOfFameEntity);
