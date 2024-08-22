@@ -3,6 +3,7 @@ package com.flow.main.service.userinfo;
 import com.flow.main.common.property.UserInfoProperty;
 import com.flow.main.common.property.UserVerifyProperty;
 import com.flow.main.dto.controller.auth.register.request.RegisterRequestDto;
+import com.flow.main.dto.controller.auth.register.response.RegisterResponseDto;
 import com.flow.main.dto.jpa.major.MajorDto;
 import com.flow.main.dto.jpa.school.SchoolDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
@@ -32,7 +33,7 @@ public class UserInfoRegisterService {
     private final UsersCheckService usersCheckService;
     private final UserInfoProperty userInfoProperty;
 
-    public UserInfoDto register(RegisterRequestDto registerRequestDto) throws IOException {
+    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) throws IOException {
         authCheckVerifiedEmailService.checkVerifiedEmail(registerRequestDto.getEmail());
         usersCheckService.checkExistUser(registerRequestDto.getEmail());
         UsersDto usersDto = usersRegisterService.register(registerRequestDto);
@@ -47,7 +48,10 @@ public class UserInfoRegisterService {
             .userName(registerRequestDto.getUserName())
             .profileUrl(userInfoProperty.getUrl())
             .build();
-        return userInfoService.save(userInfoDto);
+
+        userInfoService.save(userInfoDto);
+
+        return RegisterResponseDto.builder().build();
     }
 
 }

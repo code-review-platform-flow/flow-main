@@ -1,6 +1,7 @@
 package com.flow.main.service.replies;
 
 import com.flow.main.dto.controller.comment.replies.delete.request.RepliesDeleteRequestDto;
+import com.flow.main.dto.controller.comment.replies.delete.response.RepliesDeleteResponseDto;
 import com.flow.main.dto.jpa.replies.RepliesDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.comments.persistence.CommentsService;
@@ -19,7 +20,7 @@ public class RepliesDeleteService {
     private final RepliesService repliesService;
     private final UsersService usersService;
 
-    public RepliesDto deleteReplies(Long postId, Long commentId, Long replyId, RepliesDeleteRequestDto repliesDeleteRequestDto){
+    public RepliesDeleteResponseDto deleteReplies(Long postId, Long commentId, Long replyId, RepliesDeleteRequestDto repliesDeleteRequestDto){
 
         /*
         * 1. 유효한 포스트 인지 확인
@@ -34,7 +35,9 @@ public class RepliesDeleteService {
 
         RepliesDto repliesDto = repliesService.findByReplyId(replyId, usersDto.getUserId());
 
-        return repliesService.delete(repliesDto);
+        repliesService.delete(repliesDto);
+
+        return RepliesDeleteResponseDto.builder().build();
     }
 
 }

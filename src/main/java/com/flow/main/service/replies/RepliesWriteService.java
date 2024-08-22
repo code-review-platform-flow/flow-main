@@ -1,6 +1,7 @@
 package com.flow.main.service.replies;
 
 import com.flow.main.dto.controller.comment.replies.write.request.RepliesWriteRequestDto;
+import com.flow.main.dto.controller.comment.replies.write.response.RepliesWriteResponseDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.replies.RepliesDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
@@ -26,7 +27,7 @@ public class RepliesWriteService {
     private final RepliesService repliesService;
     private final AlarmEventPublisher alarmEventPublisher;
 
-    public RepliesDto writeReplies(Long postId, Long commentId, RepliesWriteRequestDto repliesWriteRequestDto){
+    public RepliesWriteResponseDto writeReplies(Long postId, Long commentId, RepliesWriteRequestDto repliesWriteRequestDto){
 
         postsService.findByPostId(postId); //check valid post
         CommentsDto commentsDto = commentsService.findByCommentId(commentId);
@@ -51,7 +52,10 @@ public class RepliesWriteService {
             .referenceTable("posts")
             .build());
 
-        return savedRepliesDto;
+        return RepliesWriteResponseDto.builder()
+            .commentId(savedRepliesDto.getCommentId())
+            .replyId(savedRepliesDto.getReplyId())
+            .build();
     }
 
 }

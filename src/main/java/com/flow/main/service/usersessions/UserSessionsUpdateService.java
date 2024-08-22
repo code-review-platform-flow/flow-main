@@ -1,5 +1,6 @@
 package com.flow.main.service.usersessions;
 
+import com.flow.main.dto.controller.auth.recreate.response.RecreateAccessTokenResponseDto;
 import com.flow.main.dto.jpa.usersessions.UserSessionsDto;
 import com.flow.main.mapper.UserSessionsMapper;
 import com.flow.main.service.security.JwtUtil;
@@ -14,7 +15,7 @@ public class UserSessionsUpdateService {
     private final UserSessionsService userSessionsService;
     private final JwtUtil jwtUtil;
 
-    public UserSessionsDto recreateAccessToken(String refreshToken){
+    public RecreateAccessTokenResponseDto recreateAccessToken(String refreshToken){
         jwtUtil.checkValidToken(refreshToken);
         String token = jwtUtil.getToken(refreshToken);
         jwtUtil.isExpired(token);
@@ -26,7 +27,11 @@ public class UserSessionsUpdateService {
 
         UserSessionsDto userSessionsDto = userSessionsService.findByRefreshToken(token);
         userSessionsDto.setAccessToken(accessToken);
-        return userSessionsService.save(userSessionsDto);
+        UserSessionsDto savedUserSessionsDto = userSessionsService.save(userSessionsDto);
+
+        return RecreateAccessTokenResponseDto.builder()
+            .accessToken(savedUserSessionsDto.getAccessToken())
+            .build();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.flow.main.service.likes;
 
 import com.flow.main.dto.controller.like.request.LikeCancelRequestDto;
+import com.flow.main.dto.controller.like.response.LikeCancelResponseDto;
 import com.flow.main.dto.jpa.likes.LikesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
@@ -18,10 +19,12 @@ public class LikesCancelService {
     private final UsersService usersService;
     private final PostsService postsService;
 
-    public LikesDto cancelLike(Long postId, LikeCancelRequestDto likeCancelRequestDto){
+    public LikeCancelResponseDto cancelLike(Long postId, LikeCancelRequestDto likeCancelRequestDto){
         PostsDto postsDto = postsService.findByPostId(postId);
         UsersDto usersDto = usersService.findByEmail(likeCancelRequestDto.getEmail());
         LikesDto likesDto = likesService.findByUserIdAndPostId(usersDto.getUserId(), postsDto.getPostId(), true);
-        return likesService.delete(likesDto);
+        likesService.delete(likesDto);
+
+        return LikeCancelResponseDto.builder().build();
     }
 }

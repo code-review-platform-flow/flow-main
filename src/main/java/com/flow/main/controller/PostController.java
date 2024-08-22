@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -65,11 +66,12 @@ public class PostController {
     }
 
     @GetMapping("/search/{keyword}/{page}/{count}")
-    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count){
+    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count, @RequestParam(name = "email", required = false) String email){
         log.info("keyword : {}", keyword);
         log.info("page : {}", page);
         log.info("count : {}", count);
-        return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count));
+        log.info("email : {}", email);
+        return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count, email));
     }
 
     @PostMapping("")
@@ -80,10 +82,7 @@ public class PostController {
         log.info("title : {}", postWriteRequestDto.getTitle());
         log.info("content : {}", postWriteRequestDto.getContent());
 
-        PostsDto postsDto = postsWriteService.write(postWriteRequestDto);
-        return ResponseEntity.ok(PostWriteResponseDto.builder()
-            .postId(postsDto.getPostId())
-            .build());
+        return ResponseEntity.ok(postsWriteService.write(postWriteRequestDto));
     }
 
     @PatchMapping("/{postId}")
@@ -95,10 +94,7 @@ public class PostController {
         log.info("title : {}", postModifyRequestDto.getTitle());
         log.info("content : {}", postModifyRequestDto.getContent());
 
-        PostsDto postsDto = postsModifyService.modify(postId, postModifyRequestDto);
-        return ResponseEntity.ok(PostModifyResponseDto.builder()
-            .postId(postsDto.getPostId())
-            .build());
+        return ResponseEntity.ok(postsModifyService.modify(postId, postModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}")
@@ -107,7 +103,6 @@ public class PostController {
         log.info("postId : {}", postId);
         log.info("email : {}", postDeleteRequestDto.getEmail());
 
-        PostsDto postsDto = postsDeleteService.delete(postId, postDeleteRequestDto);
-        return ResponseEntity.ok(PostDeleteResponseDto.builder().build());
+        return ResponseEntity.ok(postsDeleteService.delete(postId, postDeleteRequestDto));
     }
 }

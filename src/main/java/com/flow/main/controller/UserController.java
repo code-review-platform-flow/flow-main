@@ -2,7 +2,6 @@ package com.flow.main.controller;
 
 import com.flow.main.dto.controller.user.get.career.response.CareerGetResponseDto;
 import com.flow.main.dto.controller.user.get.education.response.EducationGetResponseDto;
-import com.flow.main.dto.controller.user.get.host.request.HostUserGetInfoRequestDto;
 import com.flow.main.dto.controller.user.get.host.response.HostUserGetInfoResponseDto;
 import com.flow.main.dto.controller.user.get.summary.request.UserSummaryRequestDto;
 import com.flow.main.dto.controller.user.get.summary.response.UserSummaryResponseDto;
@@ -16,10 +15,9 @@ import com.flow.main.dto.controller.user.withdrawal.request.UserWithdrawalReques
 import com.flow.main.dto.controller.user.withdrawal.response.UserWithdrawalResponseDto;
 import com.flow.main.service.career.CareerGetService;
 import com.flow.main.service.career.CareerUpdateService;
-import com.flow.main.service.career.persistence.CareerService;
 import com.flow.main.service.education.EducationGetService;
 import com.flow.main.service.education.EducationUpdateService;
-import com.flow.main.service.user.HostUserGetInfoService;
+import com.flow.main.service.userinfo.UserInfoGetHostService;
 import com.flow.main.service.userinfo.UserInfoOneLinerUpdateService;
 import com.flow.main.service.userinfo.UserInfoSummaryService;
 import com.flow.main.service.users.UsersWithdrawalService;
@@ -33,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -41,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final HostUserGetInfoService hostUserGetInfoService;
+    private final UserInfoGetHostService userInfoGetHostService;
     private final UserInfoSummaryService userInfoSummaryService;
     private final EducationGetService educationGetService;
     private final CareerGetService careerGetService;
@@ -50,12 +49,13 @@ public class UserController {
     private final CareerUpdateService careerUpdateService;
     private final UsersWithdrawalService usersWithdrawalService;
 
-    @GetMapping("/{hostEmail}")
-    public ResponseEntity<HostUserGetInfoResponseDto> getHostUserInfo(@PathVariable("hostEmail") String hostEmail, @RequestBody(required = false) HostUserGetInfoRequestDto hostUserGetInfoRequestDto){
+    @GetMapping("")
+    public ResponseEntity<HostUserGetInfoResponseDto> getHostUserInfo(@RequestParam("hostEmail") String hostEmail,
+        @RequestParam(name = "visitorEmail", required = false) String visitorEmail){
         log.info("hostEmail : {}", hostEmail);
-        log.info("visitorEmail : {}", hostUserGetInfoRequestDto.getVisitorEmail());
+        log.info("visitorEmail : {}", visitorEmail);
 
-        return ResponseEntity.ok(hostUserGetInfoService.getHostUserInfo(hostEmail, hostUserGetInfoRequestDto));
+        return ResponseEntity.ok(userInfoGetHostService.getHostUserInfo(hostEmail, visitorEmail));
     }
 
     @GetMapping("/summary")

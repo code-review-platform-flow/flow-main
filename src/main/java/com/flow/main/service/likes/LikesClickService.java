@@ -1,6 +1,7 @@
 package com.flow.main.service.likes;
 
 import com.flow.main.dto.controller.like.request.LikeClickRequestDto;
+import com.flow.main.dto.controller.like.response.LikeCLickResponseDto;
 import com.flow.main.dto.jpa.likes.LikesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.userinfo.UserInfoDto;
@@ -24,7 +25,7 @@ public class LikesClickService {
     private final UserInfoService userInfoService;
     private final AlarmEventPublisher alarmEventPublisher;
 
-    public LikesDto clickLike(Long postId, LikeClickRequestDto likeClickRequestDto){
+    public LikeCLickResponseDto clickLike(Long postId, LikeClickRequestDto likeClickRequestDto){
 
         PostsDto postsDto = postsService.findByPostId(postId);
         UsersDto usersDto = usersService.findByEmail(likeClickRequestDto.getEmail());
@@ -33,8 +34,12 @@ public class LikesClickService {
 
         LikesDto likesDto = likesService.findUseYnFalseOrCreateEmptyEntity(usersDto.getUserId(), postsDto.getPostId(), false);
 
+
         if(!likesDto.isUseYn()) { // reClick
-            return likesService.reuse(likesDto);
+            LikesDto reusedLikesDto = likesService.reuse(likesDto);
+            return LikeCLickResponseDto.builder()
+                .likeId(reusedLikesDto.getLikeId())
+                .build();
         }
 
         likesDto.setUserId(usersDto.getUserId());
@@ -52,7 +57,9 @@ public class LikesClickService {
             .referenceTable("posts")
             .build());
 
-        return savedLikesDto;
+        return LikeCLickResponseDto.builder()
+            .likeId(savedLikesDto.getLikeId())
+            .build();
     }
 
 }

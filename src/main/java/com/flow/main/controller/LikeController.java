@@ -40,10 +40,7 @@ public class LikeController {
         log.info("postId : {}", postId);
         log.info("email : {}", likeClickRequestDto.getEmail());
 
-        LikesDto likesDto = likesClickService.clickLike(postId, likeClickRequestDto);
-        return ResponseEntity.ok(LikeCLickResponseDto.builder()
-            .likeId(likesDto.getLikeId())
-            .build());
+        return ResponseEntity.ok(likesClickService.clickLike(postId, likeClickRequestDto));
     }
 
     @DeleteMapping("/{postId}")
@@ -52,8 +49,7 @@ public class LikeController {
         log.info("postId : {}", postId);
         log.info("email : {}", likeCancelRequestDto.getEmail());
 
-        LikesDto likesDto = likesCancelService.cancelLike(postId, likeCancelRequestDto);
-        return ResponseEntity.ok(LikeCancelResponseDto.builder().build());
+        return ResponseEntity.ok(likesCancelService.cancelLike(postId, likeCancelRequestDto));
     }
 
 }

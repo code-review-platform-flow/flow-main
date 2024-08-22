@@ -1,6 +1,7 @@
 package com.flow.main.service.comments;
 
 import com.flow.main.dto.controller.comment.comments.modify.request.CommentsModifyRequestDto;
+import com.flow.main.dto.controller.comment.comments.modify.response.CommentsModifyResponseDto;
 import com.flow.main.dto.jpa.comments.CommentsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
 import com.flow.main.service.comments.persistence.CommentsService;
@@ -17,7 +18,7 @@ public class CommentsModifyService {
     private final UsersService usersService;
     private final CommentsService commentsService;
 
-    public CommentsDto modifyComments(Long postId, Long commentId, CommentsModifyRequestDto commentsModifyRequestDto){
+    public CommentsModifyResponseDto modifyComments(Long postId, Long commentId, CommentsModifyRequestDto commentsModifyRequestDto){
 
         postsService.findByPostId(postId); // check valid post
         UsersDto usersDto = usersService.findByEmail(commentsModifyRequestDto.getEmail());
@@ -25,7 +26,11 @@ public class CommentsModifyService {
         CommentsDto commentsDto = commentsService.findByCommentId(commentId, usersDto.getUserId());
         commentsDto.setContent(commentsModifyRequestDto.getCommentContent());
 
-        return commentsService.save(commentsDto);
+        CommentsDto savedCommentsDto = commentsService.save(commentsDto);
+
+        return CommentsModifyResponseDto.builder()
+            .commentId(savedCommentsDto.getCommentId())
+            .build();
     }
 
 }

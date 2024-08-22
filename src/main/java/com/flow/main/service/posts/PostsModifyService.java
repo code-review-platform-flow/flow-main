@@ -2,6 +2,7 @@ package com.flow.main.service.posts;
 
 import com.flow.main.dto.controller.post.TagsNameDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
+import com.flow.main.dto.controller.post.modify.response.PostModifyResponseDto;
 import com.flow.main.dto.jpa.categories.CategoriesDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.dto.jpa.posttags.PostTagsDto;
@@ -29,7 +30,7 @@ public class PostsModifyService {
     private final PostTagsService postTagsService;
     private final TagsService tagsService;
 
-    public PostsDto modify(Long postId, PostModifyRequestDto postModifyRequestDto){
+    public PostModifyResponseDto modify(Long postId, PostModifyRequestDto postModifyRequestDto){
 
         UsersDto usersDto = usersService.findByEmail(postModifyRequestDto.getEmail());
         CategoriesDto categoriesDto = categoriesService.findByCategoryName(postModifyRequestDto.getCategory());
@@ -38,7 +39,7 @@ public class PostsModifyService {
         postsDto.setCategoryId(categoriesDto.getCategoryId());
         postsDto.setTitle(postModifyRequestDto.getTitle());
         postsDto.setContent(postModifyRequestDto.getContent());
-        PostsDto savedDto = postsService.save(postsDto);
+        PostsDto savedPostsDto = postsService.save(postsDto);
 
         List<PostTagsDto> postTagsDtos = postTagsService.findAllByPostId(postId);
 
@@ -72,7 +73,9 @@ public class PostsModifyService {
             postTagsService.reuseOrSavePostTags(postTagsDto);
         }
 
-        return savedDto;
+        return PostModifyResponseDto.builder()
+            .postId(savedPostsDto.getPostId())
+            .build();
     }
 
 }
