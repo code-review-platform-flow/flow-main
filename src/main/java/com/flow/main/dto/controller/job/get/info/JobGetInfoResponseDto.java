@@ -1,13 +1,17 @@
-package com.flow.main.dto.jpa.job;
+package com.flow.main.dto.controller.job.get.info;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobDto {
+public class JobGetInfoResponseDto {
 
     private Long jobId;
     private String title;
@@ -15,6 +19,5 @@ public class JobDto {
     private String description;
     private String imageUrl;
     private String redirectUrl;
-    private int version;
 
 }

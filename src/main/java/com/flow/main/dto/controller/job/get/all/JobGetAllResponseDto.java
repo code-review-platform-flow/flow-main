@@ -1,5 +1,6 @@
 package com.flow.main.dto.controller.job.get.all;
 
+import com.flow.main.dto.controller.job.get.JobIdDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,6 @@ import lombok.Setter;
 @Builder
 public class JobGetAllResponseDto {
 
-    private List<JobGetAllDto> jobIdList;
+    private List<JobIdDto> jobIdList;
 
 }

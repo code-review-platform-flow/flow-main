@@ -32,6 +32,9 @@ public class JobEntity extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
+    @Column(name = "redirect_url", nullable = false)
+    private String redirectUrl;
+
     @Version
     private int version;
 
