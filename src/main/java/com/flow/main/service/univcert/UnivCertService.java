@@ -70,7 +70,12 @@ public class UnivCertService {
                 map -> {
                     map.forEach((key, value) -> log.info("Key: {}, Value: {}", key, value));
                     if(Boolean.FALSE.equals(map.get("success"))){
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST); }},
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                    }
+                    if ((Integer)map.get("code") == 500){
+                        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                },
                 () -> log.info("Response map is empty or null"));
     }
 

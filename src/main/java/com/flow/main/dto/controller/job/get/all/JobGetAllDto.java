@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.comment.count.response;
+package com.flow.main.dto.controller.job.get.all;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CountCommentsAndRepliesResponseDto {
-
-    private Long postId;
-    private Long commentsAndRepliesCount;
-
+public class JobGetAllDto {
+    private Long jobId;
 }
