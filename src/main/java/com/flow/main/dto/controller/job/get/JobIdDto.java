@@ -1,4 +1,4 @@
-package com.flow.main.dto.controller.job.get.all;
+package com.flow.main.dto.controller.job.get;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class JobGetAllDto {
+public class JobIdDto {
     private Long jobId;
 }
