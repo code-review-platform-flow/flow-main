@@ -30,6 +30,7 @@ public class CommentsCountService {
         }
 
         return CountCommentsAndRepliesResponseDto.builder()
+            .postId(postsDto.getPostId())
             .commentsAndRepliesCount(totalCount)
             .build();
     }
