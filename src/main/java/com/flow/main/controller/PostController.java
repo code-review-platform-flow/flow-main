@@ -7,12 +7,12 @@ import com.flow.main.dto.controller.post.keyword.response.FindByKeywordResponseD
 import com.flow.main.dto.controller.post.latest.response.PostLatestResponseDto;
 import com.flow.main.dto.controller.post.modify.request.PostModifyRequestDto;
 import com.flow.main.dto.controller.post.modify.response.PostModifyResponseDto;
-import com.flow.main.dto.controller.post.tranding.response.GetTrandingPostsResponseDto;
+import com.flow.main.dto.controller.post.tranding.response.GetTrendingPostsResponseDto;
 import com.flow.main.dto.controller.post.write.request.PostWriteRequestDto;
 import com.flow.main.dto.controller.post.write.response.PostWriteResponseDto;
 import com.flow.main.dto.jpa.posts.PostsDto;
 import com.flow.main.service.posts.PostsFindByKeywordService;
-import com.flow.main.service.posts.PostsGetTrandingService;
+import com.flow.main.service.posts.PostsGetTrendingService;
 import com.flow.main.service.posts.PostsLatestService;
 import com.flow.main.service.posts.PostsDeleteService;
 import com.flow.main.service.posts.PostsGetService;
@@ -39,7 +39,7 @@ public class PostController {
 
     private final PostsLatestService postsLatestService;
     private final PostsGetService postsGetService;
-    private final PostsGetTrandingService postsGetTrandingService;
+    private final PostsGetTrendingService postsGetTrendingService;
     private final PostsFindByKeywordService postsFindByKeywordService;
     private final PostsWriteService postsWriteService;
     private final PostsModifyService postsModifyService;
@@ -58,11 +58,11 @@ public class PostController {
         return ResponseEntity.ok(postsGetService.get(postId));
     }
 
-    @GetMapping("/tranding/{page}/{count}")
-    public ResponseEntity<GetTrandingPostsResponseDto> getTrandingPosts(@PathVariable("page") Long page, @PathVariable("count") Long count){
+    @GetMapping("/trending/{page}/{count}")
+    public ResponseEntity<GetTrendingPostsResponseDto> getTrendingPosts(@PathVariable("page") Long page, @PathVariable("count") Long count){
         log.info("page : {}", page);
         log.info("count : {}", count);
-        return ResponseEntity.ok(postsGetTrandingService.getTrandingPosts(page, count));
+        return ResponseEntity.ok(postsGetTrendingService.getTrendingPosts(page, count));
     }
 
     @GetMapping("/search/{keyword}/{page}/{count}")

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TrandingPostDto {
+public class TrendingPostDto {
 
     private Long postId;
 
