@@ -59,10 +59,10 @@ public class UserController {
     }
 
     @GetMapping("/summary")
-    public ResponseEntity<UserSummaryResponseDto> getUserSummary(@RequestBody final UserSummaryRequestDto userSummaryRequestDto){
-        log.info("email : {}", userSummaryRequestDto.getEmail());
+    public ResponseEntity<UserSummaryResponseDto> getUserSummary(@RequestParam("email") String email){
+        log.info("email : {}", email);
 
-        return ResponseEntity.ok(userInfoSummaryService.getUserSummary(userSummaryRequestDto));
+        return ResponseEntity.ok(userInfoSummaryService.getUserSummary(email));
     }
 
     @GetMapping("/education/{educationId}")
