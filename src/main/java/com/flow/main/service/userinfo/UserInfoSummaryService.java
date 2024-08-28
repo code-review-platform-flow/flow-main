@@ -19,8 +19,8 @@ public class UserInfoSummaryService {
     private final UserInfoService userInfoService;
     private final MajorService majorService;
 
-    public UserSummaryResponseDto getUserSummary(UserSummaryRequestDto userSummaryRequestDto){
-        UsersDto usersDto = usersService.findByEmail(userSummaryRequestDto.getEmail());
+    public UserSummaryResponseDto getUserSummary(String email){
+        UsersDto usersDto = usersService.findByEmail(email);
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
         MajorDto majorDto = majorService.findByMajorId(userInfoDto.getMajorId());
 
