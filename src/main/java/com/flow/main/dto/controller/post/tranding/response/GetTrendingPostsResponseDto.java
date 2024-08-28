@@ -1,6 +1,6 @@
 package com.flow.main.dto.controller.post.tranding.response;
 
-import com.flow.main.dto.controller.post.tranding.TrandingPostDto;
+import com.flow.main.dto.controller.post.tranding.TrendingPostDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GetTrandingPostsResponseDto {
+public class GetTrendingPostsResponseDto {
 
-    List<TrandingPostDto> trandingPostsList;
+    List<TrendingPostDto> trendingPostsList;
 
 }
