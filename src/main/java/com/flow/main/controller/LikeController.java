@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -31,8 +32,11 @@ public class LikeController {
     private final LikesCountService likesCountService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<LikeCountResponseDto> countLike(@PathVariable("postId") Long postId){
-        return ResponseEntity.ok(likesCountService.getLikeCount(postId));
+    public ResponseEntity<LikeCountResponseDto> countLike(@PathVariable("postId") Long postId, @RequestParam(name = "email") String email){
+        log.info("postId : {}", postId);
+        log.info("email : {}", email);
+
+        return ResponseEntity.ok(likesCountService.getLikeCount(postId, email));
     }
 
     @PostMapping("/{postId}")

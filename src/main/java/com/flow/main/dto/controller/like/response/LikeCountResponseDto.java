@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class LikeCountResponseDto {
+    private boolean clicked;
     private Long postId;
     private Long likeCount;
 }

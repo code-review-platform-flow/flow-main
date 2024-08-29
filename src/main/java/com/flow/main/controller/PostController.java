@@ -54,8 +54,8 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostGetResponseDto> get(@PathVariable("postId") Long postId){
-        return ResponseEntity.ok(postsGetService.get(postId));
+    public ResponseEntity<PostGetResponseDto> get(@PathVariable("postId") Long postId, @RequestParam(name = "email", required = false) String email){
+        return ResponseEntity.ok(postsGetService.get(postId, email));
     }
 
     @GetMapping("/trending/{page}/{count}")

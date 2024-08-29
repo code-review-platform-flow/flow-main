@@ -18,6 +18,7 @@ import lombok.Setter;
 public class HostUserGetInfoResponseDto {
 
     private boolean own;
+    private boolean followHost;
     private String profileUrl;
     private String userName;
     private String majorName;

@@ -32,6 +32,11 @@ public class LikesService {
     }
 
     @Transactional(readOnly = true)
+    public boolean existsByPostIdAndUserId(Long postId, Long userId){
+        return likesRepository.existsByPostIdAndUserId(postId, userId);
+    }
+
+    @Transactional(readOnly = true)
     public List<PostsDto> findPostsOrderByLikeCount(Pageable pageable){
         return postsMapper.toDtoList(likesRepository.findPostIdsOrderByLikeCount(pageable)
             .orElse(Collections.emptyList()));

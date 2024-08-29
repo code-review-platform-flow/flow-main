@@ -18,6 +18,7 @@ import com.flow.main.service.userinfo.persistence.UserInfoService;
 import com.flow.main.service.users.persistence.UsersService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,17 +33,22 @@ public class CommentsGetAllService {
     public final MajorService majorService;
     public final RepliesService repliesService;
 
-    public CommentsGetAllResponseDto getAllCommentsAndReplies(Long postId){
+    public CommentsGetAllResponseDto getAllCommentsAndReplies(Long postId, String email){
+
+        UsersDto requestUser = email != null ? usersService.findByEmail(email) : null;
+
         PostsDto postsDto = postsService.findByPostId(postId);
         List<CommentsDto> commentsDtos = commentsService.findAllByPostId(postsDto.getPostId());
 
         List<CommentsGetDto> commentsGetDtos = new ArrayList<>();
         for(CommentsDto c : commentsDtos){
             UsersDto usersDto = usersService.findByUserId(c.getUserId());
+            boolean own = requestUser != null && Objects.equals(requestUser.getUserId(), usersDto.getUserId());
             UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
             MajorDto majorDto = majorService.findByMajorId(userInfoDto.getMajorId());
 
             CommentsGetDto commentsGetDto = CommentsGetDto.builder()
+                .own(own)
                 .commentId(c.getCommentId())
                 .profileUrl(userInfoDto.getProfileUrl())
                 .userName(userInfoDto.getUserName())
@@ -61,10 +67,12 @@ public class CommentsGetAllService {
 
             for (RepliesDto r : repliesDtos){
                 UsersDto usersDto = usersService.findByUserId(r.getUserId());
+                boolean own = requestUser != null && Objects.equals(requestUser.getUserId(), usersDto.getUserId());
                 UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
                 MajorDto majorDto = majorService.findByMajorId(userInfoDto.getMajorId());
 
                 RepliesGetDto repliesGetDto = RepliesGetDto.builder()
+                    .own(own)
                     .replyId(r.getReplyId())
                     .profileUrl(userInfoDto.getProfileUrl())
                     .userName(userInfoDto.getUserName())

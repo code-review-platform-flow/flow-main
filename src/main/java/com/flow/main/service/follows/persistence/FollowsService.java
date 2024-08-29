@@ -34,6 +34,11 @@ public class FollowsService {
     }
 
     @Transactional(readOnly = true)
+    public boolean existsByFolloweeIdAndFollowerId(Long followeeId, Long followerId){
+        return followsRepository.existsByFolloweeIdAndFollowerId(followeeId, followerId);
+    }
+
+    @Transactional(readOnly = true)
     public FollowsDto findOrEmptyByFollowerIdAndFolloweeIdUseYnTrue(Long followerId, Long followeeId){
         return followsMapper.toDto(followsRepository.findByFollowerIdAndFolloweeIdUseYnTrue(followerId, followeeId)
             .orElseThrow(() -> new EntityNotFoundException("Follows not found with followerId : " + followerId + ", followeeId : " + followeeId)));
@@ -47,7 +52,7 @@ public class FollowsService {
 
     @Transactional(readOnly = true)
     public Long countByFolloweeId(Long followeeId){
-        return followsRepository.countFByFolloweeId(followeeId);
+        return followsRepository.countByFolloweeId(followeeId);
     }
 
     @Transactional

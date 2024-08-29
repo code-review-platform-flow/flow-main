@@ -18,6 +18,7 @@ import com.flow.main.service.userinfo.persistence.UserInfoService;
 import com.flow.main.service.users.persistence.UsersService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,13 @@ public class PostsGetService {
     private final PostTagsService postTagsService;
     private final TagsService tagsService;
 
-    public PostGetResponseDto get(Long postId){
+    public PostGetResponseDto get(Long postId, String email){
+
+        UsersDto requestUser = email != null ? usersService.findByEmail(email) : null;
+
         PostsDto postsDto = postsService.findByPostId(postId);
         UsersDto usersDto = usersService.findByUserId(postsDto.getUserId());
+        boolean own = requestUser != null && Objects.equals(requestUser.getUserId(), usersDto.getUserId());
         UserInfoDto userInfoDto = userInfoService.findByUserId(usersDto.getUserId());
         System.out.println(userInfoDto.getUserName());
         System.out.println(userInfoDto.getMajorId());
@@ -55,6 +60,7 @@ public class PostsGetService {
         }
 
         return PostGetResponseDto.builder()
+            .own(own)
             .postId(postsDto.getPostId())
             .userName(userInfoDto.getUserName())
             .majorName(majorDto.getMajorName())
