@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @NoArgsConstructor
 @Builder
 public class PostGetResponseDto {
+    private boolean own;
     private Long postId;
     private String profileUrl;
     private String userName;

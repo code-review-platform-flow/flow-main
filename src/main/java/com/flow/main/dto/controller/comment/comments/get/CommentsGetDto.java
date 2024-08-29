@@ -15,6 +15,7 @@ import lombok.Setter;
 @Builder
 public class CommentsGetDto {
 
+    private boolean own;
     private Long commentId;
     private String profileUrl;
     private String userName;

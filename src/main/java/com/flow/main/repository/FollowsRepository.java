@@ -16,5 +16,8 @@ public interface FollowsRepository extends JpaRepository<FollowsEntity, Long> {
     Optional<FollowsEntity> findByFollowerIdAndFolloweeIdUseYnFalse(@Param("followerId") Long followerId, @Param("followeeId") Long followeeId);
 
     @Query("SELECT COUNT(f) FROM FollowsEntity f WHERE f.followeeId = :followeeId AND f.useYn = true")
-    Long countFByFolloweeId(@Param("followeeId") Long followeeId);
+    Long countByFolloweeId(@Param("followeeId") Long followeeId);
+
+    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM FollowsEntity f WHERE f.followeeId =:followeeId AND f.followerId =:followerId AND f.useYn = true")
+    boolean existsByFolloweeIdAndFollowerId(@Param("followeeId") Long followeeId, @Param("followerId") Long followerId);
 }

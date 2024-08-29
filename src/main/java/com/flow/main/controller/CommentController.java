@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -52,10 +53,11 @@ public class CommentController {
     private final RepliesDeleteService repliesDeleteService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<CommentsGetAllResponseDto> getAllCommentsAndReplies(@PathVariable("postId") Long postId){
+    public ResponseEntity<CommentsGetAllResponseDto> getAllCommentsAndReplies(@PathVariable("postId") Long postId, @RequestParam(name = "email", required = false) String email){
         log.info("postId : {}", postId);
+        log.info("email : {}", email);
 
-        return ResponseEntity.ok(commentsGetAllService.getAllCommentsAndReplies(postId));
+        return ResponseEntity.ok(commentsGetAllService.getAllCommentsAndReplies(postId, email));
     }
 
     @GetMapping("/count/{postId}")

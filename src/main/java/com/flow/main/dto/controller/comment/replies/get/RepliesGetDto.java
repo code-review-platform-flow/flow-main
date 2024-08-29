@@ -13,6 +13,7 @@ import lombok.Setter;
 @Builder
 public class RepliesGetDto {
 
+    private boolean own;
     private Long replyId;
     private String profileUrl;
     private String userName;

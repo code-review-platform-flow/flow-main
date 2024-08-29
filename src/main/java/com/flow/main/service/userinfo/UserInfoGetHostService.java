@@ -37,16 +37,17 @@ public class UserInfoGetHostService {
 
     public HostUserGetInfoResponseDto getHostUserInfo(String hostEmail, String visitorEmail){
 
-        UsersDto hostUsersDto = usersService.findByEmail(hostEmail);
-        UsersDto visitorUsersDto = visitorEmail != null ? usersService.findByEmail(visitorEmail) : null;
-        boolean own = visitorUsersDto != null && Objects.equals(hostUsersDto.getUserId(), visitorUsersDto.getUserId());
+        UsersDto hostUser = usersService.findByEmail(hostEmail);
+        UsersDto visitorUser = visitorEmail != null ? usersService.findByEmail(visitorEmail) : null;
+        boolean own = visitorUser != null && Objects.equals(hostUser.getUserId(), visitorUser.getUserId());
+        boolean followHost = visitorUser != null && followsService.existsByFolloweeIdAndFollowerId(hostUser.getUserId(), visitorUser.getUserId());
 
-        UserInfoDto hostUserInfoDto = userInfoService.findByUserId(hostUsersDto.getUserId());
+        UserInfoDto hostUserInfoDto = userInfoService.findByUserId(hostUser.getUserId());
         MajorDto hostMajorDto = majorService.findByMajorId(hostUserInfoDto.getMajorId());
-        Long followerCount = followsService.countByFolloweeId(hostUsersDto.getUserId());
+        Long followerCount = followsService.countByFolloweeId(hostUser.getUserId());
         List<EducationDto> hostAllEducation = educationService.findAllByUserInfoId(hostUserInfoDto.getUserInfoId());
         List<CareerDto> hostAllCareer = careerService.findAllByUserInfoId(hostUserInfoDto.getUserInfoId());
-        List<PostsDto> hostAllPosts = postsService.findAllByUserId(hostUsersDto.getUserId());
+        List<PostsDto> hostAllPosts = postsService.findAllByUserId(hostUser.getUserId());
 
         List<EducationId> educationList = hostAllEducation.stream()
             .map(educationDto -> EducationId.builder().educationId(educationDto.getEducationId()).build())
@@ -60,6 +61,7 @@ public class UserInfoGetHostService {
 
         return HostUserGetInfoResponseDto.builder()
             .own(own)
+            .followHost(followHost)
             .profileUrl(hostUserInfoDto.getProfileUrl())
             .userName(hostUserInfoDto.getUserName())
             .majorName(hostMajorDto.getMajorName())
