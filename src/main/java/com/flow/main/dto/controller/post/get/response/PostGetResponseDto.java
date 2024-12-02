@@ -26,5 +26,8 @@ public class PostGetResponseDto {
     private String content;
     private String categoryName;
     private List<TagsNameDto> tags;
+    private Long commentsAndRepliesCount;
+    private Long likeCount;
+    private boolean clicked;
     private LocalDateTime createDate;
 }
