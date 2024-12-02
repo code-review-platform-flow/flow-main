@@ -68,7 +68,7 @@ public class UserInfoGetHostService {
             .studentNumber(hostUserInfoDto.getStudentNumber())
             .oneLiner(hostUserInfoDto.getOneLiner())
             .followerCount(followerCount)
-            .educationList(educationList)
+            .educationIdList(educationList)
             .careerIdList(careerIdList)
             .postIdList(postIdList)
             .build();
