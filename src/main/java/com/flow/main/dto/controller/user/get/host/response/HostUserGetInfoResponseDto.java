@@ -25,7 +25,7 @@ public class HostUserGetInfoResponseDto {
     private String studentNumber;
     private String oneLiner;
     private Long followerCount;
-    private List<EducationId> educationList;
+    private List<EducationId> educationIdList;
     private List<CareerId> careerIdList;
     private List<PostId> postIdList;
 
