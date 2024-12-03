@@ -28,7 +28,9 @@ public class EducationUpdateService {
 
         Long educationId = educationUpdateRequestDto.getEducationId();
         String schoolName = educationUpdateRequestDto.getSchoolName();
-        LocalDate startDate =educationUpdateRequestDto.getStartDate().atMonth(12).atEndOfMonth();
+        LocalDate startDate = Optional.ofNullable(educationUpdateRequestDto.getStartDate())
+                .map(date -> date.atMonth(12).atEndOfMonth())
+                .orElse(null);
         LocalDate endDate = Optional.ofNullable(educationUpdateRequestDto.getEndDate())
             .map(date -> date.atMonth(12).atEndOfMonth())
             .orElse(null);
