@@ -42,7 +42,7 @@ public class EducationEntity extends BaseEntity {
     @Column(name = "school_name", nullable = false)
     private String schoolName;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     @Column(name = "end_date")
