@@ -53,5 +53,4 @@ public class UserInfoRegisterService {
 
         return RegisterResponseDto.builder().build();
     }
-
 }
