@@ -21,8 +21,8 @@ public class CoffeeChatsGetAllService {
 	private final CoffeeChatsService coffeeChatsService;
 	private final UsersService usersService;
 
-	public CoffeeChatsGetAllResponseDto getAllWithPageable(CoffeeChatsGetAllRequestDto coffeeChatsGetAllRequestDto, Pageable pageable) {
-		UsersDto usersDto = usersService.findByEmail(coffeeChatsGetAllRequestDto.getEmail());
+	public CoffeeChatsGetAllResponseDto getAllWithPageable(String email, Pageable pageable) {
+		UsersDto usersDto = usersService.findByEmail(email);
 		List<CoffeeChatsDto> coffeeChatsDtoList = coffeeChatsService.getAllByInitiatorUserIdWithPageable(usersDto.getUserId(), pageable);
 		return CoffeeChatsGetAllResponseDto.builder().coffeeChat(coffeeChatsDtoList).pageable(pageable).build();
 	}
