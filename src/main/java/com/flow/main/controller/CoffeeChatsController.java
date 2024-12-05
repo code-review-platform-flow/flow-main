@@ -3,11 +3,7 @@ package com.flow.main.controller;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.flow.main.dto.controller.coffeeChats.request.CoffeeChatsCreateRequestDto;
 import com.flow.main.dto.controller.coffeeChats.request.CoffeeChatsGetAllRequestDto;
@@ -31,9 +27,8 @@ public class CoffeeChatsController {
 		return ResponseEntity.ok().body(coffeeChatsCreateService.create(requestDto));
 	}
 
-	@GetMapping
-	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(@RequestBody final CoffeeChatsGetAllRequestDto requestDto, Pageable pageable) {
-		return ResponseEntity.ok().body(coffeeChatsGetAllService.getAllWithPageable(requestDto, pageable));
+	@GetMapping("/{email}")
+	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(@PathVariable("email") final String email, Pageable pageable) {
+		return ResponseEntity.ok().body(coffeeChatsGetAllService.getAllWithPageable(email, pageable));
 	}
-
 }
