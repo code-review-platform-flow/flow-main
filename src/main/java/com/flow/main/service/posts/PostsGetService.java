@@ -73,6 +73,7 @@ public class PostsGetService {
 
         return PostGetResponseDto.builder()
             .own(own)
+            .email(usersDto.getEmail())
             .postId(postsDto.getPostId())
             .userName(userInfoDto.getUserName())
             .majorName(majorDto.getMajorName())
