@@ -15,7 +15,10 @@ import com.flow.main.entity.PostTagsEntity;
 public interface CoffeeChatsMapper extends GenericMapper<CoffeeChatsDto, CoffeeChatsEntity> {
 
 	@Mapping(target = "initiatorUserId", source = "initiatorUser.userId")
+	@Mapping(target = "initiatorUserEmail", source = "initiatorUser.email")
 	@Mapping(target = "recipientUserId", source = "recipientUser.userId")
+	@Mapping(target = "recipientUserEmail", source = "recipientUser.email")
+	@Mapping(target = "createDate", source = "createDate")
 	CoffeeChatsDto toDto(CoffeeChatsEntity coffeeChatsEntity);
 
 	@Mapping(target = "initiatorUser.userId", source = "initiatorUserId")
@@ -23,7 +26,10 @@ public interface CoffeeChatsMapper extends GenericMapper<CoffeeChatsDto, CoffeeC
 	CoffeeChatsEntity toEntity(CoffeeChatsDto coffeeChatsDto);
 
 	@Mapping(target = "initiatorUserId", source = "initiatorUser.userId")
+	@Mapping(target = "initiatorUserEmail", source = "initiatorUser.email")
 	@Mapping(target = "recipientUserId", source = "recipientUser.userId")
+	@Mapping(target = "recipientUserEmail", source = "recipientUser.email")
+	@Mapping(target = "createDate", source = "createDate")
 	List<CoffeeChatsDto> toListDto(List<CoffeeChatsEntity> coffeeChatsEntities);
 
 	@Mapping(target = "initiatorUser.userId", source = "initiatorUserId")
