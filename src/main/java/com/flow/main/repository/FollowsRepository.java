@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface FollowsRepository extends JpaRepository<FollowsEntity, Long> {
-    @Query("SELECT f FROM FollowsEntity f WHERE f.followeeId = :followeeId")
+    @Query("SELECT f FROM FollowsEntity f WHERE f.followeeId = :followeeId AND f.useYn = true")
     Optional<List<FollowsEntity>> findAllByFolloweeId(@Param("followeeId") Long followeeId);
 
-    @Query("SELECT f FROM FollowsEntity f WHERE f.followerId = :followerId")
+    @Query("SELECT f FROM FollowsEntity f WHERE f.followerId = :followerId AND f.useYn = true")
     Optional<List<FollowsEntity>> findAllByFollowerId(@Param("followerId") Long followerId);
 
     @Query("SELECT f FROM FollowsEntity f WHERE f.followerId = :followerId AND f.followeeId = :followeeId AND f.useYn = true")
