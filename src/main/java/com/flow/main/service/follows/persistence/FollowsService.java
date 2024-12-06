@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FollowsService {
@@ -22,6 +25,18 @@ public class FollowsService {
     public FollowsDto save(FollowsDto followsDto){
         FollowsEntity followsEntity = followsMapper.toEntity(followsDto);
         return followsMapper.toDto(followsRepository.save(followsEntity));
+    }
+
+    @Transactional(readOnly = true)
+    public List<FollowsDto> findAllByFolloweeId(Long followeeId) {
+        return followsMapper.toDtoList(followsRepository.findAllByFolloweeId(followeeId)
+                .orElse(Collections.emptyList()));
+    }
+
+    @Transactional(readOnly = true)
+    public List<FollowsDto> findAllByFollowerId(Long followerId) {
+        return followsMapper.toDtoList(followsRepository.findAllByFollowerId(followerId)
+                .orElse(Collections.emptyList()));
     }
 
     @Transactional(readOnly = true)
