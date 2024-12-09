@@ -1,6 +1,6 @@
 package com.flow.main.dto.controller.follow.get.follower.response;
 
-import com.flow.main.dto.controller.follow.get.follower.FollowerIdDto;
+import com.flow.main.dto.controller.follow.get.follower.FollowerGetDto;
 import lombok.*;
 
 import java.util.List;
@@ -13,5 +13,5 @@ import java.util.List;
 public class FollowerGetResponseDto {
     private String email;
     private Long followeeId;
-    private List<FollowerIdDto> followerIdList;
+    private List<FollowerGetDto> followerList;
 }

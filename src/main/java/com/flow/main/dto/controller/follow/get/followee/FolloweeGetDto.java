@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FolloweeIdDto {
+public class FolloweeGetDto {
     private Long followeeId;
+    private String followeeEmail;
 }

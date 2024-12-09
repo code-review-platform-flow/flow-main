@@ -1,6 +1,6 @@
 package com.flow.main.service.follows;
 
-import com.flow.main.dto.controller.follow.get.follower.FollowerIdDto;
+import com.flow.main.dto.controller.follow.get.follower.FollowerGetDto;
 import com.flow.main.dto.controller.follow.get.follower.response.FollowerGetResponseDto;
 import com.flow.main.dto.jpa.follows.FollowsDto;
 import com.flow.main.dto.jpa.users.UsersDto;
@@ -20,19 +20,25 @@ public class FollowsFollowersGetService {
     public FollowerGetResponseDto getFollowers(String email) {
         UsersDto usersDto = usersService.findByEmail(email);
         List<FollowsDto> followsDtos = followsService.findAllByFolloweeId(usersDto.getUserId());
-        List<FollowerIdDto> followerIdDtos = getFollowerIds(followsDtos);
+        List<FollowerGetDto> followerGetDtos = getFollowerIds(followsDtos);
 
         return FollowerGetResponseDto.builder()
                 .email(usersDto.getEmail())
                 .followeeId(usersDto.getUserId())
-                .followerIdList(followerIdDtos).build();
+                .followerList(followerGetDtos).build();
     }
 
-    private List<FollowerIdDto> getFollowerIds(List<FollowsDto> followsDtos) {
+    private List<FollowerGetDto> getFollowerIds(List<FollowsDto> followsDtos) {
         return followsDtos.stream()
-                .map(followsDto -> FollowerIdDto.builder()
+                .map(followsDto -> FollowerGetDto.builder()
                         .followerId(followsDto.getFollowerId())
+                        .followerEmail(getFollowerEmail(followsDto))
                         .build())
                 .toList();
+    }
+
+    private String getFollowerEmail(FollowsDto followsDto) {
+        UsersDto usersDto = usersService.findByUserId(followsDto.getFollowerId());
+        return usersDto.getEmail();
     }
 }
