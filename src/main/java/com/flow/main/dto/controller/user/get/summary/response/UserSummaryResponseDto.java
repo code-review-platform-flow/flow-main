@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class UserSummaryResponseDto {
-
+    private String email;
     private String profileUrl;
     private String userName;
     private String majorName;

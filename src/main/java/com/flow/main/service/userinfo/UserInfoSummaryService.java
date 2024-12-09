@@ -25,6 +25,7 @@ public class UserInfoSummaryService {
         MajorDto majorDto = majorService.findByMajorId(userInfoDto.getMajorId());
 
         return UserSummaryResponseDto.builder()
+            .email(usersDto.getEmail())
             .profileUrl(userInfoDto.getProfileUrl())
             .userName(userInfoDto.getUserName())
             .studentNumber(userInfoDto.getStudentNumber())
