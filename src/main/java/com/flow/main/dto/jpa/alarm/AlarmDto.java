@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,5 @@ public class AlarmDto {
 	private Boolean isRead;
 	private Long referenceId;
 	private String referenceTable;
+	private LocalDateTime createDate;
 }
