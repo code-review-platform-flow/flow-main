@@ -85,7 +85,7 @@ public class PostController {
         return ResponseEntity.ok(postsWriteService.write(postWriteRequestDto));
     }
 
-    @PatchMapping("/{postId}")
+    @PostMapping("/{postId}")
     public ResponseEntity<PostModifyResponseDto> modify(@PathVariable("postId") Long postId, @RequestBody final PostModifyRequestDto postModifyRequestDto){
         log.info("postId : {}", postId);
         log.info("email : {}", postModifyRequestDto.getEmail());
