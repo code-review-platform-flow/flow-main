@@ -25,6 +25,11 @@ public class CoffeeChatsService {
 		return coffeeChatsMapper.toListDto(coffeeChatsRepository.findAllCoffeeChatsByInitiatorUserIdWithPageable(initiatorUserId, pageable));
 	}
 
+    @Transactional(readOnly = true)
+	public List<CoffeeChatsDto> getAllByRecipientUserIdWithPageable(Long recipientUserId, Pageable pageable) {
+		return coffeeChatsMapper.toListDto(coffeeChatsRepository.findAllCoffeeChatsByRecipientUserIdWithPageable(recipientUserId, pageable));
+	}
+
 	@Transactional
 	public CoffeeChatsDto save(CoffeeChatsDto coffeeChatsDto) {
 		CoffeeChatsEntity coffeeChatsEntity = coffeeChatsMapper.toEntity(coffeeChatsDto);

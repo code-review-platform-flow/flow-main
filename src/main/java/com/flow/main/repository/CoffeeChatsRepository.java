@@ -14,4 +14,7 @@ public interface CoffeeChatsRepository extends JpaRepository<CoffeeChatsEntity, 
 	@Query("SELECT c FROM CoffeeChatsEntity  c WHERE c.initiatorUser.userId = :initiatorUserId")
 	List<CoffeeChatsEntity> findAllCoffeeChatsByInitiatorUserIdWithPageable(@Param("initiatorUserId") Long initiatorUserId, Pageable pageable);
 
+	@Query("SELECT c FROM CoffeeChatsEntity  c WHERE c.recipientUser.userId = :recipientUserId")
+	List<CoffeeChatsEntity> findAllCoffeeChatsByRecipientUserIdWithPageable(@Param("recipientUserId") Long recipientUserId, Pageable pageable);
+
 }
