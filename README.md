@@ -18,11 +18,18 @@ MSA 구조에서 메인으로 제공되는 기능(ex 로그인)들을 담당하�
 10. 알람 기능                   # Spring Event를 사용하여 사용자 액션 추적
 ```
 
-## CI/CD
+## 🌊 CI/CD
 ```
 .
 ├── .github
 │   └── workflows
 │       ├── ci-cd-dev.yml // dev 브랜치 전용 CI/CD
 │       └── ci-cd-prd.yml // prd(main) 전용 CI/CD
+
+1. Github Actions 실행
+2. Docker 이미지 빌드
+3. Private Docker Registry에 저장
+4. flow-manifest 이미지 코드 수정
+5. ArgoCD 최신화
 ```
+
