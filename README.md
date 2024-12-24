@@ -17,3 +17,12 @@ MSA 구조에서 메인으로 제공되는 기능(ex 로그인)들을 담당하�
 9. 팔로우 및 팔로잉
 10. 알람 기능                   # Spring Event를 사용하여 사용자 액션 추적
 ```
+
+## CI/CD
+```
+.
+├── .github
+│   └── workflows
+│       ├── ci-cd-dev.yml // dev 브랜치 전용 CI/CD
+│       └── ci-cd-prd.yml // prd(main) 전용 CI/CD
+```
