@@ -35,6 +35,8 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build --push \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache \
             --tag asia-northeast3-docker.pkg.dev/gcuflow/flow-dev/flow-main-dev:${{ github.sha }} .
 
   deploy:
