@@ -22,9 +22,9 @@ public class HallOfFameController {
     private final HoFGetUsersService hoFGetUsersService;
 
     @GetMapping("/{count}")
-    public ResponseEntity<HoFGetUsersResponseDto> getHoFUsers(@PathVariable("count") Long count){
-        log.info("count : {}", count);
-
+    public ResponseEntity<HoFGetUsersResponseDto> getHoFUsers(
+            @PathVariable("count") Long count
+    ) {
         return ResponseEntity.ok(hoFGetUsersService.getHoFUsers(count));
     }
 

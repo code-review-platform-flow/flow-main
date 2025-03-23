@@ -30,6 +30,9 @@ dependencies {
     //WebFlux
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    // AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     //Security
     implementation 'org.springframework.security:spring-security-core:6.3.0'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'

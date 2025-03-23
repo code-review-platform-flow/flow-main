@@ -23,12 +23,16 @@ public class CoffeeChatsController {
 	private final CoffeeChatsGetAllService coffeeChatsGetAllService;
 
 	@PostMapping
-	public ResponseEntity<CoffeeChatsCreateResponseDto> create(@RequestBody final CoffeeChatsCreateRequestDto requestDto) {
+	public ResponseEntity<CoffeeChatsCreateResponseDto> create(
+			@RequestBody final CoffeeChatsCreateRequestDto requestDto
+	) {
 		return ResponseEntity.ok().body(coffeeChatsCreateService.create(requestDto));
 	}
 
 	@GetMapping("/{email}")
-	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(@PathVariable("email") final String email, Pageable pageable) {
+	public ResponseEntity<CoffeeChatsGetAllResponseDto> getAll(
+			@PathVariable("email") final String email, Pageable pageable
+	) {
 		return ResponseEntity.ok().body(coffeeChatsGetAllService.getAllWithPageable(email, pageable));
 	}
 }

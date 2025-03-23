@@ -50,73 +50,59 @@ public class UserController {
     private final UsersWithdrawalService usersWithdrawalService;
 
     @GetMapping("")
-    public ResponseEntity<HostUserGetInfoResponseDto> getHostUserInfo(@RequestParam("hostEmail") String hostEmail,
-        @RequestParam(name = "visitorEmail", required = false) String visitorEmail){
-        log.info("hostEmail : {}", hostEmail);
-        log.info("visitorEmail : {}", visitorEmail);
-
+    public ResponseEntity<HostUserGetInfoResponseDto> getHostUserInfo(
+            @RequestParam("hostEmail") String hostEmail,
+            @RequestParam(name = "visitorEmail", required = false) String visitorEmail
+    ) {
         return ResponseEntity.ok(userInfoGetHostService.getHostUserInfo(hostEmail, visitorEmail));
     }
 
     @GetMapping("/summary")
-    public ResponseEntity<UserSummaryResponseDto> getUserSummary(@RequestParam("email") String email){
-        log.info("email : {}", email);
-
+    public ResponseEntity<UserSummaryResponseDto> getUserSummary(
+            @RequestParam("email") String email
+    ) {
         return ResponseEntity.ok(userInfoSummaryService.getUserSummary(email));
     }
 
     @GetMapping("/education/{educationId}")
-    public ResponseEntity<EducationGetResponseDto> getEducation(@PathVariable("educationId") Long educationId){
-        log.info("educationId : {}", educationId);
-
+    public ResponseEntity<EducationGetResponseDto> getEducation(
+            @PathVariable("educationId") Long educationId
+    ) {
         return ResponseEntity.ok(educationGetService.getEducation(educationId));
     }
 
     @GetMapping("/career/{careerId}")
-    public ResponseEntity<CareerGetResponseDto> getCareer(@PathVariable("careerId") Long careerId){
-        log.info("educationId : {}", careerId);
-
+    public ResponseEntity<CareerGetResponseDto> getCareer(
+            @PathVariable("careerId") Long careerId
+    ) {
         return ResponseEntity.ok(careerGetService.getCareer(careerId));
     }
 
     @PatchMapping("/one-liner")
-    public ResponseEntity<OneLinerUpdateResponseDto> updateOneLiner(@RequestBody final OneLinerUpdateRequestDto oneLinerUpdateRequestDto){
-        log.info("email : {}", oneLinerUpdateRequestDto.getEmail());
-        log.info("oneLiner : {}", oneLinerUpdateRequestDto.getOneLiner());
-
+    public ResponseEntity<OneLinerUpdateResponseDto> updateOneLiner(
+            @RequestBody final OneLinerUpdateRequestDto oneLinerUpdateRequestDto
+    ) {
         return ResponseEntity.ok(userInfoOneLinerUpdateService.updateOneLiner(oneLinerUpdateRequestDto));
     }
 
     @PostMapping("/education")
-    public ResponseEntity<EducationUpdateResponseDto> updateEducation(@RequestBody final EducationUpdateRequestDto educationUpdateRequestDto){
-        log.info("email : {}", educationUpdateRequestDto.getEmail());
-        log.info("educationId : {}", educationUpdateRequestDto.getEducationId());
-        log.info("schoolName : {}", educationUpdateRequestDto.getSchoolName());
-        log.info("startDate : {}", educationUpdateRequestDto.getStartDate());
-        log.info("endDate : {}", educationUpdateRequestDto.getEndDate());
-
+    public ResponseEntity<EducationUpdateResponseDto> updateEducation(
+            @RequestBody final EducationUpdateRequestDto educationUpdateRequestDto
+    ) {
         return ResponseEntity.ok(educationUpdateService.updateEducation(educationUpdateRequestDto));
     }
 
     @PostMapping("/career")
-    public ResponseEntity<CareerUpdateResponseDto> updateCareer(@RequestBody final
-        CareerUpdateRequestDto careerUpdateRequestDto){
-        log.info("email : {}", careerUpdateRequestDto.getEmail());
-        log.info("careerId : {}", careerUpdateRequestDto.getCareerId());
-        log.info("title : {}", careerUpdateRequestDto.getTitle());
-        log.info("description : {}", careerUpdateRequestDto.getDescription());
-        log.info("startDate : {}", careerUpdateRequestDto.getStartDate());
-        log.info("endDate : {}", careerUpdateRequestDto.getEndDate());
-
+    public ResponseEntity<CareerUpdateResponseDto> updateCareer(
+            @RequestBody final CareerUpdateRequestDto careerUpdateRequestDto
+    ) {
         return ResponseEntity.ok(careerUpdateService.updateCareer(careerUpdateRequestDto));
     }
 
     @DeleteMapping("/withdrawal")
-    public ResponseEntity<UserWithdrawalResponseDto> withdrawal(@RequestBody final
-        UserWithdrawalRequestDto userWithdrawalRequestDto){
-        log.info("email : {}", userWithdrawalRequestDto.getEmail());
-        log.info("reason : {}", userWithdrawalRequestDto.getReason());
-
+    public ResponseEntity<UserWithdrawalResponseDto> withdrawal(
+            @RequestBody final UserWithdrawalRequestDto userWithdrawalRequestDto
+    ) {
         return ResponseEntity.ok(usersWithdrawalService.withdrawal(userWithdrawalRequestDto));
     }
 }

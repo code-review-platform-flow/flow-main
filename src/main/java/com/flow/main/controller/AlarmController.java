@@ -26,13 +26,17 @@ public class AlarmController {
 	private final AlarmClickService alarmClickService;
 
 	@GetMapping
-	public ResponseEntity<AlarmGetAllResponseDto> get(@RequestParam String email) {
+	public ResponseEntity<AlarmGetAllResponseDto> get(
+			@RequestParam String email
+	) {
 		return ResponseEntity.ok().body(alarmGetAllService.getAllByEmail(email));
 	}
 
 	@PostMapping("/{alarmId}")
-	public ResponseEntity<AlarmClickResponseDto> clickAlarm(@PathVariable("alarmId") Long alarmId ,@RequestBody final AlarmClickRequestDto alarmClickRequestDto) {
+	public ResponseEntity<AlarmClickResponseDto> clickAlarm(
+			@PathVariable("alarmId") Long alarmId,
+			@RequestBody final AlarmClickRequestDto alarmClickRequestDto
+	) {
 		return ResponseEntity.ok().body(alarmClickService.toggleIsRead(alarmId, alarmClickRequestDto.getEmail()));
 	}
-
 }

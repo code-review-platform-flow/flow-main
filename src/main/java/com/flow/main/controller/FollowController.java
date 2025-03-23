@@ -20,39 +20,37 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/follow")
 @RequiredArgsConstructor
 public class FollowController {
+
     private final FollowsFollowersGetService followsFollowersGetService;
     private final FollowsFolloweesGetService followsFolloweesGetService;
     private final FollowsFollowService followsFollowService;
     private final FollowsCancelService followsCancelService;
 
     @GetMapping("/follower-list/{email}")
-    public ResponseEntity<FollowerGetResponseDto> followerList(@PathVariable("email") String email) {
-        log.info("email : {}", email);
-
+    public ResponseEntity<FollowerGetResponseDto> followerList(
+            @PathVariable("email") String email
+    ) {
         return ResponseEntity.ok(followsFollowersGetService.getFollowers(email));
     }
 
     @GetMapping("/followee-list/{email}")
-    public ResponseEntity<FolloweeGetResponseDto> followeeList(@PathVariable("email") String email) {
-        log.info("email : {}", email);
-
+    public ResponseEntity<FolloweeGetResponseDto> followeeList(
+            @PathVariable("email") String email
+    ) {
         return ResponseEntity.ok(followsFolloweesGetService.getFollowees(email));
     }
 
     @PostMapping("")
-    public ResponseEntity<FollowResponseDto> follow(@RequestBody final FollowRequestDto followRequestDto){
-        log.info("follower email : {}", followRequestDto.getFollowerEmail());
-        log.info("followee email : {}", followRequestDto.getFolloweeEmail());
-
+    public ResponseEntity<FollowResponseDto> follow(
+            @RequestBody final FollowRequestDto followRequestDto
+    ) {
         return ResponseEntity.ok(followsFollowService.follow(followRequestDto));
     }
 
     @DeleteMapping("/cancel")
-    public ResponseEntity<FollowCancelResponseDto> followCancel(@RequestBody final
-        FollowCancelRequestDto followCancelRequestDto){
-        log.info("follower email : {}", followCancelRequestDto.getFollowerEmail());
-        log.info("followee email : {}", followCancelRequestDto.getFolloweeEmail());
-
+    public ResponseEntity<FollowCancelResponseDto> followCancel(
+            @RequestBody final FollowCancelRequestDto followCancelRequestDto
+    ) {
         return ResponseEntity.ok(followsCancelService.followCancel(followCancelRequestDto));
     }
 }

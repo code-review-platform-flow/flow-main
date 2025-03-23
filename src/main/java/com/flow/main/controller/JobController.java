@@ -1,5 +1,6 @@
 package com.flow.main.controller;
 
+import com.flow.main.common.dto.ApiResponse;
 import com.flow.main.dto.controller.job.get.all.JobGetAllResponseDto;
 import com.flow.main.dto.controller.job.get.info.JobGetInfoResponseDto;
 import com.flow.main.service.job.JobGetAllService;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/job")
+@RequestMapping("/v1/job")
 @RequiredArgsConstructor
 public class JobController {
 
@@ -24,12 +25,14 @@ public class JobController {
     private final JobGetInfoService jobGetInfoService;
 
     @GetMapping("/all")
-    public ResponseEntity<JobGetAllResponseDto> getAll(){
-        return ResponseEntity.ok(jobGetAllService.getAll());
+    public ApiResponse<JobGetAllResponseDto> getAll() {
+        return jobGetAllService.getAll();
     }
 
     @GetMapping("/{jobId}")
-    public ResponseEntity<JobGetInfoResponseDto> gwtInfo(@PathVariable("jobId") Long jobId){
+    public ResponseEntity<JobGetInfoResponseDto> gwtInfo(
+            @PathVariable("jobId") Long jobId
+    ) {
         return ResponseEntity.ok(jobGetInfoService.getInfo(jobId));
     }
 
