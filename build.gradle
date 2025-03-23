@@ -53,6 +53,14 @@ dependencies {
     //university
     implementation 'com.github.in-seo:univcert:master-SNAPSHOT'
 
+    // P6Spy
+    // implementation 'p6spy:p6spy:3.9.1'
+    // implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.0'
+    // 출처: https://curiousjinan.tistory.com/entry/spring-boot-3-p6spy-jpa-logging [오늘도 개발중입니다:티스토리]
+
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+    // 출처: https://curiousjinan.tistory.com/entry/spring-boot-3-p6spy-jpa-logging [오늘도 개발중입니다:티스토리]
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
