@@ -32,27 +32,26 @@ public class LikeController {
     private final LikesCountService likesCountService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<LikeCountResponseDto> countLike(@PathVariable("postId") Long postId, @RequestParam(name = "email") String email){
-        log.info("postId : {}", postId);
-        log.info("email : {}", email);
-
+    public ResponseEntity<LikeCountResponseDto> countLike(
+            @PathVariable("postId") Long postId,
+            @RequestParam(name = "email") String email
+    ) {
         return ResponseEntity.ok(likesCountService.getLikeCount(postId, email));
     }
 
     @PostMapping("/{postId}")
-    public ResponseEntity<LikeCLickResponseDto> clickLike(@PathVariable("postId") Long postId, @RequestBody final LikeClickRequestDto likeClickRequestDto){
-        log.info("postId : {}", postId);
-        log.info("email : {}", likeClickRequestDto.getEmail());
-
+    public ResponseEntity<LikeCLickResponseDto> clickLike(
+            @PathVariable("postId") Long postId,
+            @RequestBody final LikeClickRequestDto likeClickRequestDto
+    ) {
         return ResponseEntity.ok(likesClickService.clickLike(postId, likeClickRequestDto));
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<LikeCancelResponseDto> cancelLike(@PathVariable("postId") Long postId, @RequestBody final
-        LikeCancelRequestDto likeCancelRequestDto){
-        log.info("postId : {}", postId);
-        log.info("email : {}", likeCancelRequestDto.getEmail());
-
+    public ResponseEntity<LikeCancelResponseDto> cancelLike(
+            @PathVariable("postId") Long postId,
+            @RequestBody final LikeCancelRequestDto likeCancelRequestDto
+    ) {
         return ResponseEntity.ok(likesCancelService.cancelLike(postId, likeCancelRequestDto));
     }
 

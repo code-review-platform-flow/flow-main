@@ -46,7 +46,7 @@ public class PostController {
     private final PostsDeleteService postsDeleteService;
 
     @GetMapping("/latest")
-    public ResponseEntity<PostLatestResponseDto> getLatest(){
+    public ResponseEntity<PostLatestResponseDto> getLatest() {
         PostsDto postsDto = postsLatestService.getLatest();
         return ResponseEntity.ok(PostLatestResponseDto.builder()
                 .postId(postsDto.getPostId())
@@ -54,55 +54,51 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostGetResponseDto> get(@PathVariable("postId") Long postId, @RequestParam(name = "email", required = false) String email){
+    public ResponseEntity<PostGetResponseDto> get(
+            @PathVariable("postId") Long postId,
+            @RequestParam(name = "email", required = false) String email
+    ) {
         return ResponseEntity.ok(postsGetService.get(postId, email));
     }
 
     @GetMapping("/trending/{page}/{count}")
-    public ResponseEntity<GetTrendingPostsResponseDto> getTrendingPosts(@PathVariable("page") Long page, @PathVariable("count") Long count){
-        log.info("page : {}", page);
-        log.info("count : {}", count);
+    public ResponseEntity<GetTrendingPostsResponseDto> getTrendingPosts(
+            @PathVariable("page") Long page,
+            @PathVariable("count") Long count
+    ) {
         return ResponseEntity.ok(postsGetTrendingService.getTrendingPosts(page, count));
     }
 
     @GetMapping("/search/{keyword}/{page}/{count}")
-    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(@PathVariable("keyword") String keyword, @PathVariable("page") Long page, @PathVariable("count") Long count, @RequestParam(name = "email", required = false) String email){
-        log.info("keyword : {}", keyword);
-        log.info("page : {}", page);
-        log.info("count : {}", count);
-        log.info("email : {}", email);
+    public ResponseEntity<FindByKeywordResponseDto> findPostsByKeyword(
+            @PathVariable("keyword") String keyword,
+            @PathVariable("page") Long page,
+            @PathVariable("count") Long count,
+            @RequestParam(name = "email", required = false) String email
+    ) {
         return ResponseEntity.ok(postsFindByKeywordService.findPostsByKeyword(keyword, page, count, email));
     }
 
     @PostMapping("")
-    public ResponseEntity<PostWriteResponseDto> write(@RequestBody final PostWriteRequestDto postWriteRequestDto){
-        log.info("email : {}", postWriteRequestDto.getEmail());
-        log.info("category : {}", postWriteRequestDto.getCategory());
-        postWriteRequestDto.getTags().forEach(tagsNameDto -> { log.info("tagName : {}", tagsNameDto.getTagName());});
-        log.info("title : {}", postWriteRequestDto.getTitle());
-        log.info("content : {}", postWriteRequestDto.getContent());
-
+    public ResponseEntity<PostWriteResponseDto> write(
+            @RequestBody final PostWriteRequestDto postWriteRequestDto
+    ) {
         return ResponseEntity.ok(postsWriteService.write(postWriteRequestDto));
     }
 
     @PostMapping("/{postId}")
-    public ResponseEntity<PostModifyResponseDto> modify(@PathVariable("postId") Long postId, @RequestBody final PostModifyRequestDto postModifyRequestDto){
-        log.info("postId : {}", postId);
-        log.info("email : {}", postModifyRequestDto.getEmail());
-        log.info("category : {}", postModifyRequestDto.getCategory());
-        postModifyRequestDto.getTags().forEach(tagsNameDto -> { log.info("tagName : {}", tagsNameDto.getTagName());});
-        log.info("title : {}", postModifyRequestDto.getTitle());
-        log.info("content : {}", postModifyRequestDto.getContent());
-
+    public ResponseEntity<PostModifyResponseDto> modify(
+            @PathVariable("postId") Long postId,
+            @RequestBody final PostModifyRequestDto postModifyRequestDto
+    ) {
         return ResponseEntity.ok(postsModifyService.modify(postId, postModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<PostDeleteResponseDto> delete(@PathVariable("postId") Long postId, @RequestBody final
-        PostDeleteRequestDto postDeleteRequestDto){
-        log.info("postId : {}", postId);
-        log.info("email : {}", postDeleteRequestDto.getEmail());
-
+    public ResponseEntity<PostDeleteResponseDto> delete(
+            @PathVariable("postId") Long postId,
+            @RequestBody final PostDeleteRequestDto postDeleteRequestDto
+    ) {
         return ResponseEntity.ok(postsDeleteService.delete(postId, postDeleteRequestDto));
     }
 }

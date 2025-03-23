@@ -53,76 +53,72 @@ public class CommentController {
     private final RepliesDeleteService repliesDeleteService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<CommentsGetAllResponseDto> getAllCommentsAndReplies(@PathVariable("postId") Long postId, @RequestParam(name = "email", required = false) String email){
-        log.info("postId : {}", postId);
-        log.info("email : {}", email);
-
+    public ResponseEntity<CommentsGetAllResponseDto> getAllCommentsAndReplies(
+            @PathVariable("postId") Long postId,
+            @RequestParam(name = "email", required = false) String email
+    ) {
         return ResponseEntity.ok(commentsGetAllService.getAllCommentsAndReplies(postId, email));
     }
 
     @GetMapping("/count/{postId}")
-    public ResponseEntity<CountCommentsAndRepliesResponseDto> countCommentsAndReplies(@PathVariable("postId") Long postId){
-        log.info("postId : {}", postId);
-
+    public ResponseEntity<CountCommentsAndRepliesResponseDto> countCommentsAndReplies(
+            @PathVariable("postId") Long postId
+    ) {
         return ResponseEntity.ok(commentsCountService.countCommentsAndReplies(postId));
     }
 
     @PostMapping("/{postId}")
-    public ResponseEntity<CommentsWriteResponseDto> writeComments(@PathVariable("postId") Long postId, @RequestBody final CommentsWriteRequestDto commentsWriteRequestDto){
-        log.info("postId : {}", postId);
-        log.info("email : {}", commentsWriteRequestDto.getEmail());
-        log.info("commentContent : {}", commentsWriteRequestDto.getCommentContent());
-
+    public ResponseEntity<CommentsWriteResponseDto> writeComments(
+            @PathVariable("postId") Long postId,
+            @RequestBody final CommentsWriteRequestDto commentsWriteRequestDto
+    ) {
         return ResponseEntity.ok(commentsWriteService.writeComments(postId, commentsWriteRequestDto));
     }
 
     @PatchMapping("/{postId}/{commentId}")
-    public ResponseEntity<CommentsModifyResponseDto> modifyComments(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody final CommentsModifyRequestDto commentsModifyRequestDto){
-        log.info("postId : {}", postId);
-        log.info("commentId : {}", commentId);
-        log.info("email : {}", commentsModifyRequestDto.getEmail());
-        log.info("commentContent : {}", commentsModifyRequestDto.getCommentContent());
-
+    public ResponseEntity<CommentsModifyResponseDto> modifyComments(
+            @PathVariable("postId") Long postId,
+            @PathVariable("commentId") Long commentId,
+            @RequestBody final CommentsModifyRequestDto commentsModifyRequestDto
+    ) {
         return ResponseEntity.ok(commentsModifyService.modifyComments(postId, commentId, commentsModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}/{commentId}")
-    public ResponseEntity<CommentsDeleteResponseDto> deleteComments(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody final CommentsDeleteRequestDto commentsDeleteRequestDto){
-        log.info("postId : {}", postId);
-        log.info("commentId : {}", commentId);
-        log.info("email : {}", commentsDeleteRequestDto.getEmail());
-
+    public ResponseEntity<CommentsDeleteResponseDto> deleteComments(
+            @PathVariable("postId") Long postId,
+            @PathVariable("commentId") Long commentId,
+            @RequestBody final CommentsDeleteRequestDto commentsDeleteRequestDto
+    ) {
         return ResponseEntity.ok(commentsDeleteService.deleteComments(postId, commentId, commentsDeleteRequestDto));
     }
 
     @PostMapping("/{postId}/{commentId}")
-    public ResponseEntity<RepliesWriteResponseDto> writeReplies(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @RequestBody final RepliesWriteRequestDto repliesWriteRequestDto){
-        log.info("postId : {}", postId);
-        log.info("commentId : {}", commentId);
-        log.info("email : {}", repliesWriteRequestDto.getEmail());
-        log.info("replyContent : {}", repliesWriteRequestDto.getReplyContent());
-
+    public ResponseEntity<RepliesWriteResponseDto> writeReplies(
+            @PathVariable("postId") Long postId,
+            @PathVariable("commentId") Long commentId,
+            @RequestBody final RepliesWriteRequestDto repliesWriteRequestDto
+    ) {
         return ResponseEntity.ok(repliesWriteService.writeReplies(postId, commentId, repliesWriteRequestDto));
     }
 
     @PatchMapping("/{postId}/{commentId}/reply/{replyId}")
-    public ResponseEntity<RepliesModifyResponseDto> modifyReplies(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @PathVariable("replyId") Long replyId, @RequestBody final RepliesModifyRequestDto repliesModifyRequestDto){
-        log.info("postId : {}", postId);
-        log.info("commentId : {}", commentId);
-        log.info("replyId : {}", replyId);
-        log.info("email : {}", repliesModifyRequestDto.getEmail());
-        log.info("replyContent : {}", repliesModifyRequestDto.getReplyContent());
-
+    public ResponseEntity<RepliesModifyResponseDto> modifyReplies(
+            @PathVariable("postId") Long postId,
+            @PathVariable("commentId") Long commentId,
+            @PathVariable("replyId") Long replyId,
+            @RequestBody final RepliesModifyRequestDto repliesModifyRequestDto
+    ) {
         return ResponseEntity.ok(repliesModifyService.updateReplies(postId, commentId, replyId, repliesModifyRequestDto));
     }
 
     @DeleteMapping("/{postId}/{commentId}/reply/{replyId}")
-    public ResponseEntity<RepliesDeleteResponseDto> deleteReplies(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId, @PathVariable("replyId") Long replyId, @RequestBody final RepliesDeleteRequestDto repliesDeleteRequestDto){
-        log.info("postId : {}", postId);
-        log.info("commentId : {}", commentId);
-        log.info("replyId : {}", replyId);
-        log.info("email : {}", repliesDeleteRequestDto.getEmail());
-
+    public ResponseEntity<RepliesDeleteResponseDto> deleteReplies(
+            @PathVariable("postId") Long postId,
+            @PathVariable("commentId") Long commentId,
+            @PathVariable("replyId") Long replyId,
+            @RequestBody final RepliesDeleteRequestDto repliesDeleteRequestDto
+    ) {
         return ResponseEntity.ok(repliesDeleteService.deleteReplies(postId, commentId, replyId, repliesDeleteRequestDto));
     }
 

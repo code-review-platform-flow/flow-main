@@ -46,62 +46,57 @@ public class AuthController {
     private final UserInfoFileUploadService userInfoFileUploadService;
 
     @GetMapping("/major")
-    public ResponseEntity<MajorGetAllResponseDto> getAllMajor(){
+    public ResponseEntity<MajorGetAllResponseDto> getAllMajor() {
         return ResponseEntity.ok(majorGetAllService.getAllMajor());
     }
 
     @PostMapping("/email")
-    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(@RequestBody final SendEmailRequestDto sendEmailRequestDto){
-        log.info("email : {}", sendEmailRequestDto.getEmail());
-        log.info("universityName : {}", sendEmailRequestDto.getUniversityName());
-
+    public ResponseEntity<SendEmailResponseDto> sendVerifyEmail(
+            @RequestBody final SendEmailRequestDto sendEmailRequestDto
+    ) {
         return ResponseEntity.ok(authSendVerifyEmailService.sendVerifyEmail(sendEmailRequestDto));
     }
 
     @PostMapping("/code")
-    public ResponseEntity<VerifyCodeResponseDto> verifyCode(@RequestBody final VerifyCodeRequestDto verifyCodeRequestDto) throws IOException {
+    public ResponseEntity<VerifyCodeResponseDto> verifyCode(
+            @RequestBody final VerifyCodeRequestDto verifyCodeRequestDto
+    ) throws IOException {
         return ResponseEntity.ok(authVerifyCodeService.verifyCode(verifyCodeRequestDto));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@RequestBody final RegisterRequestDto registerRequestDto) throws IOException {
-        log.info("email : {}",registerRequestDto.getEmail());
-        log.info("password : {}",registerRequestDto.getPassword());
-        log.info("majorName : {}",registerRequestDto.getMajorName());
-        log.info("schoolName : {}",registerRequestDto.getSchoolName());
-        log.info("studentNumber : {}",registerRequestDto.getStudentNumber());
-        log.info("userName : {}",registerRequestDto.getUserName());
+    public ResponseEntity<RegisterResponseDto> register(
+            @RequestBody final RegisterRequestDto registerRequestDto
+    ) throws IOException {
         return ResponseEntity.ok(userInfoRegisterService.register(registerRequestDto));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody final LoginRequestDto loginRequestDto){
-        log.info("email : {}", loginRequestDto.getEmail());
-        log.info("password : {}", loginRequestDto.getPassword());
+    public ResponseEntity<LoginResponseDto> login(
+            @RequestBody final LoginRequestDto loginRequestDto
+    ) {
         return ResponseEntity.ok(userSessionsLoginService.login(loginRequestDto));
     }
 
     @PatchMapping("/refresh-token")
-    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(@RequestHeader("Authorization") String refreshToken) {
-        log.info("refreshToken : {}", refreshToken);
-
+    public ResponseEntity<RecreateAccessTokenResponseDto> recreate(
+            @RequestHeader("Authorization") String refreshToken
+    ) {
         return ResponseEntity.ok(userSessionsUpdateService.recreateAccessToken(refreshToken));
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<LogoutResponseDto> logout(@RequestHeader("Authorization") String accessToken) {
-        log.info("accessToken : {}", accessToken);
+    public ResponseEntity<LogoutResponseDto> logout(
+            @RequestHeader("Authorization") String accessToken
+    ) {
         return ResponseEntity.ok(userSessionsLogoutService.logout(accessToken));
     }
 
     @PostMapping("/file/upload")
     public ResponseEntity<FileUploadResponseDto> upload(
         @RequestPart("file") MultipartFile file,
-        @RequestPart("email") String email){
-
-        log.info("file.getOriginalFileName : {}", file.getOriginalFilename());
-        log.info("email : {}", email);
-
+        @RequestPart("email") String email
+    ) {
         return ResponseEntity.ok(userInfoFileUploadService.fileUpload(file, email));
     }
 }
